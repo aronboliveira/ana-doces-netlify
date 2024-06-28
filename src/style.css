@@ -1106,7 +1106,7 @@ button.opBtn {
 
 #divTotal {
   width: 20ch;
-  margin: 2vh 0 4vh 5%;
+  margin: 2vh 0 4vh 4.1vw;
   align-self: flex-start;
   font-size: 1.2rem;
 }
@@ -1217,6 +1217,14 @@ button.opBtn {
   margin: 1vw 0 1vw 0.7vw;
 }
 
+#productsCell {
+  padding-left: 0;
+}
+#productsCell span {
+  padding-left: 0;
+  margin-left: 0.3rem;
+}
+
 #productsRoot {
   width: 80%;
   scrollbar-width: none;
@@ -1225,6 +1233,16 @@ button.opBtn {
 #productsRoot:hover {
   scrollbar-width: thin;
 }
+
+#quantityCell span {
+  margin-right: 0;
+  padding-right: 0;
+}
+
+#quantCel_order_ph {
+  text-align: center;
+}
+
 #rootTab {
   width: 88%;
   overflow: auto;
@@ -1339,7 +1357,7 @@ button.opBtn {
     max-height: 20vw;
   }
   #divTotal {
-    margin-left: 6.25%;
+    margin-left: calc(5.3vw + 0.1rem);
   }
   #infoAuthorsSect #listAuthors .authorMainDiv .authorDesc {
     display: flex;

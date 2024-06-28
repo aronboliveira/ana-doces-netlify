@@ -56,10 +56,18 @@ export function TableOrders(): JSX.Element {
         </colgroup>
         <thead>
           <tr>
-            <th scope="col" className="tabOrdersCel tabOrdersTh">
+            <th
+              scope="col"
+              className="tabOrdersCel tabOrdersTh"
+              id="productsCell"
+            >
               <span className="tabCelSpan">Produtos</span>
             </th>
-            <th scope="col" className="tabOrdersCel tabOrdersTh">
+            <th
+              scope="col"
+              className="tabOrdersCel tabOrdersTh"
+              id="quantityCell"
+            >
               <span className="tabCelSpan">Quantidades</span>
             </th>
           </tr>
