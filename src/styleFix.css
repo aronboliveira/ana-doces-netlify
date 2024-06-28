@@ -1,0 +1,12 @@
+/* running production test fix */
+li.divProduct {
+  padding-bottom: 7rem;
+}
+
+#headerLogo + hr {
+  margin-bottom: 2rem;
+}
+
+divProduct .divProductDetails {
+  margin-bottom: 1.2rem;
+}

@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2022" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "useDefineForClassFields": true /* Emit ECMAScript-standard-compliant class fields. */,
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
+    // "composite": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "allowJs": true,
+
+    /* Modules */
+    "module": "ES2022" /* Specify what module code is generated. */,
+    "outDir": "dist" /* Specify an output folder for all emitted files. */,
+    // "moduleResolution": "bundler" /* Specify how TypeScript looks up a file from a given module specifier. */,
+    // "resolveJsonModule": true /* Enable importing .json files. */,
+    // "allowImportingTsExtensions": true /* Allow imports to include TypeScript file extensions. Requires '--moduleResolution bundler' and either '--noEmit' or '--emitDeclarationOnly' to be set. */,
+
+    /* Interop Constraints */
+    "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
+    "jsx": "react-jsx",
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "allowSyntheticDefaultImports": true,
+    // "noEmit": true,
+    // "emitDeclarationOnly": true
+
+    /* Type Checking */
+    "strict": true /* Enable all strict type-checking options. */,
+    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
+    "alwaysStrict": true /* Ensure 'use strict' is always emitted. */,
+    "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
+    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
+    "noFallthroughCasesInSwitch": true /* Enable error reporting for fallthrough cases in switch statements. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+  },
+  "include": [
+    "src"
+    // "__tests__" //desativar na compilação
+  ],
+  "exclude": [
+    "**/types.ts",
+    "**/types.tsx",
+    "**/test.tsx",
+    "**/test.ts" //desativar na compilação
+  ]
+}
