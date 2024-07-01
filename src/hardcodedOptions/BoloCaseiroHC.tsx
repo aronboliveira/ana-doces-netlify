@@ -108,6 +108,21 @@ export default function BoloCaseiroHC(): JSX.Element {
     }
   }, [defOptRef]);
   useEffect(() => {
+    const idRef = optionsRef.current?.id;
+    const modalInterv = setInterval((interv) => {
+      if (optionsRef.current?.open === false) {
+        optionsRef.current.close();
+        setOptions && setOptions(false);
+        clearInterval(interv);
+      }
+    }, 100);
+    const clearAddInterv = setInterval(() => {
+      if (idRef && !document.getElementById(idRef)) clearInterval(modalInterv);
+    }, 60000);
+    setTimeout(() => {
+      if (idRef && !document.getElementById(idRef)) clearInterval(modalInterv);
+      clearInterval(clearAddInterv);
+    }, 300000);
     const handlePopState = (): void => {
       const idRef = optionsRef.current?.id || "dialog";
       optionsRef.current?.close();
@@ -162,7 +177,10 @@ export default function BoloCaseiroHC(): JSX.Element {
       }, 200);
     };
     addEventListener("popstate", handlePopState);
-    return () => removeEventListener("popstate", handlePopState);
+    return () => {
+      removeEventListener("popstate", handlePopState);
+      clearInterval(modalInterv);
+    };
   }, [shouldShowOptions]);
   return (
     <ErrorBoundary
@@ -175,6 +193,7 @@ export default function BoloCaseiroHC(): JSX.Element {
           className="modal-content"
           id="div-Bolo-Caseiro__01-Banana-Banana_Fit-Café-Cenoura-Cenoura_Fit-Chocolate-Chocolate_Fit-Coco-Formigueiro-Laranja-Limão-Limão_Fit-Maçã_Fit-Milho-Morango-Red_Velvet"
           ref={optionsRef}
+          open={true}
           onClick={(click) => {
             if (
               isClickOutside(click, optionsRef.current!).some(

@@ -82,6 +82,21 @@ export default function TravessaHC(): JSX.Element {
     return () => clearURLAfterModal(optionsId);
   }, []);
   useEffect(() => {
+    const idRef = optionsRef.current?.id;
+    const modalInterv = setInterval((interv) => {
+      if (optionsRef.current?.open === false) {
+        optionsRef.current.close();
+        setOptions && setOptions(false);
+        clearInterval(interv);
+      }
+    }, 100);
+    const clearAddInterv = setInterval(() => {
+      if (idRef && !document.getElementById(idRef)) clearInterval(modalInterv);
+    }, 60000);
+    setTimeout(() => {
+      if (idRef && !document.getElementById(idRef)) clearInterval(modalInterv);
+      clearInterval(clearAddInterv);
+    }, 300000);
     const handlePopState = (): void => {
       const idRef = optionsRef.current?.id || "dialog";
       optionsRef.current?.close();
@@ -136,7 +151,10 @@ export default function TravessaHC(): JSX.Element {
       }, 200);
     };
     addEventListener("popstate", handlePopState);
-    return () => removeEventListener("popstate", handlePopState);
+    return () => {
+      removeEventListener("popstate", handlePopState);
+      clearInterval(modalInterv);
+    };
   }, [shouldShowOptions]);
   return (
     <ErrorBoundary

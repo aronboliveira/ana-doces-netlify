@@ -20,6 +20,10 @@ export const mainItems: { listMainItems: Array<looseNum[]> } = {
   listMainItems: [],
 };
 export const basePath = location.pathname;
+export const pathInfo = {
+  currentPath: location.href,
+  prevPath: location.href,
+};
 let productsRooted: voidishRoot = undefined;
 let mainRoot: voidishRoot = undefined;
 
