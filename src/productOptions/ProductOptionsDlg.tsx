@@ -442,8 +442,9 @@ export default function ProductOptionsDlg({
   }, [finished]);
   useEffect(() => {
     const handlePopState = (): void => {
-      setOptions && setOptions(!shouldShowOptions);
+      const idRef = optionsRef.current?.id || "dialog";
       optionsRef.current?.close();
+      setOptions && setOptions(false);
       history.pushState(
         {},
         "",
@@ -456,8 +457,23 @@ export default function ProductOptionsDlg({
           )
           .replace("/h?", "/html?")
       );
+      const allDialogs: string[] = [];
+      setTimeout(() => {
+        document.querySelectorAll(idRef).forEach((ref) => {
+          if (ref.id !== "") allDialogs.push(ref.id);
+          else if (ref instanceof HTMLDialogElement) allDialogs.push("dialog");
+          ref instanceof HTMLDialogElement && ref.close();
+          setOptions && setOptions(false);
+        });
+      }, 300);
+      setTimeout(() => {
+        for (const ref of allDialogs) {
+          const currentRef = document.querySelector(ref);
+          currentRef instanceof HTMLElement && currentRef.remove();
+        }
+      }, 500);
     };
-    addEventListener("popstate", () => handlePopState());
+    addEventListener("popstate", handlePopState);
     return () => removeEventListener("popstate", handlePopState);
   }, [setOptions, shouldShowOptions]);
   return (

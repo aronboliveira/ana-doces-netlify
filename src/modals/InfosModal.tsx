@@ -224,7 +224,6 @@ export default function InfosModal({ dispatch, state }: DlgProps): JSX.Element {
         ) {
           const matchesNum =
             location.href.match(/Desenvolvimento/gi)!.length - 1;
-          console.log(matchesNum);
           for (let i = 0; i < matchesNum; i++)
             history.pushState(
               {},

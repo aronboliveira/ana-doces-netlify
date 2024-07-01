@@ -785,6 +785,6 @@ setTimeout(() => {
     document.querySelector(".divProduct") &&
     document.getElementById("divBtns")?.querySelector("button") &&
     document.querySelector(".outp_orderTitle") &&
-    console.warn(`finished`);
+    console.log(`finished`);
 }, 10000);
 watchLabels();

@@ -126,7 +126,6 @@ export function handleOrderAdd(addBtn: nullishBtn, totalEl: nullishEl) {
           currency: "BRL",
         }).format(parseFinite(prevPrice) + parseFinite(price))}` ||
         totalEl.innerText;
-      console.log(totalEl.innerText);
       updatesValidation[0] = 1;
     } catch (e2) {
       console.error(`Error updating price after addition event call:
@@ -233,14 +232,11 @@ export function handleOrderAdd(addBtn: nullishBtn, totalEl: nullishEl) {
           `Element for displaying alert for add button id ${addBtn.id}`,
           ["HTMLElement"]
         );
-      console.log("alerta de adição acionado");
-      console.log(updatesValidation);
       if (!updatesValidation.every((num) => num === 0)) {
         if (
           updatesValidation[0] === 0 &&
           !/Erro calculando total/gi.test(addAlert.innerText)
         ) {
-          console.log("Caso 01");
           addAlert.innerText += ` Erro calculando total`;
           addAlert.style.color = `#cf6d12`;
           setTimeout(() => {
@@ -252,7 +248,6 @@ export function handleOrderAdd(addBtn: nullishBtn, totalEl: nullishEl) {
           updatesValidation[1] === 0 &&
           !/Erro montando mensagem/gi.test(addAlert.innerText)
         ) {
-          console.log("Caso 10");
           addAlert.innerText += ` Erro montando mensagem`;
           addAlert.style.color = `#cf6d12`;
           setTimeout(() => {
@@ -265,7 +260,6 @@ export function handleOrderAdd(addBtn: nullishBtn, totalEl: nullishEl) {
         updatesValidation.every((num) => num === 0) &&
         !/Erro adicionando pedido/gi.test(addAlert.innerText)
       ) {
-        console.log("Caso 00");
         addAlert.innerText = `Erro adicionando pedido`;
         addAlert.style.color = `#c21414`;
         setTimeout(() => {
@@ -376,8 +370,6 @@ export function handleOrderSubtract(subtBtn: nullishBtn, totalEl: nullishEl) {
         `tr[id*=${subtBtn.id.slice(subtBtn.id.indexOf("__"))}]`
       );
       if (relTr) {
-        console.log("found match for price change");
-        console.log(relTr.id);
         totalEl.innerText =
           ` ${new Intl.NumberFormat("pt-BR", {
             style: "currency",
@@ -392,7 +384,6 @@ export function handleOrderSubtract(subtBtn: nullishBtn, totalEl: nullishEl) {
           )} `
         );
       if (/-/g.test(totalEl.innerText)) totalEl.innerText = `R$ 0,00`;
-      console.log(totalEl.innerText);
     } catch (e2) {
       console.error(`Error updating price after addition event call:
       ${(e2 as Error).message}`);
@@ -414,7 +405,6 @@ export function handleOrderSubtract(subtBtn: nullishBtn, totalEl: nullishEl) {
           `Element for displaying alert for add button id ${subtBtn.id}`,
           ["HTMLElement"]
         );
-      console.log("alerta de remoção acionado");
       if (!updatesValidation.every((num) => num === 0)) {
         if (updatesValidation[0] === 0) {
           minusAlert.innerText += ` Erro calculando total`;
@@ -626,16 +616,12 @@ export function handleMultipleOrder(
       );
     }
     if (tbodyProps.currentRef.querySelector("#tr_order_ph")) {
-      console.log("replacing placeholder");
       tbodyProps.root.render(
         <OrderRow title={unfillableTitle} id={unfillableId} quantity={"1"} />
       );
     } else {
       const relTr = tbodyProps.currentRef.querySelector(`#tr_${unfillableId}`);
       if (!relTr) {
-        console.log("No match for expect tr pattern");
-        console.log("Used pattern:");
-        console.log(`#tr_${unfillableId}`);
         if (context === "add") {
           const newTr = Object.assign(document.createElement("tr"), {
             id: `tr_${unfillableId}`,
@@ -659,7 +645,6 @@ export function handleMultipleOrder(
           );
         }
       } else {
-        console.log("match for table row pattern. changing quantity.");
         try {
           const outpQuant = relTr.querySelector(".outp_orderQuant");
           if (!(outpQuant instanceof HTMLElement))
@@ -679,11 +664,9 @@ export function handleMultipleOrder(
                 break;
               case "subtract":
                 const outptQuantNum = parseFinite(outpQuant.innerText) - 1;
-                if (outptQuantNum > 0) {
-                  console.log(">0");
+                if (outptQuantNum > 0) 
                   outpQuant.innerText = `${outptQuantNum}`;
-                } else {
-                  console.log("<=0");
+                 else {
                   relTr instanceof HTMLElement && (relTr.hidden = true);
                   if (!tbodyProps[`${relTr.id}`])
                     tbodyProps[`${relTr.id}`] = createRoot(relTr);
@@ -746,7 +729,6 @@ export function handleMultipleOrder(
             }
           }
         } catch (eTr) {
-          console.log("initiating procedure to check root definition");
           if (!tbodyProps.root) {
             console.warn(
               `no root validated in tbody props. initiating replacement.`
@@ -987,10 +969,6 @@ export function switchAlertOp(
         message.indexOf(pattern) + pattern.length,
         message.length
       );
-      console.log("----MENSAGEM---");
-      console.log(message);
-      console.log(products);
-      console.log(products.length);
       if (products.length < 2) {
         alertEl.innerText = `Mensagem copiada com algum erro...`;
         alertEl.style.color = `#d87111ec`;
@@ -1004,7 +982,6 @@ export function switchAlertOp(
       parseFinite(getComputedStyle(alertEl!).opacity) >= 0.99 ||
       parseFinite(getComputedStyle(alertEl!).opacity) <= 0.1
     ) {
-      console.log("opacity changing");
       const addOpacity = setInterval(() => {
         if (alertEl?.id && document.querySelector(`#${alertEl.id}`)) {
           if (parseFinite(getComputedStyle(alertEl).opacity) >= 1)
@@ -1471,8 +1448,6 @@ export function recalculateByOption(
             "/bolo/gi || /torta/gi || /palha/gi || /cookie/gi"
           );
         if (/bolo/gis.test(relDlg.id) && /festa/gis.test(relDlg.id)) {
-          console.log("Relation of Prices:");
-          console.log(relationPrices);
           relationPrices.forEach((relationPrice, i) => {
             applyRelationBdfCases(relationPrice, factor, scope, i);
           });
@@ -1682,12 +1657,10 @@ export function applyRelationBdfCases(
         /®\S/g.test(title)
       )
         title = title.replaceAll(/®/g, `® `).trim().replaceAll(/® ,/g, `®,`);
-      console.log("Attempt recovered title " + title);
       relationBaseValue = baseFestValues.get(title);
     }
     if (!relationBaseValue) {
       console.error(`Error recovering relationBaseValue. Defaulting Value.`);
-      console.log(title);
       switch (factor) {
         case "grande":
           relationBaseValue = averageFestPricesMap.get("grande") || 170.0;

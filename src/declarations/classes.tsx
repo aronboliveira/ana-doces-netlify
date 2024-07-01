@@ -36,8 +36,6 @@ export class Product {
   static fabricOption(options: Array<string[]>): ProductOption[] {
     return options
       .map((opcao, i) => {
-        // console.log("Fabric " + opcao[0]);
-        // console.log(opcao[1]);
         return new ProductOption(
           opcao[0],
           opcao[1],
@@ -78,7 +76,6 @@ export class ProductOption
     if (typeof _id === "number") _id = _id.toString();
     this.#id = _id || "invalidId";
     this.#_id = __id || "noGivenId";
-    // console.log(`Id for ${opName}: ${_id}`);
   }
   get id() {
     return this.#id;

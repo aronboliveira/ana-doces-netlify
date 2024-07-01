@@ -386,7 +386,6 @@ export default function ProductOptionGrid({
                   .slice(startIdx, lastIdx + 1)
                   .replace("®", "")
                   .trim();
-                console.log([startIdx, lastIdx, currString]);
                 if (currString !== "")
                   usedStrings.push(currString.replace("\n", ""));
                 startIdx = lastIdx + 1;
@@ -396,8 +395,6 @@ export default function ProductOptionGrid({
                 .trim();
               opNameRef.current.style.position = `relative`;
               opNameRef.current.innerText = ``;
-              console.log("USEDSTRING");
-              console.log(usedStrings);
               usedStrings
                 .map((usedString) => {
                   const currentSpan = Object.assign(

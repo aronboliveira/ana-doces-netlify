@@ -52,8 +52,6 @@ export default function ProductsProvider({
           /torta/gis.test(product._name)
       )
       .map((product) => {
-        // console.log("!produto");
-        // console.log(product._name);
         try {
           if (/bolo/gis.test(product._name)) {
             if (/caseiro/gis.test(product._name)) {
@@ -125,7 +123,6 @@ export default function ProductsProvider({
   const renderProducts = (products: Array<Product>) => {
     return products.map((product, i) => {
       const matchedSubOptObj = subOptionsGroup.find((productOp) => {
-        // console.log(`Opção em teste: ${product._name} usando ${productOp}`);
         try {
           return product._name.toLowerCase() === productOp.name.toLowerCase()
             ? productOp.opts
@@ -139,9 +136,7 @@ export default function ProductsProvider({
           return [[]];
         }
       }) || { name: product._name, opts: [[]] };
-      // console.log(subOptionsGroup);
       const matchedSubOpts = matchedSubOptObj.opts;
-      // console.log(matchedSubOpts);
       return (
         <ErrorBoundary
           key={`errorBoundary_${product}_${i}_#${product?.id || `brk${i}`}`}
@@ -229,7 +224,6 @@ export default function ProductsProvider({
             typeof itemInfo[1] === "number" &&
             itemInfo[1] >= 0
         );
-      // console.log(mainItems.listMainItems);
     } catch (e) {
       setTimeout(() => {
         !document.querySelector("menu") &&
@@ -272,7 +266,6 @@ export default function ProductsProvider({
                     location.href.indexOf("&Op-")
                   )
                 );
-            console.log(locRefRegex);
             const normalizedItemId = `${item.id
               .slice(0, item.id.indexOf("__"))
               .replaceAll("®", "")
