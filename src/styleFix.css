@@ -3,10 +3,37 @@ li.divProduct {
   padding-bottom: 7rem;
 }
 
+td output {
+  font-size: 1rem;
+  vertical-align: middle;
+}
+
+td[id^="quantCel"],
+td:has(output.outp_orderQuant) {
+  text-align: center;
+}
+
+thead,
+.tabOrdersCel.tabOrdersTh {
+  font-size: 0.8rem;
+}
+
+#btnChame_no_Whatsapp span:has(svg) {
+  transform: translateX(3px);
+}
+
+#btnChame_no_Whatsapp a {
+  transform: translateX(-2px);
+}
+
 #headerLogo + hr {
   margin-bottom: 2rem;
 }
 
-divProduct .divProductDetails {
-  margin-bottom: 1.2rem;
+#quantityCell {
+  text-align: right;
+}
+
+#rootTab {
+  min-height: unset;
 }
