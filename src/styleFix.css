@@ -37,3 +37,15 @@ thead,
 #rootTab {
   min-height: unset;
 }
+
+@media screen and (min-width: 1421px) {
+  #divBtns {
+    min-width: 0;
+  }
+  #divBtns button {
+    padding-inline: 1rem;
+  }
+  #divBtns button:has(.bi-whatsapp):has(svg) {
+    padding-inline: 1.5rem;
+  }
+}
