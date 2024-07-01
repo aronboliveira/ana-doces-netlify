@@ -460,7 +460,7 @@ export default function ProductOptionsDlg({
       const allDialogs: string[] = [];
       setTimeout(() => {
         document.querySelectorAll(idRef).forEach((ref) => {
-          if (ref.id !== "") allDialogs.push(ref.id);
+          if (ref.id !== "") allDialogs.push(`#${ref.id}`);
           else if (ref instanceof HTMLDialogElement) allDialogs.push("dialog");
           ref instanceof HTMLDialogElement && ref.close();
           setOptions && setOptions(false);
@@ -469,9 +469,26 @@ export default function ProductOptionsDlg({
       setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
+          if (currentRef instanceof HTMLDialogElement) {
+            currentRef.close();
+            currentRef.open = false;
+            setOptions && setOptions(false);
+          }
+        }
+      }, 600);
+      setTimeout(() => {
+        for (const ref of allDialogs) {
+          const currentRef = document.querySelector(ref);
+          currentRef instanceof HTMLDialogElement &&
+            createRoot(currentRef).unmount();
+        }
+      }, 900);
+      setTimeout(() => {
+        for (const ref of allDialogs) {
+          const currentRef = document.querySelector(ref);
           currentRef instanceof HTMLElement && currentRef.remove();
         }
-      }, 500);
+      }, 1200);
     };
     addEventListener("popstate", handlePopState);
     return () => removeEventListener("popstate", handlePopState);

@@ -100,7 +100,7 @@ export default function TravessaHC(): JSX.Element {
       const allDialogs: string[] = [];
       setTimeout(() => {
         document.querySelectorAll(idRef).forEach((ref) => {
-          if (ref.id !== "") allDialogs.push(ref.id);
+          if (ref.id !== "") allDialogs.push(`#${ref.id}`);
           else if (ref instanceof HTMLDialogElement) allDialogs.push("dialog");
           ref instanceof HTMLDialogElement && ref.close();
           setOptions && setOptions(false);

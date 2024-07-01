@@ -116,7 +116,7 @@ export default function SuboptionsSubDiv({
                 if (radio instanceof HTMLInputElement && radio.type === "radio")
                   radio.name = firstRadioName;
               });
-          } else
+          } else if (document.querySelector("dialog"))
             console.warn(
               `No radios found for ${
                 mainRef.current.id || "unidentified refenrece"
