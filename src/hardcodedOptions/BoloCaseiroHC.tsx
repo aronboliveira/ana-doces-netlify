@@ -159,19 +159,14 @@ export default function BoloCaseiroHC(): JSX.Element {
         }
       }, 800);
       setTimeout(() => {
-        for (const ref of allDialogs) {
-          const currentRef = document.querySelector(ref);
-          const contDlg = currentRef?.closest(".contDlg")
-          currentRef instanceof HTMLDialogElement && contDlg &&
+        document.querySelectorAll(".contDlg").forEach((contDlg) => {
           createRoot(contDlg).unmount();
-        }
+        });
       }, 1000);
       setTimeout(() => {
-        for (const ref of allDialogs) {
-          const currentRef = document.querySelector(ref);
-          const contDlg = currentRef?.closest(".contDlg");
-          currentRef instanceof HTMLElement && contDlg && contDlg.remove();
-        }
+        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+          contDlg.remove();
+        });
       }, 1200);
     };
     addEventListener("popstate", handlePopState);
