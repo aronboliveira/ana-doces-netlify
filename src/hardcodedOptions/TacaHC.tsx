@@ -106,8 +106,6 @@ export default function TacaHC(): JSX.Element {
           ref instanceof HTMLDialogElement && ref.close();
           setOptions && setOptions(false);
         });
-      }, 300);
-      setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
           if (currentRef instanceof HTMLDialogElement) {
@@ -116,8 +114,6 @@ export default function TacaHC(): JSX.Element {
             setOptions && setOptions(false);
           }
         }
-      }, 500);
-      setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
           if (currentRef instanceof HTMLDialogElement) {
@@ -131,17 +127,13 @@ export default function TacaHC(): JSX.Element {
             );
           }
         }
-      }, 800);
-      setTimeout(() => {
         document.querySelectorAll(".contDlg").forEach((contDlg) => {
           createRoot(contDlg).unmount();
         });
-      }, 1000);
-      setTimeout(() => {
         document.querySelectorAll(".contDlg").forEach((contDlg) => {
           contDlg.remove();
         });
-      }, 1200);
+      }, 200);
     };
     addEventListener("popstate", handlePopState);
     return () => removeEventListener("popstate", handlePopState);

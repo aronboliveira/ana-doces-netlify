@@ -465,8 +465,6 @@ export default function ProductOptionsDlg({
           ref instanceof HTMLDialogElement && ref.close();
           setOptions && setOptions(false);
         });
-      }, 300);
-      setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
           if (currentRef instanceof HTMLDialogElement) {
@@ -475,8 +473,6 @@ export default function ProductOptionsDlg({
             setOptions && setOptions(false);
           }
         }
-      }, 500);
-      setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
           if (currentRef instanceof HTMLDialogElement) {
@@ -490,20 +486,13 @@ export default function ProductOptionsDlg({
             );
           }
         }
-      }, 800);
-      setTimeout(() => {
-        for (const ref of allDialogs) {
-          const currentRef = document.querySelector(ref);
-          currentRef instanceof HTMLDialogElement &&
-            createRoot(currentRef).unmount();
-        }
-      }, 1000);
-      setTimeout(() => {
-        for (const ref of allDialogs) {
-          const currentRef = document.querySelector(ref);
-          currentRef instanceof HTMLElement && currentRef.remove();
-        }
-      }, 1200);
+        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+          createRoot(contDlg).unmount();
+        });
+        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+          contDlg.remove();
+        });
+      }, 200);
     };
     addEventListener("popstate", handlePopState);
     return () => removeEventListener("popstate", handlePopState);
