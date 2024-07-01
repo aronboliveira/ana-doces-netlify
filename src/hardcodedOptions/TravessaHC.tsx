@@ -11,6 +11,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
 import { htmlElementNotFound } from "../handlersErrors";
 import SearchBar from "../interactives/SearchBar";
+import { createRoot } from "react-dom/client";
 
 export default function TravessaHC(): JSX.Element {
   const optionsRef = useRef<nullishDlg>(null);
@@ -109,9 +110,41 @@ export default function TravessaHC(): JSX.Element {
       setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
-          currentRef instanceof HTMLElement && currentRef.remove();
+          if (currentRef instanceof HTMLDialogElement) {
+            currentRef.close();
+            currentRef.open = false;
+            setOptions && setOptions(false);
+          }
         }
       }, 500);
+      setTimeout(() => {
+        for (const ref of allDialogs) {
+          const currentRef = document.querySelector(ref);
+          if (currentRef instanceof HTMLDialogElement) {
+            dispatchEvent(
+              new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                clientX: innerWidth * 0.9,
+                clientY: innerHeight * 0.5,
+              })
+            );
+          }
+        }
+      }, 800);
+      setTimeout(() => {
+        for (const ref of allDialogs) {
+          const currentRef = document.querySelector(ref);
+          currentRef instanceof HTMLDialogElement &&
+            createRoot(currentRef).unmount();
+        }
+      }, 1000);
+      setTimeout(() => {
+        for (const ref of allDialogs) {
+          const currentRef = document.querySelector(ref);
+          currentRef instanceof HTMLElement && currentRef.remove();
+        }
+      }, 1200);
     };
     addEventListener("popstate", handlePopState);
     return () => removeEventListener("popstate", handlePopState);

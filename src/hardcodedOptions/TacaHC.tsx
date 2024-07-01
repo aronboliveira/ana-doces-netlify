@@ -116,14 +116,29 @@ export default function TacaHC(): JSX.Element {
             setOptions && setOptions(false);
           }
         }
-      }, 600);
+      }, 500);
+      setTimeout(() => {
+        for (const ref of allDialogs) {
+          const currentRef = document.querySelector(ref);
+          if (currentRef instanceof HTMLDialogElement) {
+            dispatchEvent(
+              new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                clientX: innerWidth * 0.9,
+                clientY: innerHeight * 0.5,
+              })
+            );
+          }
+        }
+      }, 800);
       setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
           currentRef instanceof HTMLDialogElement &&
             createRoot(currentRef).unmount();
         }
-      }, 900);
+      }, 1000);
       setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
