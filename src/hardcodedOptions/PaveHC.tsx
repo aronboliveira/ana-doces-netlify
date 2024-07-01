@@ -135,14 +135,17 @@ export default function PaveHC(): JSX.Element {
       setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
+          const contDlg = currentRef?.closest(".contDlg");
           currentRef instanceof HTMLDialogElement &&
-            createRoot(currentRef).unmount();
+            contDlg &&
+            createRoot(contDlg).unmount();
         }
       }, 1000);
       setTimeout(() => {
         for (const ref of allDialogs) {
           const currentRef = document.querySelector(ref);
-          currentRef instanceof HTMLElement && currentRef.remove();
+          const contDlg = currentRef?.closest(".contDlg");
+          currentRef instanceof HTMLElement && contDlg && contDlg.remove();
         }
       }, 1200);
     };
