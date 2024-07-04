@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { htmlElementNotFound } from "../handlersErrors";
+import { elementNotFound, htmlElementNotFound } from "../handlersErrors";
 import { createRoot } from "react-dom/client";
 import { TbodyProps } from "../declarations/interfaces";
 import { ErrorBoundary } from "react-error-boundary";
@@ -23,7 +23,7 @@ export function TableOrders(): JSX.Element {
           `Reference of Table body for orders`,
           ["HTMLTableSectionElement"]
         );
-      tbodyProps.root = createRoot(tbodyRef.current);
+      if (!tbodyProps.root) tbodyProps.root = createRoot(tbodyRef.current);
       tbodyProps.currentRef = tbodyRef.current;
       tbodyProps.root.render(
         <OrderRow key={"order_ph"} id={"order_ph"} quantity={"0"} />
@@ -44,17 +44,56 @@ export function TableOrders(): JSX.Element {
         />
       )}
     >
-      <table className="table table-bordered table-hover">
-        <caption>
-          <h3 className="bolded" id="ordersCaption">
-            Pedido
-          </h3>
+      <table className="table table-bordered table-hover" id="productsTab">
+        <caption id="productsTabCapt">
+          <div id="productsTabTitle">
+            <h3 className="bolded" id="ordersCaption">
+              Pedido
+            </h3>
+            <button
+              id="resetTabBtn"
+              className="btn btn-secondary btn-rounded"
+              onClick={ev => {
+                try {
+                  const tBody =
+                    document.getElementById("tbodyOrder") ??
+                    ev.currentTarget.closest("table")?.querySelector("tbody");
+                  if (!(tBody instanceof HTMLTableSectionElement))
+                    throw elementNotFound(
+                      tBody,
+                      `Validation of Table Body for Products`,
+                      ["HTMLTableSectionElement"]
+                    );
+                  if (!tbodyProps.root) tbodyProps.root = createRoot(tBody);
+                  tbodyProps.root.render(
+                    <OrderRow key={"order_ph"} id={"order_ph"} quantity={"0"} />
+                  );
+                  const total = document.getElementById("total");
+                  if (!(total instanceof HTMLElement))
+                    throw elementNotFound(
+                      total,
+                      `validation of Total element`,
+                      ["HTMLElement"]
+                    );
+                  total.innerText = ` R$ 0,00`;
+                } catch (e) {
+                  console.error(
+                    `Error executing callback for ${ev.currentTarget.id}:\n${
+                      (e as Error).message
+                    }`
+                  );
+                }
+              }}
+            >
+              Limpar Tabela
+            </button>
+          </div>
         </caption>
         <colgroup>
           <col />
           <col />
         </colgroup>
-        <thead>
+        <thead id="productsThead">
           <tr>
             <th
               scope="col"

@@ -571,7 +571,7 @@ table th span.tabCelSpan {
 
 .btn.btn-rounded {
   font-weight: bold;
-  border-radius: 2rem;
+  border-radius: 1rem;
 }
 .btn.btn-success {
   font-weight: 600;
@@ -1224,7 +1224,6 @@ button.opBtn {
   padding-left: 0;
   margin-left: 0.3rem;
 }
-
 #productsRoot {
   width: 80%;
   scrollbar-width: none;
@@ -1233,7 +1232,19 @@ button.opBtn {
 #productsRoot:hover {
   scrollbar-width: thin;
 }
-
+#productsTabTitle {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+#productsTabTitle #resetTabBtns {
+  height: fit-content;
+}
+#productsThead {
+  height: 3rem;
+  vertical-align: middle;
+}
 #quantityCell span {
   margin-right: 0.3rem;
   padding-right: 0;
@@ -1307,7 +1318,8 @@ button.opBtn {
   }
   div#divBtns button,
   div#divCallers button {
-    width: 60vw;
+    width: 61vw;
+    transform: translateX(-0.5rem);
   }
   div#divBtns:last-child,
   div#divCallers:last-child {
@@ -1329,7 +1341,8 @@ button.opBtn {
     padding-bottom: 2vh;
   }
   div#divBtns button {
-    width: 79vw;
+    width: 68.5vw;
+    transform: translateX(0);
   }
   main > * {
     width: 95vw;
@@ -1364,6 +1377,16 @@ button.opBtn {
     text-align: end;
     align-items: self-end;
     justify-content: flex-end;
+  }
+}
+@media screen and (min-width: 800px) and (max-width: 900px) {
+  div#divBtns #copyBtnWp {
+    width: 87.5%;
+    transform: translateX(0);
+  }
+  div#divBtns #btnChame_no_Whatsapp {
+    width: 87.5%;
+    transform: translateX(0);
   }
 }
 @media screen and (max-width: 800px) {
