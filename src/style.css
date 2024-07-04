@@ -1245,11 +1245,6 @@ button.opBtn {
   height: 3rem;
   vertical-align: middle;
 }
-#quantityCell span {
-  margin-right: 0.3rem;
-  padding-right: 0;
-}
-
 #quantCel_order_ph {
   text-align: center;
 }

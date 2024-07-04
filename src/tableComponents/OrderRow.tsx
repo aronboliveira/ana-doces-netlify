@@ -1,6 +1,7 @@
 import { OrderProps } from "../declarations/interfaces";
 import OrderTitle from "./OrderTitle";
 import OrderQuantity from "./OrderQuantity";
+import OrderRemove from "./OrderRemove";
 
 export default function OrderRow(props: OrderProps): JSX.Element {
   return (
@@ -10,6 +11,7 @@ export default function OrderRow(props: OrderProps): JSX.Element {
         quantity={props.quantity ?? "0"}
         id={props.id || "unfilled"}
       />
+      <OrderRemove title={props.title ?? ""} id={props.id || "unfilled"} />
     </tr>
   );
 }

@@ -91,7 +91,8 @@ export function TableOrders(): JSX.Element {
         </caption>
         <colgroup>
           <col />
-          <col />
+          <col style={{ minWidth: "1ch" }} />
+          <col style={{ minWidth: "1ch" }} />
         </colgroup>
         <thead id="productsThead">
           <tr>
@@ -108,6 +109,13 @@ export function TableOrders(): JSX.Element {
               id="quantityCell"
             >
               <span className="tabCelSpan">Quantidades</span>
+            </th>
+            <th
+              scope="col"
+              className="tabOrdersCel tabOrdersTh"
+              id="removeCell"
+            >
+              <span className="tabCelSpan">Remoções</span>
             </th>
           </tr>
         </thead>

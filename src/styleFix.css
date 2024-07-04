@@ -18,6 +18,18 @@ thead,
   font-size: 0.8rem;
 }
 
+.celName {
+  width: 70%;
+}
+
+.celRemove {
+  width: 1.5rem;
+}
+
+.celRemove .tabRemove {
+  transform: translate(81%, -7%);
+}
+
 #btnChame_no_Whatsapp span:has(svg) {
   transform: translateX(3px);
 }
@@ -31,7 +43,26 @@ thead,
 }
 
 #quantityCell {
-  text-align: right;
+  text-align: center;
+}
+
+#quantityCell span {
+  margin-inline: 0.1vw 0;
+  padding-inline: 0;
+}
+
+#removeCell {
+  text-align: center;
+}
+
+#removeCell span {
+  margin: 0;
+  padding-right: 0.2vw;
+}
+
+.celRemove .bi.bi-dash-square-fill {
+  clip-path: circle(40%);
+  transform: scale(1.5);
 }
 
 #rootTab {
