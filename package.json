@@ -9,6 +9,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "watch": "npm-run-all -p watch-t webp-db",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "babel-b": "npx babel src --out-dir src --verbose",
     "sassc": "sass --no-source-map src/style.scss src/style.css -w",
