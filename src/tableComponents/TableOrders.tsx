@@ -29,6 +29,16 @@ export function TableOrders(): JSX.Element {
       tbodyProps.root.render(
         <OrderRow key={"order_ph"} id={"order_ph"} quantity={"0"} />
       );
+      const tbodyInterv = setInterval(() => {
+        const tbody = document
+          .getElementById("productsTab")
+          ?.querySelector("tbody");
+        if (tbody?.rows.length === 0) {
+          if (!tbodyProps.root) tbodyProps.root = createRoot(tbody);
+          tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
+        }
+      }, 200);
+      return () => clearInterval(tbodyInterv);
     } catch (e) {
       console.error(
         `Error executing useEffect for TableOrders: ${(e as Error).message}`

@@ -124,3 +124,9 @@ thead,
     transform: translate(1.4rem, -7%);
   }
 }
+
+@media screen and (max-width: 345px) {
+  #divBtns #copyBtnWp {
+    height: 4rem;
+  }
+}

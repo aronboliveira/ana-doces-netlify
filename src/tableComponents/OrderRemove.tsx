@@ -38,6 +38,145 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
                 `Validation of Related Table Body`,
                 ["HTMLTableSectionElement"]
               );
+            if (
+              relTbody.rows.length === 1 &&
+              relTbody.rows[0].id === "tr_order_ph"
+            ) {
+              const phTitle =
+                relTbody.rows[0].querySelector(".outp_orderTitle");
+              if (phTitle instanceof HTMLElement) phTitle.innerText = "";
+              total.innerText = "R$ 0,00";
+              tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
+              return;
+            }
+            for (const row of relTbody.rows) {
+              try {
+                const celQuant = row.querySelector(".celQuant");
+                const celName = row.querySelector(".celName");
+                if (!(celQuant instanceof HTMLElement))
+                  throw elementNotFound(
+                    celQuant,
+                    `validation of Relative Cell for Quantity`,
+                    ["HTMLElement"]
+                  );
+                if (!(celName instanceof HTMLElement))
+                  throw elementNotFound(
+                    celName,
+                    `Validation of Relative Cell for Name`,
+                    ["HTMLElement"]
+                  );
+                if (celQuant.innerText === "0") {
+                  if (row === relTbody.rows[0] && relTbody.rows.length === 1) {
+                    if (!tbodyProps.root)
+                      tbodyProps.root = createRoot(relTbody);
+                    tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
+                    return;
+                  } else createRoot(row).unmount();
+                }
+                if (celName.innerText === "" && celQuant.innerText !== "0") {
+                  console.warn(`Failed to form name. Trying recovery...`);
+                  if (!(/li-/gi.test(row.id) && /__/gi.test(row.id)))
+                    throw new Error(
+                      `Failed to validated product name in row id`
+                    );
+                  const productName = row.id.slice(
+                    row.id.indexOf("li-") + 3,
+                    row.id.indexOf("__")
+                  );
+                  const productIdx = row.id.slice(
+                    row.id.indexOf("__") + 2,
+                    row.id.indexOf("__") + 4
+                  );
+                  console.log("Name: " + productName);
+                  console.log("Idx: " + productIdx);
+                  const mainMenu = document.getElementById("mainMenu");
+                  if (
+                    !(
+                      mainMenu instanceof HTMLMenuElement ||
+                      mainMenu instanceof HTMLOListElement ||
+                      mainMenu instanceof HTMLUListElement ||
+                      mainMenu instanceof HTMLDListElement
+                    )
+                  )
+                    throw elementNotFound(
+                      mainMenu,
+                      `Validation of Main Menu instance`,
+                      [
+                        "HTMLMenuElement | HTMLOListElement | HTMLUListElement | HTMLDListElement",
+                      ]
+                    );
+                  const recoveredItem = Array.from(
+                    mainMenu.querySelectorAll("li")
+                  )
+                    .filter(
+                      item =>
+                        item instanceof HTMLLIElement &&
+                        item.classList.contains("divProduct") &&
+                        /__[0-9]/g.test(item.id)
+                    )
+                    .find(item => {
+                      return (
+                        productIdx ===
+                        item.id.slice(
+                          item.id.indexOf("__") + 2,
+                          item.id.indexOf("__") + 4
+                        )
+                      );
+                    });
+                  if (!recoveredItem)
+                    throw new Error(
+                      `Failed to recover name when trying to fetch item element.`
+                    );
+                  let itemName = "",
+                    opt = "";
+                  const itemNameEl =
+                    recoveredItem.querySelector(".divProductName");
+                  if (itemNameEl instanceof HTMLElement) {
+                    const strongItemNameEl = itemNameEl.querySelector("strong");
+                    if (strongItemNameEl instanceof HTMLElement)
+                      itemName = strongItemNameEl.innerText;
+                    else
+                      itemName = itemNameEl.innerText
+                        .trim()
+                        .replaceAll(/[\r\n\t]/g, "");
+                  } else {
+                    console.warn(`Failed to fetch Product Name Element`);
+                    itemName = recoveredItem.id
+                      .replaceAll("div-", "")
+                      .slice(0, recoveredItem.id.indexOf("__"))
+                      .replaceAll("-", "");
+                  }
+                  if (/li-/gi.test(row.id) && /__/gi.test(row.id))
+                    opt = celName.id.slice(
+                      celName.id.indexOf("li-") + 3,
+                      celName.id.indexOf("__")
+                    );
+                  else
+                    console.warn(
+                      `Failed to read option for product using cell for name id.`
+                    );
+                  if (itemName !== "") {
+                    const replaceOutp = document.createElement("output");
+                    replaceOutp.classList.add("outp_orderTitle");
+                    replaceOutp.id = `titleOutp_${celName.id.slice(
+                      celName.id.indexOf("li-" + 3)
+                    )}`;
+                    replaceOutp.innerText = `${itemName} ${opt}`;
+                    celName.innerHTML = ``;
+                    celName.append(replaceOutp);
+                  } else
+                    console.error(
+                      `Failed to recover name after item element data check.`
+                    );
+                }
+              } catch (e) {
+                console.error(
+                  `Error executing 0 check for ${
+                    row.id || row.classList.toString() || row.tagName
+                  }:${(e as Error).message}`
+                );
+              }
+            }
             const relTr = ev.currentTarget.closest("tr");
             if (!(relTr instanceof HTMLTableRowElement))
               throw elementNotFound(relTr, `Validation of Related Table Row`, [
@@ -113,6 +252,7 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
               productMainPart = "travessa recheada";
             opt = product
               .replace(productMainPart.replace("pave", "pavê"), "")
+              .replace("de ", "")
               .trim();
             console.log("MAIN PART");
             console.log(productMainPart);
@@ -288,7 +428,8 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
               relQuant.innerText = `0`;
               if (relTr === relTbody.rows[0] && relTbody.rows.length === 1) {
                 if (!tbodyProps.root) tbodyProps.root = createRoot(relTbody);
-                tbodyProps.root.render(<OrderRow id="order_ph" />);
+                tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
+                return;
               } else {
                 createRoot(relTr).unmount();
                 relTr.id !== "" &&
@@ -312,7 +453,100 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
                     `Validation of Relative Cell for Name`,
                     ["HTMLElement"]
                   );
-                if (celQuant.innerText === "0") celName.innerText = "";
+                if (celQuant.innerText === "0") {
+                  if (row === relTbody.rows[0] && relTbody.rows.length === 1) {
+                    if (!tbodyProps.root)
+                      tbodyProps.root = createRoot(relTbody);
+                    tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
+                    return;
+                  } else createRoot(row).unmount();
+                }
+                if (celName.innerText === "" && celQuant.innerText !== "0") {
+                  console.warn(`Failed to form name. Trying recovery...`);
+                  if (!(/li-/gi.test(row.id) && /__/gi.test(row.id)))
+                    throw new Error(
+                      `Failed to validated product name in row id`
+                    );
+                  const productName = row.id.slice(
+                    row.id.indexOf("li-") + 3,
+                    row.id.indexOf("__")
+                  );
+                  const productIdx = row.id.slice(
+                    row.id.indexOf("__") + 2,
+                    row.id.indexOf("__") + 4
+                  );
+                  console.log("Name: " + productName);
+                  console.log("Idx: " + productIdx);
+                  const mainMenu = document.getElementById("mainMenu");
+                  if (
+                    !(
+                      mainMenu instanceof HTMLMenuElement ||
+                      mainMenu instanceof HTMLOListElement ||
+                      mainMenu instanceof HTMLUListElement ||
+                      mainMenu instanceof HTMLDListElement
+                    )
+                  )
+                    throw elementNotFound(
+                      mainMenu,
+                      `Validation of Main Menu instance`,
+                      [
+                        "HTMLMenuElement | HTMLOListElement | HTMLUListElement | HTMLDListElement",
+                      ]
+                    );
+                  const recoveredItem = Array.from(
+                    mainMenu.querySelectorAll("li")
+                  )
+                    .filter(
+                      item =>
+                        item instanceof HTMLLIElement &&
+                        item.classList.contains("divProduct") &&
+                        /__[0-9]/g.test(item.id)
+                    )
+                    .find(item => {
+                      return (
+                        productIdx ===
+                        item.id.slice(
+                          item.id.indexOf("__") + 2,
+                          item.id.indexOf("__") + 4
+                        )
+                      );
+                    });
+                  if (!recoveredItem)
+                    throw new Error(
+                      `Failed to recover name when trying to fetch item element.`
+                    );
+                  let itemName = "";
+                  const itemNameEl =
+                    recoveredItem.querySelector(".divProductName");
+                  if (itemNameEl instanceof HTMLElement) {
+                    const strongItemNameEl = itemNameEl.querySelector("strong");
+                    if (strongItemNameEl instanceof HTMLElement)
+                      itemName = strongItemNameEl.innerText;
+                    else
+                      itemName = itemNameEl.innerText
+                        .trim()
+                        .replaceAll(/[\r\n\t]/g, "");
+                  } else {
+                    console.warn(`Failed to fetch Product Name Element`);
+                    itemName = recoveredItem.id
+                      .replaceAll("div-", "")
+                      .slice(0, recoveredItem.id.indexOf("__"))
+                      .replaceAll("-", "");
+                  }
+                  if (itemName !== "") {
+                    const replaceOutp = document.createElement("output");
+                    replaceOutp.classList.add("outp_orderTitle");
+                    replaceOutp.id = `titleOutp_${celName.id.slice(
+                      celName.id.indexOf("li-" + 3)
+                    )}`;
+                    replaceOutp.innerText = `${itemName} ${opt}`;
+                    celName.innerHTML = ``;
+                    celName.append(replaceOutp);
+                  } else
+                    console.error(
+                      `Failed to recover name after item element data check.`
+                    );
+                }
               } catch (e) {
                 console.error(
                   `Error executing 0 check for ${
