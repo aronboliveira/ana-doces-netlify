@@ -1,5 +1,6 @@
 import { OrderProps } from "src/declarations/interfaces";
 import {
+  baseFestValues,
   baseMappedValues,
   baseValues,
   factorMaps,
@@ -12,7 +13,7 @@ import OrderRow from "./OrderRow";
 
 export default function OrderRemove(props: OrderProps): JSX.Element {
   return (
-    <td className="celRemove">
+    <td className="celRemove" style={{ paddingRight: "3.2rem" }}>
       <button
         type="button"
         className="biBtn opBtn opBtnRemove tabRemove"
@@ -68,12 +69,17 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
             let subopt = "",
               product = "",
               productMainPart = "",
-              opt = "";
+              opt = "",
+              productValue: number | undefined = 0,
+              diffPrice = 0,
+              factor: number | undefined = 1;
             if (/\(/g.test(normText) && /\)/g.test(normText)) {
               subopt = normText.slice(
                 normText.indexOf("(") + 1,
                 normText.indexOf(")")
               );
+              if (subopt === "média") subopt = "médio";
+              if (subopt === "pequena") subopt = "pequeno";
               product = normText.slice(0, normText.indexOf("(")).trim();
             } else product = normText;
             if (/bolo caseiro/gi.test(product))
@@ -105,32 +111,28 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
               productMainPart = "taça recheada";
             else if (/travessa recheada/gi.test(product))
               productMainPart = "travessa recheada";
-            console.log("MAIN PART");
-            console.log(productMainPart);
             opt = product
               .replace(productMainPart.replace("pave", "pavê"), "")
               .trim();
+            console.log("MAIN PART");
+            console.log(productMainPart);
             console.log("OPTION");
             console.log(opt);
             console.log("SUBOPTION");
             console.log(subopt);
-            let productValue = baseValues.get(productMainPart);
-            if (!productValue && /ê/gi.test(productMainPart))
-              productValue = baseValues.get(
-                productMainPart.replaceAll("ê", "e")
-              );
-            if (!productValue)
-              throw new Error(`Failed to fetch product value in map`);
-            if (productValue > 0) {
-              let factor: number | undefined = 1;
-              if (subopt) {
-                factor = factorMaps.get(subopt);
-                if (!factor)
-                  throw new Error(
-                    `Failed to get factor for product with options`
-                  );
-              }
-              let diffPrice =
+            if (productMainPart === "bolo de festa") {
+              productValue = baseFestValues.get(opt);
+              if (!productValue && /ê/gi.test(opt))
+                productValue = baseFestValues.get(opt.replaceAll("ê", "e"));
+              if (!productValue)
+                throw new Error(`Failed to fetch product value in map`);
+              if (/ fit|fit /gi.test(opt)) productValue *= 1.1;
+              factor = factorMaps.get(subopt);
+              if (!factor)
+                throw new Error(
+                  `Failed to get factor for product with options`
+                );
+              diffPrice =
                 parseFinite(
                   `${total.innerText
                     .replace("R$", "")
@@ -139,45 +141,105 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
                     ",",
                     ""
                   )
-                ) - productValue;
-              diffPrice = diffPrice * factor;
+                ) -
+                productValue * factor;
               console.log(diffPrice);
-              if (diffPrice <= 0) diffPrice = 0;
+              if (diffPrice <= 0 || !Number.isFinite(diffPrice)) {
+                console.warn(
+                  `Failed to calculate Price after difference. Defaulting value.`
+                );
+                diffPrice = 0;
+              }
               total.innerText = Intl.NumberFormat("pt-BR", {
                 style: "currency",
                 currency: "BRL",
                 maximumFractionDigits: 2,
               }).format(parseFinite(roundToTenth(diffPrice)));
-            } else if (productValue <= 0) {
-              let mappedProductValue = baseMappedValues.get(productMainPart);
-              if (!mappedProductValue && /ê/gi.test(productMainPart))
-                mappedProductValue = baseMappedValues.get(
+            } else {
+              productValue = baseValues.get(productMainPart);
+              if (!productValue && /ê/gi.test(productMainPart))
+                productValue = baseValues.get(
                   productMainPart.replaceAll("ê", "e")
                 );
-              if (!mappedProductValue)
-                throw new Error(`Failed to fetch Mapped Product value`);
-              if (opt === "")
-                throw new Error(
-                  `Failed to assign option string for ${productMainPart}. Mapped products need to have an option value for mapping.`
-                );
-              const optValue = mappedProductValue.get(opt);
-              if (!optValue) throw new Error(`Failed to fetch Option value.`);
-              let diffPrice =
-                parseFinite(
-                  `${total.innerText
-                    .replace("R$", "")
-                    .replaceAll(" ", "")
-                    .slice(0, -3)}.${total.innerText.slice(-2)}`.replaceAll(
-                    ",",
-                    ""
-                  )
-                ) - optValue;
-              if (diffPrice <= 0) diffPrice = 0;
-              total.innerText = Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-                maximumFractionDigits: 2,
-              }).format(parseFinite(roundToTenth(diffPrice)));
+              if (!productValue)
+                throw new Error(`Failed to fetch product value in map`);
+              if (productValue > 0) {
+                if (subopt) {
+                  factor = factorMaps.get(subopt);
+                  if (!factor)
+                    throw new Error(
+                      `Failed to get factor for product with options`
+                    );
+                }
+                if (/ fit|fit /gi.test(opt)) productValue *= 1.1;
+                diffPrice =
+                  parseFinite(
+                    `${total.innerText
+                      .replace("R$", "")
+                      .replaceAll(" ", "")
+                      .slice(0, -3)}.${total.innerText.slice(-2)}`.replaceAll(
+                      ",",
+                      ""
+                    )
+                  ) -
+                  productValue * factor;
+                console.log(diffPrice);
+                if (diffPrice <= 0 || !Number.isFinite(diffPrice)) {
+                  console.warn(
+                    `Failed to calculate Price after difference. Defaulting value.`
+                  );
+                  diffPrice = 0;
+                }
+                total.innerText = Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                  maximumFractionDigits: 2,
+                }).format(parseFinite(roundToTenth(diffPrice)));
+              } else if (productValue <= 0) {
+                if (subopt) {
+                  factor = factorMaps.get(subopt);
+                  if (!factor)
+                    throw new Error(
+                      `Failed to get factor for product with options`
+                    );
+                }
+                let mappedProductValue = baseMappedValues.get(productMainPart);
+                if (!mappedProductValue && /ê/gi.test(productMainPart))
+                  mappedProductValue = baseMappedValues.get(
+                    productMainPart.replaceAll("ê", "e")
+                  );
+                if (!mappedProductValue)
+                  throw new Error(`Failed to fetch Mapped Product value`);
+                if (opt === "")
+                  throw new Error(
+                    `Failed to assign option string for ${productMainPart}. Mapped products need to have an option value for mapping.`
+                  );
+                let optValue = mappedProductValue.get(opt);
+                if (!optValue) throw new Error(`Failed to fetch Option value.`);
+                if (/ fit|fit /gi.test(opt)) optValue *= 1.1;
+                diffPrice =
+                  parseFinite(
+                    `${total.innerText
+                      .replace("R$", "")
+                      .replaceAll(" ", "")
+                      .slice(0, -3)}.${total.innerText.slice(-2)}`.replaceAll(
+                      ",",
+                      ""
+                    )
+                  ) -
+                  optValue * factor;
+                if (diffPrice <= 0 || !Number.isFinite(diffPrice)) {
+                  console.warn(
+                    `Failed to calculate Price after difference. Defaulting value.`
+                  );
+                  diffPrice = 0;
+                }
+                total.innerText = Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                  maximumFractionDigits: 2,
+                }).format(parseFinite(roundToTenth(diffPrice)));
+              }
             }
             console.log(
               "Comparing: " +
@@ -234,6 +296,31 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
                   relTr.remove();
               }
             } else relQuant.innerText = `${quant - 1}`;
+            for (const row of relTbody.rows) {
+              try {
+                const celQuant = row.querySelector(".celQuant");
+                const celName = row.querySelector(".celName");
+                if (!(celQuant instanceof HTMLElement))
+                  throw elementNotFound(
+                    celQuant,
+                    `validation of Relative Cell for Quantity`,
+                    ["HTMLElement"]
+                  );
+                if (!(celName instanceof HTMLElement))
+                  throw elementNotFound(
+                    celName,
+                    `Validation of Relative Cell for Name`,
+                    ["HTMLElement"]
+                  );
+                if (celQuant.innerText === "0") celName.innerText = "";
+              } catch (e) {
+                console.error(
+                  `Error executing 0 check for ${
+                    row.id || row.classList.toString() || row.tagName
+                  }:${(e as Error).message}`
+                );
+              }
+            }
           } catch (e) {
             console.error(
               `Error executing callback for ${

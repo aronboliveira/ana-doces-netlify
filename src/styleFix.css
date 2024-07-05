@@ -1,4 +1,12 @@
 /* running production test fix */
+header svg.bi.bi-instagram {
+  opacity: 0.5;
+}
+
+header .tips {
+  padding-top: 0.05rem;
+}
+
 li.divProduct {
   padding-bottom: 7rem;
 }
@@ -57,11 +65,12 @@ thead,
 
 #quantityCell {
   text-align: center;
+  padding-left: 1rem;
 }
 
 #quantityCell span {
   margin-inline: 0.1vw 0;
-  padding-inline: 0;
+  padding-inline: 0 0.5rem;
 }
 
 #removeCell {
@@ -73,7 +82,7 @@ thead,
 
 #removeCell span {
   margin: 0;
-  padding-inline: 0;
+  padding-inline: 0.5rem 6px;
 }
 
 .celRemove .bi.bi-dash-square-fill {
@@ -100,12 +109,18 @@ thead,
 
 @media screen and (min-width: 1010px) and (max-width: 1420px) {
   .celRemove .tabRemove {
-    transform: translate(calc(1.5vw), -7%);
+    transform: translate(1.6vw, -7%);
+  }
+}
+
+@media screen and (max-width: 1010px) {
+  .celRemove .tabRemove {
+    transform: translate(1.3rem, -7%);
   }
 }
 
 @media screen and (max-width: 460px) {
   .celRemove .tabRemove {
-    transform: translate(calc(1rem), -7%);
+    transform: translate(1.4rem, -7%);
   }
 }
