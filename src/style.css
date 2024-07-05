@@ -797,7 +797,7 @@ table th span.tabCelSpan {
   width: 1.5rem;
 }
 .menuOpNav .menuOpMenu .opLi .opBtn .bi[class*="square"] {
-  clip-path: circle(40%);
+  clip-path: circle(30%);
 }
 .menuOpNav .menuOpMenu .opLi .opSpan {
   text-align: left;
@@ -1245,11 +1245,6 @@ button.opBtn {
   height: 3rem;
   vertical-align: middle;
 }
-#quantityCell span {
-  margin-right: 0.3rem;
-  padding-right: 0;
-}
-
 #quantCel_order_ph {
   text-align: center;
 }

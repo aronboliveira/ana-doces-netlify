@@ -1,4 +1,12 @@
 /* running production test fix */
+header svg.bi.bi-instagram {
+  opacity: 0.5;
+}
+
+header .tips {
+  padding-top: 0.05rem;
+}
+
 li.divProduct {
   padding-bottom: 7rem;
 }
@@ -18,6 +26,31 @@ thead,
   font-size: 0.8rem;
 }
 
+.brandSpan,
+.brandedNameSpan {
+  font-weight: 700;
+}
+
+.celName {
+  width: 75%;
+}
+
+.celQuant {
+  width: 6rem;
+}
+
+.celRemove {
+  width: 1.5rem;
+}
+
+.celRemove .tabRemove {
+  transform: translate(calc(1.8vw), -7%);
+}
+
+.opBtnAdd {
+  transform: translateX(0.8vw);
+}
+
 #btnChame_no_Whatsapp span:has(svg) {
   transform: translateX(3px);
 }
@@ -26,12 +59,45 @@ thead,
   transform: translateX(-2px);
 }
 
+#btnsTip {
+  width: 59vw;
+  align-self: center;
+  font-size: 0.6rem;
+  opacity: 0.4;
+  word-wrap: break-word;
+  padding-bottom: 1rem;
+}
+
 #headerLogo + hr {
   margin-bottom: 2rem;
 }
 
 #quantityCell {
-  text-align: right;
+  text-align: center;
+  padding-left: 1rem;
+}
+
+#quantityCell span {
+  margin-inline: 0.1vw 0;
+  padding-inline: 0 0.5rem;
+}
+
+#removeCell {
+  text-align: center;
+  padding-inline: 0;
+  min-width: 5rem;
+  max-width: 5rem;
+}
+
+#removeCell span {
+  margin: 0;
+  padding-inline: 0.5rem 6px;
+}
+
+.celRemove .bi.bi-dash-square-fill {
+  clip-path: circle(40%);
+  transform: scale(1.5);
+  padding-left: 0.1vw;
 }
 
 #rootTab {
@@ -47,5 +113,47 @@ thead,
   }
   #divBtns button:has(.bi-whatsapp):has(svg) {
     padding-inline: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  div#divBtns {
+    margin-bottom: 0;
+  }
+  #btnsTip {
+    width: 64vw;
+  }
+}
+
+@media screen and (min-width: 1010px) and (max-width: 1420px) {
+  .celRemove .tabRemove {
+    transform: translate(1.6vw, -7%);
+  }
+}
+
+@media screen and (max-width: 1010px) {
+  .celRemove .tabRemove {
+    transform: translate(1.3rem, -7%);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  #btnsTip {
+    width: 74vw;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .celRemove .tabRemove {
+    transform: translate(1.4rem, -7%);
+  }
+  #btnsTip {
+    width: 70vw;
+  }
+}
+
+@media screen and (max-width: 345px) {
+  #divBtns #copyBtnWp {
+    height: 4rem;
   }
 }

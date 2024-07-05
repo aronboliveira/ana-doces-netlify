@@ -19,6 +19,7 @@ export default function ProductGrid(props: ProductGridProps): JSX.Element {
   };
   const refLi = useRef<nullishLi>(null);
   const priceRef = useRef<nullishSpan>(null);
+  // console.log(props.subOptions ?? "none");
   useEffect(() => {
     setTimeout(() => {
       priceRef.current instanceof HTMLElement
@@ -89,7 +90,7 @@ export default function ProductGrid(props: ProductGridProps): JSX.Element {
           .replaceAll(/\s/g, "-")
           .replaceAll(/[êéèë]/g, "e")}__${props.id}`}
         className="divProduct"
-        onClick={(event) => {
+        onClick={event => {
           event.stopPropagation();
           handleClick(
             `div-${props.name

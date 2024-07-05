@@ -26,7 +26,11 @@ export default function OrderQuantity(props: OrderQuant): JSX.Element {
     }
   }, [quantRef]);
   return (
-    <td ref={quantCelRef} id={`quantCel_${props.id || "unfilled"}`}>
+    <td
+      ref={quantCelRef}
+      id={`quantCel_${props.id || "unfilled"}`}
+      className="celQuant"
+    >
       <output
         id={`quantOutp_${props.id || "unfilled"}`}
         className={`outp_orderQuant`}

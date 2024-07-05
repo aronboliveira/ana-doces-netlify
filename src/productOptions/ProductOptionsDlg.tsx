@@ -39,6 +39,7 @@ export default function ProductOptionsDlg({
   root = null,
   setOptions = undefined,
 }: ProductOptionsDlgProps): JSX.Element {
+  console.log(subOptions ?? "none");
   const [finished] = useState<boolean>(false);
   const params = useParams<{ options: string; subOptions: string }>();
   if (params.options && params.subOptions) {
@@ -64,7 +65,7 @@ export default function ProductOptionsDlg({
         if (
           !Array.isArray(options) ||
           !options.every(
-            (option) => option instanceof Object && "opName" in option
+            option => option instanceof Object && "opName" in option
           ) ||
           !(op instanceof EventTarget) ||
           !(menuRoot instanceof Object && "_internalRoot" in menuRoot)
@@ -198,7 +199,7 @@ export default function ProductOptionsDlg({
                   </ErrorBoundary>
                 );
               });
-              const menuInterv = setInterval((interv) => {
+              const menuInterv = setInterval(interv => {
                 if (
                   attemptRender(menuRoot, menuRef.current, ...optionsJsx) ||
                   !menuRef.current ||
@@ -292,7 +293,7 @@ export default function ProductOptionsDlg({
           const liSet = optionsRef.current.parentElement.querySelectorAll("li");
           const dialogMatch = Array.from(
             optionsRef.current.parentElement.querySelectorAll("dialog")
-          ).findIndex((dialog) => dialog === optionsRef.current);
+          ).findIndex(dialog => dialog === optionsRef.current);
           dialogMatch
             ? (sufixOptionsId = liSet[dialogMatch].id)
             : console.warn(
@@ -308,7 +309,7 @@ export default function ProductOptionsDlg({
             optionsRef.current.querySelector(".menuOpH") ||
             optionsRef.current.querySelector("h2") ||
             Array.from(optionsRef.current.querySelectorAll("*")).filter(
-              (el) => el instanceof HTMLHeadingElement
+              el => el instanceof HTMLHeadingElement
             )[0];
           if (!(optionHeader instanceof HTMLElement))
             throw htmlElementNotFound(
@@ -345,10 +346,10 @@ export default function ProductOptionsDlg({
         );
       }
       shouldShowOptions && optionsRef.current.showModal();
-      optionsRef.current.addEventListener("click", (click) => {
+      optionsRef.current.addEventListener("click", click => {
         if (
           isClickOutside(click, optionsRef.current!).some(
-            (coord) => coord === true
+            coord => coord === true
           )
         ) {
           setOptions && setOptions(!shouldShowOptions);
@@ -357,7 +358,7 @@ export default function ProductOptionsDlg({
             : optionsRef.current?.close();
         }
       });
-      addEventListener("keydown", (press) => handleKeyPress(press));
+      addEventListener("keydown", press => handleKeyPress(press));
       if (optionsRef.current instanceof HTMLElement) {
         setTimeout(() => {
           syncAriaStates(optionsRef.current);
@@ -442,7 +443,7 @@ export default function ProductOptionsDlg({
   }, [finished]);
   useEffect(() => {
     const idRef = optionsRef.current?.id;
-    const modalInterv = setInterval((interv) => {
+    const modalInterv = setInterval(interv => {
       if (optionsRef.current?.open === false) {
         optionsRef.current.close();
         setOptions && setOptions(false);
@@ -474,7 +475,7 @@ export default function ProductOptionsDlg({
       );
       const allDialogs: string[] = [];
       setTimeout(() => {
-        document.querySelectorAll(idRef).forEach((ref) => {
+        document.querySelectorAll(idRef).forEach(ref => {
           if (ref.id !== "") allDialogs.push(`#${ref.id}`);
           else if (ref instanceof HTMLDialogElement) allDialogs.push("dialog");
           ref instanceof HTMLDialogElement && ref.close();
@@ -501,10 +502,10 @@ export default function ProductOptionsDlg({
             );
           }
         }
-        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+        document.querySelectorAll(".contDlg").forEach(contDlg => {
           createRoot(contDlg).unmount();
         });
-        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+        document.querySelectorAll(".contDlg").forEach(contDlg => {
           contDlg.remove();
         });
       }, 200);
@@ -525,10 +526,10 @@ export default function ProductOptionsDlg({
         <dialog
           className="modal-content"
           ref={optionsRef}
-          onClick={(click) => {
+          onClick={click => {
             if (
               isClickOutside(click, optionsRef.current!).some(
-                (coord) => coord === true
+                coord => coord === true
               )
             ) {
               setOptions && setOptions(!shouldShowOptions);
@@ -542,7 +543,7 @@ export default function ProductOptionsDlg({
             }
           }}
           id={`unfilled-${options
-            .map((option) => option.opName)
+            .map(option => option.opName)
             .toString()
             .replace("[", "")
             .replace("]", "")
@@ -564,7 +565,9 @@ export default function ProductOptionsDlg({
                 }}
               ></button>
             </div>
-            <SuboptionsCont subOptions={subOptions} inpType={"radio"} />
+            {subOptions.length > 0 && (
+              <SuboptionsCont subOptions={subOptions} inpType={"radio"} />
+            )}
             <menu ref={menuRef} className="menuOpMenu">
               <Spinner
                 spinnerClass={`spinner-grow`}

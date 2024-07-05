@@ -21,6 +21,7 @@ import {
   voidishHTMLEl,
 } from "./declarations/types";
 import { ErrorBoundary } from "react-error-boundary";
+import OrderRemove from "./tableComponents/OrderRemove";
 
 export const orderedProducts: Record<string, OrderProps> = {};
 export const formatPrice = (priceEl: nullishHTMLEl) => {
@@ -71,7 +72,6 @@ export function handleOrderAdd(addBtn: nullishBtn, totalEl: nullishEl) {
     try {
       if (!(totalEl instanceof HTMLOutputElement))
         throw elementNotFound(
-          //TODO
           totalEl,
           `Input for fetching updated order sum id ${
             (totalEl as any)?.id ?? "nullish"
@@ -107,7 +107,6 @@ export function handleOrderAdd(addBtn: nullishBtn, totalEl: nullishEl) {
       }
       if (!(relPrice instanceof HTMLElement))
         throw elementNotFound(
-          //TODO
           relPrice,
           `Menu price Element of item id ${
             relLi.id || "falsish"
@@ -232,7 +231,7 @@ export function handleOrderAdd(addBtn: nullishBtn, totalEl: nullishEl) {
           `Element for displaying alert for add button id ${addBtn.id}`,
           ["HTMLElement"]
         );
-      if (!updatesValidation.every((num) => num === 0)) {
+      if (!updatesValidation.every(num => num === 0)) {
         if (
           updatesValidation[0] === 0 &&
           !/Erro calculando total/gi.test(addAlert.innerText)
@@ -257,7 +256,7 @@ export function handleOrderAdd(addBtn: nullishBtn, totalEl: nullishEl) {
         }
       }
       if (
-        updatesValidation.every((num) => num === 0) &&
+        updatesValidation.every(num => num === 0) &&
         !/Erro adicionando pedido/gi.test(addAlert.innerText)
       ) {
         addAlert.innerText = `Erro adicionando pedido`;
@@ -353,7 +352,6 @@ export function handleOrderSubtract(subtBtn: nullishBtn, totalEl: nullishEl) {
       }
       if (!(relPrice instanceof HTMLElement))
         throw elementNotFound(
-          //TODO
           relPrice,
           `Menu price Element of item id ${
             relLi.id || "falsish"
@@ -405,7 +403,7 @@ export function handleOrderSubtract(subtBtn: nullishBtn, totalEl: nullishEl) {
           `Element for displaying alert for add button id ${subtBtn.id}`,
           ["HTMLElement"]
         );
-      if (!updatesValidation.every((num) => num === 0)) {
+      if (!updatesValidation.every(num => num === 0)) {
         if (updatesValidation[0] === 0) {
           minusAlert.innerText += ` Erro calculando total`;
           minusAlert.style.color = `#cf6d12`;
@@ -423,7 +421,7 @@ export function handleOrderSubtract(subtBtn: nullishBtn, totalEl: nullishEl) {
           }, 2000);
         }
       }
-      if (updatesValidation.every((num) => num === 0)) {
+      if (updatesValidation.every(num => num === 0)) {
         minusAlert.innerText = `Erro removendo pedido!`;
         minusAlert.style.color = `#cf6d12`;
         setTimeout(() => {
@@ -502,7 +500,7 @@ export function handleMultipleOrder(
           ...relDlg.querySelectorAll("div"),
           ...relDlg.children,
         ].filter(
-          (div) =>
+          div =>
             div.querySelector('input[type="radio"]') ||
             div.querySelector('input[type="checkbox"]') ||
             div.querySelector('input[type="range"]')
@@ -515,7 +513,7 @@ export function handleMultipleOrder(
           if (opGroup.querySelector('input[type="radio"]')) {
             const chosenOption = Array.from(
               opGroup.querySelectorAll("input")
-            ).filter((inp) => inp.checked === true)[0];
+            ).filter(inp => inp.checked === true)[0];
             if (!chosenOption) throw new Error(`No available radio chosen`);
             const closestLabel = chosenOption.closest("label");
             if (!(closestLabel instanceof HTMLElement))
@@ -545,10 +543,10 @@ export function handleMultipleOrder(
           } else if (opGroup.querySelector('input[type="checkbox"]')) {
             const chosenOptions = Array.from(
               opGroup.querySelectorAll("input")
-            ).filter((inp) => inp.checked === true);
+            ).filter(inp => inp.checked === true);
             if (chosenOptions.length === 0)
               throw new Error(`No available checkboxes checked`);
-            chosenOptions.forEach((chosenOption) => {
+            chosenOptions.forEach(chosenOption => {
               const closestLabel = chosenOption.closest("label");
               if (!(closestLabel instanceof HTMLElement))
                 throw htmlElementNotFound(
@@ -636,11 +634,12 @@ export function handleMultipleOrder(
                   title={unfillableTitle}
                   id={unfillableId}
                   quantity={"1"}
-                ></OrderRow>
+                />
               )}
             >
               <OrderTitle title={unfillableTitle} id={unfillableId} />
               <OrderQuantity quantity={"1"} id={`${unfillableId}`} />
+              <OrderRemove title={unfillableTitle} id={unfillableId} />
             </ErrorBoundary>
           );
         }
@@ -664,9 +663,8 @@ export function handleMultipleOrder(
                 break;
               case "subtract":
                 const outptQuantNum = parseFinite(outpQuant.innerText) - 1;
-                if (outptQuantNum > 0) 
-                  outpQuant.innerText = `${outptQuantNum}`;
-                 else {
+                if (outptQuantNum > 0) outpQuant.innerText = `${outptQuantNum}`;
+                else {
                   relTr instanceof HTMLElement && (relTr.hidden = true);
                   if (!tbodyProps[`${relTr.id}`])
                     tbodyProps[`${relTr.id}`] = createRoot(relTr);
@@ -676,7 +674,7 @@ export function handleMultipleOrder(
                     Array.from(
                       tbodyProps.currentRef.querySelectorAll("tr")
                     ).filter(
-                      (tr) =>
+                      tr =>
                         tr.hidden === false &&
                         parseFinite(
                           getComputedStyle(tr).height.replace("px", "")
@@ -685,7 +683,7 @@ export function handleMultipleOrder(
                     Array.from(
                       tbodyProps.currentRef.querySelectorAll("tr")
                     ).every(
-                      (tr) =>
+                      tr =>
                         tr instanceof HTMLElement &&
                         (getComputedStyle(tr).height === "0" ||
                           tr.hidden === true)
@@ -831,51 +829,47 @@ export function addListenerCopyMessage() {
             `Reference for Orders in Table Body`,
             ["HTMLElement"]
           );
-        Array.from(tbodyProps.currentRef.querySelectorAll("tr")).forEach(
-          (tr) => {
-            try {
-              const titleEl = tr.querySelector(".outp_orderTitle");
-              if (!(titleEl instanceof HTMLElement))
-                throw htmlElementNotFound(
-                  titleEl,
-                  `Title Element for Table Row id ${tr.id || "Unidentified"}`,
-                  ["HTMLElement"]
-                );
-              if (
-                !/\w/g.test(titleEl.innerText) ||
-                /undefined/gi.test(titleEl.innerText) ||
-                /unfilled/gi.test(titleEl.innerText) ||
-                /null/gi.test(titleEl.innerText)
-              )
-                throw stringError(
-                  titleEl.innerText,
-                  "letters, not containing undefined, unfilled or null"
-                );
-              const title = titleEl.innerText;
-              const quantEl = tr.querySelector(".outp_orderQuant");
-              if (!(quantEl instanceof HTMLElement))
-                throw htmlElementNotFound(
-                  quantEl,
-                  `quantity Element for Table Row id ${
-                    tr.id || "Unidentified"
-                  }`,
-                  ["HTMLElement"]
-                );
-              const quant = quantEl.innerText;
-              if (!Number.isFinite(parseInt(quant)))
-                console.warn(
-                  `Quantity of product ??? not finite. Process aborted.`
-                );
-              orderMsg += `\n\t${title} (${quant})`;
-            } catch (eC) {
-              console.error(
-                `Error concatening product for clipboard message:${
-                  (eC as Error).message
-                }`
+        Array.from(tbodyProps.currentRef.querySelectorAll("tr")).forEach(tr => {
+          try {
+            const titleEl = tr.querySelector(".outp_orderTitle");
+            if (!(titleEl instanceof HTMLElement))
+              throw htmlElementNotFound(
+                titleEl,
+                `Title Element for Table Row id ${tr.id || "Unidentified"}`,
+                ["HTMLElement"]
               );
-            }
+            if (
+              !/\w/g.test(titleEl.innerText) ||
+              /undefined/gi.test(titleEl.innerText) ||
+              /unfilled/gi.test(titleEl.innerText) ||
+              /null/gi.test(titleEl.innerText)
+            )
+              throw stringError(
+                titleEl.innerText,
+                "letters, not containing undefined, unfilled or null"
+              );
+            const title = titleEl.innerText;
+            const quantEl = tr.querySelector(".outp_orderQuant");
+            if (!(quantEl instanceof HTMLElement))
+              throw htmlElementNotFound(
+                quantEl,
+                `quantity Element for Table Row id ${tr.id || "Unidentified"}`,
+                ["HTMLElement"]
+              );
+            const quant = quantEl.innerText;
+            if (!Number.isFinite(parseInt(quant)))
+              console.warn(
+                `Quantity of product ??? not finite. Process aborted.`
+              );
+            orderMsg += `\n\t${title} (${quant})`;
+          } catch (eC) {
+            console.error(
+              `Error concatening product for clipboard message:${
+                (eC as Error).message
+              }`
+            );
           }
-        );
+        });
       } catch (eM) {
         console.error(`Error generating clipboard message:
       ${(eM as Error).message}`);
@@ -901,9 +895,7 @@ export function addListenerCopyMessage() {
           .then(() => {
             switchAlertOp(copyAlert, orderMsg, "copying message for WhatsApp");
           })
-          .catch((err) =>
-            console.error(`Error copying message: ${err.message}`)
-          );
+          .catch(err => console.error(`Error copying message: ${err.message}`));
       });
     } catch (e2) {
       console.error(`Error adding listener to copyBtnWp:
@@ -932,9 +924,7 @@ export function addListenerCopyMessage() {
               "copying message for Default Pattern"
             );
           })
-          .catch((err) =>
-            console.error(`Error copying message: ${err.message}`)
-          );
+          .catch(err => console.error(`Error copying message: ${err.message}`));
       });
     } catch (e3) {
       console.error(`Error adding listener to copyBtnWp:
@@ -1031,8 +1021,7 @@ export function handleDoubleClick(inps: (nullishHTMLEl | undefined)[]): void {
   try {
     if (
       !(
-        Array.isArray(inps) &&
-        inps.some((inp) => inp instanceof HTMLInputElement)
+        Array.isArray(inps) && inps.some(inp => inp instanceof HTMLInputElement)
       )
     )
       throw typeError(
@@ -1041,7 +1030,7 @@ export function handleDoubleClick(inps: (nullishHTMLEl | undefined)[]): void {
         ["Array<void | HTMLInputElement>"]
       );
     inps = inps.filter(
-      (inp) =>
+      inp =>
         inp instanceof HTMLInputElement &&
         (inp.type === "radio" || inp.type === "checkbox")
     );
@@ -1060,7 +1049,7 @@ export function handleDoubleClick(inps: (nullishHTMLEl | undefined)[]): void {
           throw htmlElementNotFound(inp, `validation of Input`, [
             '<input type="radio"> || <input type="checkbox">',
           ]);
-        inp.addEventListener("doubleclick", (ev) => {
+        inp.addEventListener("doubleclick", ev => {
           try {
             if (
               !(
@@ -1130,12 +1119,12 @@ export function handleSearchFilter(
     };
     const filterNormalized = normalizeSpacingHifen(filter).toLowerCase();
     targSelectors = targSelectors.filter(
-      (selector) => typeof selector === "string"
+      selector => typeof selector === "string"
     );
     if (
       !(
         Array.isArray(targSelectors) &&
-        targSelectors.every((targSelector) => typeof targSelector === "string")
+        targSelectors.every(targSelector => typeof targSelector === "string")
       )
     )
       throw typeError(
@@ -1143,7 +1132,7 @@ export function handleSearchFilter(
         `validation of targSelectors in handleSearchFilter`,
         ["string[]"]
       );
-    if (!targSelectors.some((selector) => scope.querySelector(selector)))
+    if (!targSelectors.some(selector => scope.querySelector(selector)))
       throw new Error(
         `No correspondence of selector in the passed scope for handleSearchFilter`
       );
@@ -1156,7 +1145,7 @@ export function handleSearchFilter(
               `validation of Selected Element instance`
             );
           if (filter === "") {
-            scope.querySelectorAll("li").forEach((item) => {
+            scope.querySelectorAll("li").forEach(item => {
               if (
                 item instanceof HTMLElement &&
                 item.querySelector(".divProductPrice") &&
@@ -1188,8 +1177,8 @@ export function handleSearchFilter(
                       selected.dataset.title.toLocaleLowerCase()
                     )
                   ))) ||
-              innerSpans.some((span) => testExp.test(span.innerText)) ||
-              innerSpans.some((span) =>
+              innerSpans.some(span => testExp.test(span.innerText)) ||
+              innerSpans.some(span =>
                 testExpNormalized.test(
                   normalizeSpacingHifen(span.innerText.toLowerCase())
                 )
@@ -1214,14 +1203,66 @@ export function handleSearchFilter(
   }
 }
 
-const baseValues: Map<string, number> = new Map([
+export const baseMappedValues: Map<string, Map<string, number>> = new Map([
+  [
+    "cookie recheado",
+    new Map([
+      ["chocolatudo", 10.0],
+      ["duochoco", 10.0],
+      ["ferrero rocher®", 12.0],
+      ["nutella®", 10.0],
+      ["pistache", 10.0],
+      ["red velvet com chocolate branco", 10.0],
+    ]),
+  ],
+  [
+    "geleia artesanal",
+    new Map([
+      ["frutas vermelhas", 25.0],
+      ["maracujá", 20.0],
+      ["morango", 20.0],
+      ["pessego", 20.0],
+    ]),
+  ],
+  [
+    "taça recheada",
+    new Map([
+      ["banoffee", 85.0],
+      ["chocolate com frutas vermelhas", 80.0],
+      ["chocolate com morango", 90.0],
+      ["ninho® com morango", 95],
+      ["ninho® com nutella® e brownie", 85.0],
+    ]),
+  ],
+  [
+    "travessa recheada",
+    new Map([
+      ["banoffee", 80.0],
+      ["ninho® trufado com mousse de nutella®", 85.0],
+      ["pave de morango com ninho®", 85.0],
+      ["pave de sonho de valsa®", 90.0],
+      ["torta de limão", 80.0],
+    ]),
+  ],
+]);
+export const baseValues: Map<string, number> = new Map([
   ["bolo caseiro".toLowerCase(), 45.0],
   ["bolo de festa".toLowerCase(), 60.0],
+  ["bolo de pote".toLowerCase(), 15.0],
+  ["brownie recheado".toLowerCase(), 10.0],
+  ["mini brownie recheado".toLowerCase(), 4.0],
+  ["brownie simples".toLowerCase(), 8.0],
+  ["cookie recheado".toLowerCase(), -1],
+  ["copo da felicidade", 20.0],
   ["mini cookie".toLowerCase(), 15.0],
+  ["geleia artesanal".toLowerCase(), -1],
   ["palha italiana".toLowerCase(), 8.0],
+  ["pave de pote".toLowerCase(), 15.0],
   ["torta".toLowerCase(), 45.0],
+  ["taça recheada".toLowerCase(), -1],
+  ["travessa recheada".toLowerCase(), -1],
 ]);
-const factorMaps = new Map([
+export const factorMaps = new Map([
   ["pequeno".toLowerCase(), 1],
   ["médio".toLowerCase(), 1.5556],
   ["grande".toLowerCase(), 1.7778],
@@ -1230,7 +1271,7 @@ const factorMaps = new Map([
   ["saco".toLowerCase(), 1],
   ["lata personalizada".toLowerCase(), 1.66667],
 ]);
-const baseFestValues: Map<string, number> = new Map([
+export const baseFestValues: Map<string, number> = new Map([
   ["branco com chantili e morango".toLowerCase(), 90.0],
   ["branco com mousse de chocolate branco e framboesa".toLowerCase(), 100.0],
   ["brigadeiro com morango".toLowerCase(), 80.0],
@@ -1246,7 +1287,7 @@ const baseFestValues: Map<string, number> = new Map([
   ["ouro branco®".toLowerCase(), 85.0],
   ["red velvet com mousse de cream cheese e morango".toLowerCase(), 75.0],
 ]);
-const factorFestValues: Map<string, Map<string, number>> = new Map([
+export const factorFestValues: Map<string, Map<string, number>> = new Map([
   [
     "pequeno",
     new Map([
@@ -1311,48 +1352,48 @@ const factorFestValues: Map<string, Map<string, number>> = new Map([
     ]),
   ],
 ]);
-const averageFestPricesMap: Map<string, number> = new Map([
+export const averageFestPricesMap: Map<string, number> = new Map([
   [
     "pequeno",
     (Array.from(baseFestValues.values() ?? [85.0])
-      .filter((num) => Number.isFinite(num))
-      .map((num) => Math.abs(num))
+      .filter(num => Number.isFinite(num))
+      .map(num => Math.abs(num))
       .reduce((acc, num) => (acc += num), 0) || 85.0) /
-      Array.from(baseFestValues.values() ?? [85.0]).filter((num) =>
+      Array.from(baseFestValues.values() ?? [85.0]).filter(num =>
         Number.isFinite(num)
       ).length,
   ],
   [
     "médio",
     ((Array.from(baseFestValues.values() ?? [85.0])
-      .filter((num) => Number.isFinite(num))
-      .map((num) => Math.abs(num))
+      .filter(num => Number.isFinite(num))
+      .map(num => Math.abs(num))
       .reduce((acc, num) => (acc += num), 0) || 85.0) *
       ((Array.from(factorFestValues.get("médio")?.values() ?? [1.5])
-        .filter((num) => Number.isFinite(num))
-        .map((num) => Math.abs(num))
+        .filter(num => Number.isFinite(num))
+        .map(num => Math.abs(num))
         .reduce((acc, num) => (acc += num), 0) || 1.5) /
-        Array.from(baseFestValues.values() ?? [85.0]).filter((num) =>
+        Array.from(baseFestValues.values() ?? [85.0]).filter(num =>
           Number.isFinite(num)
         ).length)) /
-      Array.from(baseFestValues.values() ?? [85.0]).filter((num) =>
+      Array.from(baseFestValues.values() ?? [85.0]).filter(num =>
         Number.isFinite(num)
       ).length,
   ],
   [
     "grande",
     ((Array.from(baseFestValues.values() ?? [85.0])
-      .filter((num) => Number.isFinite(num))
-      .map((num) => Math.abs(num))
+      .filter(num => Number.isFinite(num))
+      .map(num => Math.abs(num))
       .reduce((acc, num) => (acc += num), 0) || 85.0) *
       ((Array.from(factorFestValues.get("grande")?.values() ?? [2.0])
-        .filter((num) => Number.isFinite(num))
-        .map((num) => Math.abs(num))
+        .filter(num => Number.isFinite(num))
+        .map(num => Math.abs(num))
         .reduce((acc, num) => (acc += num), 0) || 2.0) /
-        Array.from(baseFestValues.values() ?? [85.0]).filter((num) =>
+        Array.from(baseFestValues.values() ?? [85.0]).filter(num =>
           Number.isFinite(num)
         ).length)) /
-      Array.from(baseFestValues.values() ?? [85.0]).filter((num) =>
+      Array.from(baseFestValues.values() ?? [85.0]).filter(num =>
         Number.isFinite(num)
       ).length,
   ],
@@ -1418,7 +1459,7 @@ export function recalculateByOption(
             targProduct = "bolo de festa";
             try {
               relationPrices = fetchRelationBdfCases(relDlg).filter(
-                (relationPrice) =>
+                relationPrice =>
                   typeof relationPrice[0] === "string" &&
                   typeof relationPrice[1] === "string" &&
                   typeof relationPrice[2] === "string"
@@ -1464,7 +1505,7 @@ export function recalculateByOption(
             );
           applyFactorProductCase(
             appliedFactor,
-            targBaseValue,
+            targBaseValue as number,
             correctionFactor,
             refClass,
             scope
@@ -1592,7 +1633,7 @@ export function fetchRelationBdfCases(scope: nodeScope): Array<string[]> {
           return [];
         }
       })
-      .filter((price) => price && typeof price[1] === "string");
+      .filter(price => price && typeof price[1] === "string");
   } catch (e) {
     console.error(
       `Error executing fetchRelationBdfCases:\n${(e as Error).message}`
@@ -1639,7 +1680,7 @@ export function applyRelationBdfCases(
       cicle = NaN;
     }
     let correctionFactor = 1;
-    if (relationPrice.filter((info) => typeof info === "string").length < 3)
+    if (relationPrice.filter(info => typeof info === "string").length < 3)
       throw numberError(relationPrice, `validation of relationPrice length`);
     let [idf, title] = relationPrice,
       appliedFactor = factorMaps.get(factor);
@@ -1798,7 +1839,7 @@ export function applyFactorProductCase(
                 ...relDlg.querySelectorAll('[id*="Velvet"]'),
                 ...relDlg.querySelectorAll('[id*="velvet"]'),
               ].filter(
-                (el) =>
+                el =>
                   el.classList.contains("opSpanPrice") &&
                   el instanceof HTMLElement
               );
@@ -2059,7 +2100,7 @@ export function attemptRender(
     if (
       !(
         Array.isArray(children) &&
-        children.every((child) => "type" in child && "props" in child)
+        children.every(child => "type" in child && "props" in child)
       )
     )
       throw typeError(
@@ -2136,7 +2177,7 @@ export function adjustIdentifiers(scope: nodeScope = document): void {
     )
       throw new Error(`Invalid scope passed to adjustIdentifiers`);
     if (scope instanceof HTMLElement)
-      [scope, ...scope.querySelectorAll("*")].forEach((el) => {
+      [scope, ...scope.querySelectorAll("*")].forEach(el => {
         if (el.id !== "") {
           if (/\s/g.test(el.id)) el.id = normalizeSpacing(el.id);
           if (
@@ -2167,7 +2208,7 @@ export function adjustIdentifiers(scope: nodeScope = document): void {
             el.name.startsWith("-")
           )
             el.name = `_${el.name}`;
-          el.classList.forEach((classListed) => {
+          el.classList.forEach(classListed => {
             if (/[êéèë]/g.test(classListed)) {
               const fixedClassListed = classListed.replaceAll(/[êéèë]/g, "e");
               el.classList.remove(classListed);
@@ -2197,7 +2238,7 @@ export function adjustIdentifiers(scope: nodeScope = document): void {
         }
       });
     else
-      scope.querySelectorAll("*").forEach((el) => {
+      scope.querySelectorAll("*").forEach(el => {
         if (el.id !== "") {
           if (/\s/g.test(el.id)) el.id = normalizeSpacing(el.id);
           if (
@@ -2222,7 +2263,7 @@ export function adjustIdentifiers(scope: nodeScope = document): void {
             el.name.startsWith("-")
           )
             el.name = `_${el.name}`;
-          el.classList.forEach((classListed) => {
+          el.classList.forEach(classListed => {
             if (/\s/g.test(classListed)) {
               const fixedClass = normalizeSpacing(classListed);
               el.classList.remove(fixedClass);
@@ -2277,7 +2318,7 @@ export function adjustHeadings(refEl: voidishHTMLEl): void {
         currElement = currElement.parentElement;
       } else break;
     }
-    const lowestPrioHeadingNum = parentElements.find((parentEl) => {
+    const lowestPrioHeadingNum = parentElements.find(parentEl => {
       switch (parentEl.tagName) {
         case "H5":
           return "H5";
@@ -2408,9 +2449,9 @@ export function syncAriaStates(scope: nodeScope = document): void {
     if (
       (Array.isArray(els) || els instanceof NodeList) &&
       els.length > 0 &&
-      Array.from(els).every((el) => el instanceof Element)
+      Array.from(els).every(el => el instanceof Element)
     ) {
-      els.forEach((el) => {
+      els.forEach(el => {
         if (el instanceof HTMLElement) {
           el.hidden && !el.focus
             ? (el.ariaHidden = "true")
@@ -2430,13 +2471,13 @@ export function syncAriaStates(scope: nodeScope = document): void {
           ) {
             if (el instanceof HTMLSelectElement) {
               if (el.querySelectorAll("option").length > 0) {
-                el.querySelectorAll("option").forEach((option) => {
+                el.querySelectorAll("option").forEach(option => {
                   option.selected
                     ? (option.ariaSelected = "true")
                     : (option.ariaSelected = "false");
                 });
                 el.addEventListener("change", () => {
-                  el.querySelectorAll("option").forEach((option) => {
+                  el.querySelectorAll("option").forEach(option => {
                     option.selected
                       ? (option.ariaSelected = "true")
                       : (option.ariaSelected = "false");
@@ -2528,10 +2569,10 @@ export function syncAriaStates(scope: nodeScope = document): void {
                   el.type === "submit" ||
                   el.type === "reset")
               ) {
-                el.addEventListener("mousedown", (click) => {
+                el.addEventListener("mousedown", click => {
                   if (click.button === 0) el.ariaPressed = "true";
                 });
-                el.addEventListener("mouseup", (release) => {
+                el.addEventListener("mouseup", release => {
                   if (release.button === 0) el.ariaPressed = "false";
                 });
               }
@@ -2543,10 +2584,10 @@ export function syncAriaStates(scope: nodeScope = document): void {
             }
           }
           if (el instanceof HTMLButtonElement) {
-            el.addEventListener("mousedown", (click) => {
+            el.addEventListener("mousedown", click => {
               if (click.button === 0) el.ariaPressed = "true";
             });
-            el.addEventListener("mouseup", (release) => {
+            el.addEventListener("mouseup", release => {
               if (release.button === 0) el.ariaPressed = "false";
             });
             if (el.textContent?.match(/consultar/gi)) {
