@@ -27,9 +27,6 @@ export default function AppProvider() {
   const setRoot = async (id: string, root: Root): Promise<void> => {
     dispatchRoots({ type: "SET_ROOT", id, root });
   };
-  // setTimeout(() => {
-  //   console.clear();
-  // }, 6000);
   const [rootsState, dispatchRoots] = useReducer(rootReducer, new Map());
   return (
     <AppContext.Provider value={{ rootsState, setRoot }}>

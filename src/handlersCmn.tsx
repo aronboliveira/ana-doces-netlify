@@ -1201,14 +1201,37 @@ export function handleSearchFilter(
   }
 }
 
-const baseValues: Map<string, number> = new Map([
+export const baseMappedValues: Map<string, Map<string, number>> = new Map([
+  [
+    "cookie recheado",
+    new Map([
+      ["chocolatudo", 10.0],
+      ["duochoco", 10.0],
+      ["ferrero rocher®", 12.0],
+      ["nutella®", 10.0],
+      ["pistache", 10.0],
+      ["red velvet com chocolate branco", 10.0],
+    ]),
+  ],
+]);
+export const baseValues: Map<string, number> = new Map([
   ["bolo caseiro".toLowerCase(), 45.0],
   ["bolo de festa".toLowerCase(), 60.0],
+  ["bolo de pote".toLowerCase(), 15.0],
+  ["brownie recheado".toLowerCase(), 10.0],
+  ["mini brownie recheado".toLowerCase(), 4.0],
+  ["brownie simples", 8.0],
+  // ["cookie recheado".toLowerCase(), -1],
+  ["copo da felicidade", 20.0],
   ["mini cookie".toLowerCase(), 15.0],
+  ["geleia artesanal", -1],
   ["palha italiana".toLowerCase(), 8.0],
+  ["pave de pote", 15.0],
   ["torta".toLowerCase(), 45.0],
+  ["taça recheada", -1],
+  ["travessa recheada", -1],
 ]);
-const factorMaps = new Map([
+export const factorMaps = new Map([
   ["pequeno".toLowerCase(), 1],
   ["médio".toLowerCase(), 1.5556],
   ["grande".toLowerCase(), 1.7778],
@@ -1217,7 +1240,7 @@ const factorMaps = new Map([
   ["saco".toLowerCase(), 1],
   ["lata personalizada".toLowerCase(), 1.66667],
 ]);
-const baseFestValues: Map<string, number> = new Map([
+export const baseFestValues: Map<string, number> = new Map([
   ["branco com chantili e morango".toLowerCase(), 90.0],
   ["branco com mousse de chocolate branco e framboesa".toLowerCase(), 100.0],
   ["brigadeiro com morango".toLowerCase(), 80.0],
@@ -1233,7 +1256,7 @@ const baseFestValues: Map<string, number> = new Map([
   ["ouro branco®".toLowerCase(), 85.0],
   ["red velvet com mousse de cream cheese e morango".toLowerCase(), 75.0],
 ]);
-const factorFestValues: Map<string, Map<string, number>> = new Map([
+export const factorFestValues: Map<string, Map<string, number>> = new Map([
   [
     "pequeno",
     new Map([
@@ -1298,7 +1321,7 @@ const factorFestValues: Map<string, Map<string, number>> = new Map([
     ]),
   ],
 ]);
-const averageFestPricesMap: Map<string, number> = new Map([
+export const averageFestPricesMap: Map<string, number> = new Map([
   [
     "pequeno",
     (Array.from(baseFestValues.values() ?? [85.0])
@@ -1451,7 +1474,7 @@ export function recalculateByOption(
             );
           applyFactorProductCase(
             appliedFactor,
-            targBaseValue,
+            targBaseValue as number,
             correctionFactor,
             refClass,
             scope
