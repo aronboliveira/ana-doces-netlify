@@ -64,6 +64,11 @@ export default function Home(): JSX.Element {
               message="Loading copy buttons..."
             />
           </div>
+          <span id="btnsTip">
+            *Clique nos botões de Copiar para poder colar a mensagem (formato
+            padrão ou para o WhatsApp) e então entre em contato clicando no
+            botão de Chame!
+          </span>
         </section>
       </div>
     </ErrorBoundary>

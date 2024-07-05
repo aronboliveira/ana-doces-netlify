@@ -48,7 +48,7 @@ thead,
 }
 
 .opBtnAdd {
-  transform: translateX(1vw);
+  transform: translateX(0.8vw);
 }
 
 #btnChame_no_Whatsapp span:has(svg) {
@@ -57,6 +57,15 @@ thead,
 
 #btnChame_no_Whatsapp a {
   transform: translateX(-2px);
+}
+
+#btnsTip {
+  width: 59vw;
+  align-self: center;
+  font-size: 0.6rem;
+  opacity: 0.4;
+  word-wrap: break-word;
+  padding-bottom: 1rem;
 }
 
 #headerLogo + hr {
@@ -107,6 +116,15 @@ thead,
   }
 }
 
+@media screen and (max-width: 1020px) {
+  div#divBtns {
+    margin-bottom: 0;
+  }
+  #btnsTip {
+    width: 64vw;
+  }
+}
+
 @media screen and (min-width: 1010px) and (max-width: 1420px) {
   .celRemove .tabRemove {
     transform: translate(1.6vw, -7%);
@@ -119,9 +137,18 @@ thead,
   }
 }
 
+@media screen and (max-width: 900px) {
+  #btnsTip {
+    width: 74vw;
+  }
+}
+
 @media screen and (max-width: 460px) {
   .celRemove .tabRemove {
     transform: translate(1.4rem, -7%);
+  }
+  #btnsTip {
+    width: 70vw;
   }
 }
 
