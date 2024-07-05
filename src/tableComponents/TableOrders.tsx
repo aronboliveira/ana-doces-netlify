@@ -10,6 +10,7 @@ import OrderRow from "./OrderRow";
 export const tbodyProps: TbodyProps = {
   root: undefined,
   currentRef: undefined,
+  primaryRowRoot: undefined,
 };
 
 export function TableOrders(): JSX.Element {

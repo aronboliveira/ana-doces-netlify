@@ -18,6 +18,11 @@ thead,
   font-size: 0.8rem;
 }
 
+.brandSpan,
+.brandedNameSpan {
+  font-weight: 700;
+}
+
 .celName {
   width: 75%;
 }
@@ -32,6 +37,10 @@ thead,
 
 .celRemove .tabRemove {
   transform: translate(calc(1.8vw), -7%);
+}
+
+.opBtnAdd {
+  transform: translateX(1vw);
 }
 
 #btnChame_no_Whatsapp span:has(svg) {
@@ -86,6 +95,12 @@ thead,
   }
   #divBtns button:has(.bi-whatsapp):has(svg) {
     padding-inline: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1010px) and (max-width: 1420px) {
+  .celRemove .tabRemove {
+    transform: translate(calc(1.5vw), -7%);
   }
 }
 

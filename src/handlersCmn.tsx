@@ -21,6 +21,7 @@ import {
   voidishHTMLEl,
 } from "./declarations/types";
 import { ErrorBoundary } from "react-error-boundary";
+import OrderRemove from "./tableComponents/OrderRemove";
 
 export const orderedProducts: Record<string, OrderProps> = {};
 export const formatPrice = (priceEl: nullishHTMLEl) => {
@@ -633,11 +634,12 @@ export function handleMultipleOrder(
                   title={unfillableTitle}
                   id={unfillableId}
                   quantity={"1"}
-                ></OrderRow>
+                />
               )}
             >
               <OrderTitle title={unfillableTitle} id={unfillableId} />
               <OrderQuantity quantity={"1"} id={`${unfillableId}`} />
+              <OrderRemove title={unfillableTitle} id={unfillableId} />
             </ErrorBoundary>
           );
         }
@@ -1213,6 +1215,35 @@ export const baseMappedValues: Map<string, Map<string, number>> = new Map([
       ["red velvet com chocolate branco", 10.0],
     ]),
   ],
+  [
+    "geleia artesanal",
+    new Map([
+      ["frutas vermelhas", 25.0],
+      ["maracujá", 20.0],
+      ["morango", 20.0],
+      ["pessego", 20.0],
+    ]),
+  ],
+  [
+    "taça recheada",
+    new Map([
+      ["banoffee", 85.0],
+      ["chocolate com frutas vermelhas", 80.0],
+      ["chocolate com morango", 90.0],
+      ["ninho® com morango", 95],
+      ["ninho® com nutella® e brownie", 85.0],
+    ]),
+  ],
+  [
+    "travessa recheada",
+    new Map([
+      ["banoffee", 80.0],
+      ["ninho® trufado com mousse de nutella®", 85.0],
+      ["pave de morango com ninho®", 85.0],
+      ["pave de sonho de valsa®", 90.0],
+      ["torta de limão", 80.0],
+    ]),
+  ],
 ]);
 export const baseValues: Map<string, number> = new Map([
   ["bolo caseiro".toLowerCase(), 45.0],
@@ -1220,16 +1251,16 @@ export const baseValues: Map<string, number> = new Map([
   ["bolo de pote".toLowerCase(), 15.0],
   ["brownie recheado".toLowerCase(), 10.0],
   ["mini brownie recheado".toLowerCase(), 4.0],
-  ["brownie simples", 8.0],
-  // ["cookie recheado".toLowerCase(), -1],
+  ["brownie simples".toLowerCase(), 8.0],
+  ["cookie recheado".toLowerCase(), -1],
   ["copo da felicidade", 20.0],
   ["mini cookie".toLowerCase(), 15.0],
-  ["geleia artesanal", -1],
+  ["geleia artesanal".toLowerCase(), -1],
   ["palha italiana".toLowerCase(), 8.0],
-  ["pave de pote", 15.0],
+  ["pave de pote".toLowerCase(), 15.0],
   ["torta".toLowerCase(), 45.0],
-  ["taça recheada", -1],
-  ["travessa recheada", -1],
+  ["taça recheada".toLowerCase(), -1],
+  ["travessa recheada".toLowerCase(), -1],
 ]);
 export const factorMaps = new Map([
   ["pequeno".toLowerCase(), 1],
