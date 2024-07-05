@@ -42,101 +42,87 @@ export default function ProductsProvider({
   setSearchParams,
 }: ProductsProviderProps): JSX.Element {
   const menuRef = useRef<nullishMenu>(null);
-  const subOptionsGroup: Array<{ name: string; opts: Array<string[]> }> =
-    products
-      .filter(
-        (product) =>
-          /caseiro/gis.test(product._name) ||
-          /festa/gis.test(product._name) ||
-          /conjunto/gis.test(product._name) ||
-          /torta/gis.test(product._name)
-      )
-      .map((product) => {
-        try {
-          if (/bolo/gis.test(product._name)) {
-            if (/caseiro/gis.test(product._name)) {
-              return {
-                name: product._name,
-                opts: [
-                  ["pequeno", "grande"].map((subopt) =>
-                    capitalizeFirstLetter(subopt)
-                  ),
-                ],
-              };
-            } else if (/festa/gis.test(product._name)) {
-              return {
-                name: product._name,
-                opts: [
-                  ["pequeno", "médio", "grande"].map((subopt) =>
-                    capitalizeFirstLetter(subopt)
-                  ),
-                ],
-              };
-            } else
-              throw stringError(
-                product._name,
-                `/bolo/gis && (/caseiro/gis || /festa/gis)`
-              );
-          } else if (/conjunto/gis.test(product._name)) {
-            if (/cookie/gis.test(product._name)) {
-              return {
-                name: product._name,
-                opts: [
-                  ["saco", "lata personalizada"].map((subopt) =>
-                    capitalizeFirstLetter(subopt)
-                  ),
-                ],
-              };
-            } else if (/palha/gis.test(product._name)) {
-              return {
-                name: product._name,
-                opts: [
-                  ["75g", "150g"].map((subopt) =>
-                    capitalizeFirstLetter(subopt)
-                  ),
-                ],
-              };
-            } else
-              throw stringError(
-                product._name,
-                `/conjunto/gis && (/cookie/gis || /palha/gis)`
-              );
-          } else if (/torta/gis.test(product._name)) {
-            return {
-              name: product._name,
-              opts: [
-                ["pequena", "média", "grande"].map((subopt) =>
-                  capitalizeFirstLetter(subopt)
-                ),
-              ],
-            };
-          } else throw stringError(product._name, "/bolo/gis || /conjunto/gis");
-        } catch (e) {
-          console.error(
-            `Error executing mapping for product ${product._name}:\n${
-              (e as Error).message
-            }`
-          );
-          return { name: product._name, opts: [[]] };
-        }
-      });
   const renderProducts = (products: Array<Product>) => {
+    const subOptionsGroup: Array<{ name: string; opts: Array<string[]> }> =
+      products
+        .filter(
+          product =>
+            /caseiro/gis.test(product._name) ||
+            /festa/gis.test(product._name) ||
+            /conjunto/gis.test(product._name) ||
+            /torta/gis.test(product._name)
+        )
+        .map(product => {
+          try {
+            if (/bolo/gis.test(product._name)) {
+              if (/caseiro/gis.test(product._name)) {
+                return {
+                  name: product._name,
+                  opts: [
+                    ["pequeno", "grande"].map(subopt =>
+                      capitalizeFirstLetter(subopt)
+                    ),
+                  ],
+                };
+              } else if (/festa/gis.test(product._name)) {
+                return {
+                  name: product._name,
+                  opts: [
+                    ["pequeno", "médio", "grande"].map(subopt =>
+                      capitalizeFirstLetter(subopt)
+                    ),
+                  ],
+                };
+              } else
+                throw stringError(
+                  product._name,
+                  `/bolo/gis && (/caseiro/gis || /festa/gis)`
+                );
+            } else if (/conjunto/gis.test(product._name)) {
+              if (/cookie/gis.test(product._name)) {
+                return {
+                  name: product._name,
+                  opts: [
+                    ["saco", "lata personalizada"].map(subopt =>
+                      capitalizeFirstLetter(subopt)
+                    ),
+                  ],
+                };
+              } else if (/palha/gis.test(product._name)) {
+                return {
+                  name: product._name,
+                  opts: [
+                    ["75g", "150g"].map(subopt =>
+                      capitalizeFirstLetter(subopt)
+                    ),
+                  ],
+                };
+              } else
+                throw stringError(
+                  product._name,
+                  `/conjunto/gis && (/cookie/gis || /palha/gis)`
+                );
+            } else if (/torta/gis.test(product._name)) {
+              return {
+                name: product._name,
+                opts: [
+                  ["pequena", "média", "grande"].map(subopt =>
+                    capitalizeFirstLetter(subopt)
+                  ),
+                ],
+              };
+            } else
+              throw stringError(product._name, "/bolo/gis || /conjunto/gis");
+          } catch (e) {
+            console.error(
+              `Error executing mapping for product ${product._name}:\n${
+                (e as Error).message
+              }`
+            );
+            return { name: product._name, opts: [[]] };
+          }
+        });
     return products.map((product, i) => {
-      const matchedSubOptObj = subOptionsGroup.find((productOp) => {
-        try {
-          return product._name.toLowerCase() === productOp.name.toLowerCase()
-            ? productOp.opts
-            : [[]];
-        } catch (e) {
-          console.warn(
-            `Failure finding suboptions for ${
-              product._name
-            }. Check if this is expected behavior:\n${(e as Error).message}`
-          );
-          return [[]];
-        }
-      }) || { name: product._name, opts: [[]] };
-      const matchedSubOpts = matchedSubOptObj.opts;
       return (
         <ErrorBoundary
           key={`errorBoundary_${product}_${i}_#${product?.id || `brk${i}`}`}
@@ -158,7 +144,18 @@ export default function ProductsProvider({
             imgSrc={product.imgSrc ?? "/img/x-octagon.svg"}
             detail={product.detail}
             options={product.options}
-            subOptions={matchedSubOpts}
+            subOptions={
+              subOptionsGroup.find(possibleProd => {
+                possibleProd.name === product._name &&
+                  console.log(
+                    "Found match for " +
+                      possibleProd.name +
+                      " with " +
+                      product._name
+                  );
+                return possibleProd.name === product._name;
+              })?.opts || [[]]
+            }
           />
         </ErrorBoundary>
       );
@@ -219,7 +216,7 @@ export default function ProductsProvider({
           }
         })
         .filter(
-          (itemInfo) =>
+          itemInfo =>
             itemInfo[0] !== "invalid" &&
             typeof itemInfo[1] === "number" &&
             itemInfo[1] >= 0
@@ -236,10 +233,10 @@ export default function ProductsProvider({
     }
     setTimeout(() => {
       const availableProductRefs = mainItems.listMainItems.map(
-        (item) => item[0] as string
+        item => item[0] as string
       );
       if (
-        availableProductRefs.some((item) =>
+        availableProductRefs.some(item =>
           new RegExp(item, "gi").test(location.href)
         )
       ) {
@@ -257,7 +254,7 @@ export default function ProductsProvider({
               items.length,
               `validation of List Items length in Main Menu`
             );
-          const matchedItem = Array.from(items).find((item) => {
+          const matchedItem = Array.from(items).find(item => {
             const locRefRegex = !/&Op-/g.test(location.href)
               ? new RegExp(location.href.slice(location.href.indexOf("?&") + 2))
               : new RegExp(
