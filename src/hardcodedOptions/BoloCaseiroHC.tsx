@@ -33,7 +33,7 @@ export default function BoloCaseiroHC(): JSX.Element {
         }
       }
     };
-    addEventListener("keydown", (press) => handleKeyPress(press));
+    addEventListener("keydown", press => handleKeyPress(press));
     return () => removeEventListener("keydown", handleKeyPress);
   }, [shouldShowOptions]);
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function BoloCaseiroHC(): JSX.Element {
           `validation of Options Reference Modal`
         );
       shouldShowOptions && optionsRef.current.showModal();
-      optionsRef.current.querySelectorAll(".opBtnAdd").forEach((addBtn) => {
+      optionsRef.current.querySelectorAll(".opBtnAdd").forEach(addBtn => {
         addBtn.addEventListener("click", function (this: HTMLButtonElement, c) {
           handleOrderAdd(
             this || c.currentTarget,
@@ -52,7 +52,7 @@ export default function BoloCaseiroHC(): JSX.Element {
           );
         });
       });
-      optionsRef.current.querySelectorAll(".opBtnRemove").forEach((addBtn) => {
+      optionsRef.current.querySelectorAll(".opBtnRemove").forEach(addBtn => {
         addBtn.addEventListener("click", function (this: HTMLButtonElement, c) {
           handleOrderSubtract(
             this || c.currentTarget,
@@ -109,7 +109,7 @@ export default function BoloCaseiroHC(): JSX.Element {
   }, [defOptRef]);
   useEffect(() => {
     const idRef = optionsRef.current?.id;
-    const modalInterv = setInterval((interv) => {
+    const modalInterv = setInterval(interv => {
       if (optionsRef.current?.open === false) {
         optionsRef.current.close();
         setOptions && setOptions(false);
@@ -141,7 +141,7 @@ export default function BoloCaseiroHC(): JSX.Element {
       );
       const allDialogs: string[] = [];
       setTimeout(() => {
-        document.querySelectorAll(idRef).forEach((ref) => {
+        document.querySelectorAll(idRef).forEach(ref => {
           if (ref.id !== "") allDialogs.push(`#${ref.id}`);
           else if (ref instanceof HTMLDialogElement) allDialogs.push("dialog");
           ref instanceof HTMLDialogElement && ref.close();
@@ -168,10 +168,10 @@ export default function BoloCaseiroHC(): JSX.Element {
             );
           }
         }
-        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+        document.querySelectorAll(".contDlg").forEach(contDlg => {
           createRoot(contDlg).unmount();
         });
-        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+        document.querySelectorAll(".contDlg").forEach(contDlg => {
           contDlg.remove();
         });
       }, 200);
@@ -194,10 +194,10 @@ export default function BoloCaseiroHC(): JSX.Element {
           id="div-Bolo-Caseiro__01-Banana-Banana_Fit-Café-Cenoura-Cenoura_Fit-Chocolate-Chocolate_Fit-Coco-Formigueiro-Laranja-Limão-Limão_Fit-Maçã_Fit-Milho-Morango-Red_Velvet"
           ref={optionsRef}
           open={true}
-          onClick={(click) => {
+          onClick={click => {
             if (
               isClickOutside(click, optionsRef.current!).some(
-                (coord) => coord === true
+                coord => coord === true
               )
             ) {
               setOptions && setOptions(!shouldShowOptions);
@@ -213,9 +213,21 @@ export default function BoloCaseiroHC(): JSX.Element {
         >
           <nav className="menuOpNav fade-in" aria-hidden="false">
             <div className="flNoW menuOpMainDiv" aria-hidden="false">
-              <h2 className="menuOpH" aria-hidden="false">
-                <span aria-hidden="false">Opções — </span>
-                <span aria-hidden="false">Bolo Caseiro</span>
+              <h2
+                className="menuOpH"
+                id="heading-Banana-Banana_Fit-Café-Cenoura-Cenoura_Fit-Chocolate-Chocolate_Fit-Coco-Formigueiro-Laranja-Limão-Limão_Fit-Maçã_Fit-Milho-Morango-Red_Velvet"
+                aria-hidden="false"
+              >
+                <span className="menuOpHOptChunk" aria-hidden="false">
+                  Opções —{" "}
+                </span>
+                <span
+                  className="menuOpHNameChunk"
+                  id="Bolo-Caseiro"
+                  aria-hidden="false"
+                >
+                  Bolo Caseiro
+                </span>
               </h2>
               <button
                 className="fade-in-mid btn btn-close"
@@ -259,7 +271,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     aria-checked="true"
                     aria-disabled="false"
                     ref={defOptRef}
-                    onClick={(ev) => {
+                    onClick={ev => {
                       if (ev.currentTarget.checked) {
                         try {
                           if (!(ev.currentTarget instanceof HTMLInputElement))
@@ -350,7 +362,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     aria-hidden="false"
                     aria-checked="false"
                     aria-disabled="false"
-                    onClick={(ev) => {
+                    onClick={ev => {
                       if (ev.currentTarget.checked) {
                         try {
                           if (!(ev.currentTarget instanceof HTMLInputElement))

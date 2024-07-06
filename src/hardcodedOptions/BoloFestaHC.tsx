@@ -33,7 +33,7 @@ export default function BoloFestaHC(): JSX.Element {
         }
       }
     };
-    addEventListener("keydown", (press) => handleKeyPress(press));
+    addEventListener("keydown", press => handleKeyPress(press));
     return () => removeEventListener("keydown", handleKeyPress);
   }, [shouldShowOptions]);
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function BoloFestaHC(): JSX.Element {
           `validation of Options Reference Modal`
         );
       shouldShowOptions && optionsRef.current.showModal();
-      optionsRef.current.querySelectorAll(".opBtnAdd").forEach((addBtn) => {
+      optionsRef.current.querySelectorAll(".opBtnAdd").forEach(addBtn => {
         addBtn.addEventListener("click", function (this: HTMLButtonElement, c) {
           handleOrderAdd(
             this || c.currentTarget,
@@ -52,7 +52,7 @@ export default function BoloFestaHC(): JSX.Element {
           );
         });
       });
-      optionsRef.current.querySelectorAll(".opBtnRemove").forEach((addBtn) => {
+      optionsRef.current.querySelectorAll(".opBtnRemove").forEach(addBtn => {
         addBtn.addEventListener("click", function (this: HTMLButtonElement, c) {
           handleOrderSubtract(
             this || c.currentTarget,
@@ -107,7 +107,7 @@ export default function BoloFestaHC(): JSX.Element {
   }, [defOptRef]);
   useEffect(() => {
     const idRef = optionsRef.current?.id;
-    const modalInterv = setInterval((interv) => {
+    const modalInterv = setInterval(interv => {
       if (optionsRef.current?.open === false) {
         optionsRef.current.close();
         setOptions && setOptions(false);
@@ -139,7 +139,7 @@ export default function BoloFestaHC(): JSX.Element {
       );
       const allDialogs: string[] = [];
       setTimeout(() => {
-        document.querySelectorAll(idRef).forEach((ref) => {
+        document.querySelectorAll(idRef).forEach(ref => {
           if (ref.id !== "") allDialogs.push(`#${ref.id}`);
           else if (ref instanceof HTMLDialogElement) allDialogs.push("dialog");
           ref instanceof HTMLDialogElement && ref.close();
@@ -166,10 +166,10 @@ export default function BoloFestaHC(): JSX.Element {
             );
           }
         }
-        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+        document.querySelectorAll(".contDlg").forEach(contDlg => {
           createRoot(contDlg).unmount();
         });
-        document.querySelectorAll(".contDlg").forEach((contDlg) => {
+        document.querySelectorAll(".contDlg").forEach(contDlg => {
           contDlg.remove();
         });
       }, 200);
@@ -191,10 +191,10 @@ export default function BoloFestaHC(): JSX.Element {
           className="modal-content"
           id="div-Bolo-de-Festa__02-Branco_com_Chantili_e_Morango-Branco_com_Mousse_de_Chocolate_Branco_e_Framboesa-Brigadeiro_com_Morango-Brigadeiro_Confeitado_e_Morango-Brigadeiro_Granulado-Chocolate_com_Brigadeiro_e_Kit_Kat®-Chocolate_com_Doce_de_Leite-_Kit_Kat®_e_Kinder_Bueno®-Chocolate_com_Mousse_de_Ninho®-_Nutella®_e_Morango-Mousse_de_Chocolate_com_Frutas_Vermelhas-Ouro_Branco®-Red_Velvet_com_Mousse_de_Cream_Cheese_e_Morango"
           ref={optionsRef}
-          onClick={(click) => {
+          onClick={click => {
             if (
               isClickOutside(click, optionsRef.current!).some(
-                (coord) => coord === true
+                coord => coord === true
               )
             ) {
               setOptions && setOptions(!shouldShowOptions);
@@ -210,9 +210,21 @@ export default function BoloFestaHC(): JSX.Element {
         >
           <nav className="menuOpNav fade-in" aria-hidden="false">
             <div className="flNoW menuOpMainDiv" aria-hidden="false">
-              <h2 className="menuOpH" aria-hidden="false">
-                <span aria-hidden="false">Opções — </span>
-                <span aria-hidden="false">Bolo de Festa</span>
+              <h2
+                className="menuOpH"
+                id="heading-Branco_com_Chantili_e_Morango-Branco_com_Mousse_de_Chocolate_Branco_e_Framboesa-Brigadeiro_com_Morango-Brigadeiro_Confeitado_e_Morango-Brigadeiro_Granulado-Chocolate_com_Brigadeiro_e_Kit_Kat®-Chocolate_com_Doce_de_Leite-_Kit_Kat®_e_Kinder_Bueno®-Chocolate_com_Mousse_de_Ninho®-_Nutella®_e_Morango-Mousse_de_Chocolate_com_Frutas_Vermelhas-Ouro_Branco®-Red_Velvet_com_Mousse_de_Cream_Cheese_e_Morango"
+                aria-hidden="false"
+              >
+                <span className="menuOpHOptChunk" aria-hidden="false">
+                  Opções —{" "}
+                </span>
+                <span
+                  className="menuOpHNameChunk"
+                  id="Bolo-de-Festa"
+                  aria-hidden="false"
+                >
+                  Bolo de Festa
+                </span>
               </h2>
               <button
                 className="fade-in-mid btn btn-close"
@@ -256,7 +268,7 @@ export default function BoloFestaHC(): JSX.Element {
                     aria-checked="true"
                     aria-disabled="false"
                     ref={defOptRef}
-                    onClick={(ev) => {
+                    onClick={ev => {
                       if (ev.currentTarget.checked) {
                         try {
                           if (!(ev.currentTarget instanceof HTMLInputElement))
@@ -347,7 +359,7 @@ export default function BoloFestaHC(): JSX.Element {
                     aria-hidden="false"
                     aria-checked="false"
                     aria-disabled="false"
-                    onClick={(ev) => {
+                    onClick={ev => {
                       if (ev.currentTarget.checked) {
                         try {
                           if (!(ev.currentTarget instanceof HTMLInputElement))
@@ -438,7 +450,7 @@ export default function BoloFestaHC(): JSX.Element {
                     aria-hidden="false"
                     aria-checked="false"
                     aria-disabled="false"
-                    onClick={(ev) => {
+                    onClick={ev => {
                       if (ev.currentTarget.checked) {
                         try {
                           if (!(ev.currentTarget instanceof HTMLInputElement))

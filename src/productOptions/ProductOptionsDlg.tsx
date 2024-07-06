@@ -560,7 +560,7 @@ export default function ProductOptionsDlg({
             <div className="flNoW menuOpMainDiv">
               <h2
                 className="menuOpH"
-                id={`unfilled-heading-${options
+                id={`heading-${options
                   .map(option => option.opName)
                   .toString()
                   .replace("[", "")
