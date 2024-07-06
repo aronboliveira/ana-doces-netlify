@@ -39,7 +39,6 @@ export default function ProductOptionsDlg({
   root = null,
   setOptions = undefined,
 }: ProductOptionsDlgProps): JSX.Element {
-  console.log(subOptions ?? "none");
   const [finished] = useState<boolean>(false);
   const params = useParams<{ options: string; subOptions: string }>();
   if (params.options && params.subOptions) {

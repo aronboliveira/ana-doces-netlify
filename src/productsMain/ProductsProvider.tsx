@@ -145,16 +145,9 @@ export default function ProductsProvider({
             detail={product.detail}
             options={product.options}
             subOptions={
-              subOptionsGroup.find(possibleProd => {
-                possibleProd.name === product._name &&
-                  console.log(
-                    "Found match for " +
-                      possibleProd.name +
-                      " with " +
-                      product._name
-                  );
-                return possibleProd.name === product._name;
-              })?.opts || [[]]
+              subOptionsGroup.find(
+                possibleProd => possibleProd.name === product._name
+              )?.opts || [[]]
             }
           />
         </ErrorBoundary>

@@ -86,24 +86,32 @@ export default function TortasHC(): JSX.Element {
     return () => clearURLAfterModal(optionsId);
   }, []);
   useEffect(() => {
-    try {
-      if (
-        !(
-          defOptRef.current instanceof HTMLInputElement &&
-          (defOptRef.current.type === "radio" ||
-            defOptRef.current.type === "checkbox")
+    const checkInterv = setInterval(() => {
+      try {
+        if (
+          !(
+            defOptRef.current instanceof HTMLInputElement &&
+            (defOptRef.current.type === "radio" ||
+              defOptRef.current.type === "checkbox")
+          )
         )
-      )
-        throw htmlElementNotFound(
-          defOptRef.current,
-          `Validation of Default Option`,
-          ['<input type="radio"> || <input type="checkbox">']
+          throw htmlElementNotFound(
+            defOptRef.current,
+            `Validation of Default Option`,
+            ['<input type="radio"> || <input type="checkbox">']
+          );
+        if (defOptRef.current.checked) return;
+        defOptRef.current.checked = true;
+        applySubOptParam(defOptRef.current);
+      } catch (e) {
+        console.error(
+          `Error executing interval for applying default check:\n${
+            (e as Error).message
+          }`
         );
-      defOptRef.current.checked = true;
-      applySubOptParam(defOptRef.current);
-    } catch (e) {
-      console.error(`Error:${(e as Error).message}`);
-    }
+      }
+    }, 200);
+    setTimeout(() => clearInterval(checkInterv), 2000);
   }, [defOptRef]);
   useEffect(() => {
     const idRef = optionsRef.current?.id;

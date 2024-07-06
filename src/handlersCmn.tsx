@@ -480,7 +480,7 @@ export function handleMultipleOrder(
         }`
       );
     }
-    const unfillableId =
+    let unfillableId =
       productName !== ""
         ? `${productName}-${relLi.id || "unfilled"}`
         : `${relLi.id || "unfilled"}`;
@@ -626,6 +626,10 @@ export function handleMultipleOrder(
             }
           }
           unfillableTitle += ` ${chosenOptionText}`;
+          unfillableId += `-${chosenOptionText
+            .replaceAll("(", "")
+            .replaceAll(")", "")
+            .replaceAll(" ", "_")}`;
         }
       }
     } catch (e) {
@@ -640,6 +644,7 @@ export function handleMultipleOrder(
         <OrderRow title={unfillableTitle} id={unfillableId} quantity={"1"} />
       );
     else {
+      console.log(unfillableId);
       const relTr = tbodyProps.currentRef.querySelector(`#tr_${unfillableId}`);
       if (!relTr) {
         if (context === "add") {
@@ -1072,6 +1077,7 @@ export function handleDoubleClick(inps: (nullishHTMLEl | undefined)[]): void {
             '<input type="radio"> || <input type="checkbox">',
           ]);
         inp.addEventListener("doubleclick", ev => {
+          console.log("double click listened");
           try {
             if (
               !(

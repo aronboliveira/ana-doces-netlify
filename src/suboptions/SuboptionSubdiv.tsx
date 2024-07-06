@@ -57,12 +57,12 @@ export default function SuboptionsSubDiv({
           ...mainRef.current.querySelectorAll('input[type="radio"]'),
           ...mainRef.current.querySelectorAll('input[type="checkbox"]'),
         ].filter(
-          (inp) =>
+          inp =>
             inp instanceof HTMLInputElement &&
             (inp.type === "radio" || inp.type === "checkbox")
         ) as HTMLInputElement[]
       );
-      const namingInterval = setInterval((interv) => {
+      const namingInterval = setInterval(interv => {
         if (!document.querySelector("dialog")) clearInterval(interv);
         try {
           if (!(mainRef.current instanceof HTMLElement))
@@ -73,24 +73,24 @@ export default function SuboptionsSubDiv({
             );
           if (
             Array.from(mainRef.current.querySelectorAll("*")).every(
-              (el) => !/unfilled/gis.test(el.id)
+              el => !/unfilled/gis.test(el.id)
             ) &&
             Array.from(mainRef.current.querySelectorAll('input[type="radio"]'))
               .filter(
-                (el) => el instanceof HTMLInputElement && el.type === "radio"
+                el => el instanceof HTMLInputElement && el.type === "radio"
               )
               .every(
                 (radio, _, arr) =>
                   radio instanceof HTMLInputElement &&
                   arr.every(
-                    (otherRadio) =>
+                    otherRadio =>
                       otherRadio instanceof HTMLInputElement &&
                       radio.name === otherRadio.name
                   )
               )
           )
             clearInterval(interv);
-          mainRef.current.querySelectorAll("*").forEach((el) => {
+          mainRef.current.querySelectorAll("*").forEach(el => {
             if (/unfilled/gi.test(el.id))
               el.id = el.id.replace(/unfilled/gi, mainRef.current!.id);
             if (
@@ -112,7 +112,7 @@ export default function SuboptionsSubDiv({
             const firstRadioName = firstRadio.name;
             mainRef.current
               .querySelectorAll('input[type="radio"]')
-              .forEach((radio) => {
+              .forEach(radio => {
                 if (radio instanceof HTMLInputElement && radio.type === "radio")
                   radio.name = firstRadioName;
               });
@@ -153,7 +153,7 @@ export default function SuboptionsSubDiv({
           `validation of Main Reference`,
           ["HTMLElement"]
         );
-      const checkInterv = setInterval((interv) => {
+      const checkInterv = setTimeout(interv => {
         const firstRadio = mainRef.current?.querySelector(
           'input[type="radio"]'
         );
@@ -161,6 +161,7 @@ export default function SuboptionsSubDiv({
           firstRadio instanceof HTMLInputElement &&
           firstRadio.type === "radio"
         ) {
+          if (firstRadio.checked) return;
           firstRadio.checked = true;
           clearInterval(interv);
         } else
@@ -171,6 +172,7 @@ export default function SuboptionsSubDiv({
           );
       }, 200);
       setTimeout(() => {
+        console.log("first radio interval cleared.");
         clearInterval(checkInterv);
       }, 2000);
     } catch (e) {
