@@ -112,8 +112,6 @@
         primaryImage.src = "https://anadocesapp.netlify.app/img/og-bolo.png";
         const fallbackImage =
           "https://anadocesapp.netlify.app/img/AnaDoces_colorido.png";
-        primaryImage.onload = () =>
-          console.log("Primary meta image loaded with success.");
         primaryImage.onerror = () => {
           const ogImageMeta = document.getElementById("ogImage");
           ogImageMeta && ogImageMeta.setAttribute("content", fallbackImage);

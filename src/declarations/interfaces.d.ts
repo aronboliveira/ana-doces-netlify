@@ -64,6 +64,8 @@ export interface ErrorComponentProps extends ErrorMessageProps {
 export interface TbodyProps extends Record<string, Root> {
   currentRef: voidishEl;
   root?: Root;
+  primaryRowRoot?: Root;
+  roots: { [k: string]: Root | undefined };
 }
 
 export interface Order {

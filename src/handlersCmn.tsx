@@ -644,8 +644,12 @@ export function handleMultipleOrder(
         <OrderRow title={unfillableTitle} id={unfillableId} quantity={"1"} />
       );
     else {
-      console.log(unfillableId);
-      const relTr = tbodyProps.currentRef.querySelector(`#tr_${unfillableId}`);
+      const tbody =
+        document.getElementById("tbodyOrders") ||
+        Array.from(document.querySelectorAll("tbody")).at(-1);
+      if (!(tbody instanceof HTMLElement))
+        throw htmlElementNotFound(tbody, `Validation of Table Body`);
+      const relTr = tbody.querySelector(`#tr_${unfillableId}`);
       if (!relTr) {
         if (context === "add") {
           const newTr = Object.assign(document.createElement("tr"), {
@@ -653,7 +657,7 @@ export function handleMultipleOrder(
           });
           if (!tbodyProps[`${newTr.id}`])
             tbodyProps[`${newTr.id}`] = createRoot(newTr);
-          tbodyProps.currentRef.appendChild(newTr);
+          tbody.appendChild(newTr);
           tbodyProps[`${newTr.id}`].render(
             <ErrorBoundary
               FallbackComponent={() => (
@@ -669,6 +673,32 @@ export function handleMultipleOrder(
               <OrderRemove title={unfillableTitle} id={unfillableId} />
             </ErrorBoundary>
           );
+          setTimeout(() => {
+            const currNewTr = document.getElementById(newTr.id);
+            if (!(currNewTr instanceof HTMLElement)) {
+              console.warn(`Failed to fetch Current New Table Row`);
+              return;
+            }
+            if (currNewTr.innerHTML === "") {
+              tbodyProps[`${newTr.id}`] = undefined;
+              tbodyProps[`${newTr.id}`] = createRoot(newTr);
+              tbodyProps[`${newTr.id}`].render(
+                <ErrorBoundary
+                  FallbackComponent={() => (
+                    <OrderRow
+                      title={unfillableTitle}
+                      id={unfillableId}
+                      quantity={"1"}
+                    />
+                  )}
+                >
+                  <OrderTitle title={unfillableTitle} id={unfillableId} />
+                  <OrderQuantity quantity={"1"} id={`${unfillableId}`} />
+                  <OrderRemove title={unfillableTitle} id={unfillableId} />
+                </ErrorBoundary>
+              );
+            }
+          }, 200);
         }
       } else {
         try {
@@ -696,20 +726,104 @@ export function handleMultipleOrder(
                   if (!tbodyProps[`${relTr.id}`])
                     tbodyProps[`${relTr.id}`] = createRoot(relTr);
                   tbodyProps[`${relTr.id}`].unmount();
+                  setTimeout(() => {
+                    if (
+                      relTr.innerHTML === "" ||
+                      parseFinite(
+                        getComputedStyle(relTr).height.replace("px", "").trim()
+                      ) <= 0
+                    ) {
+                      tbodyProps.roots[`${relTr.id}`] = undefined;
+                      tbodyProps.roots[`${relTr.id}`] = createRoot(relTr);
+                      tbodyProps.roots[`${relTr.id}`].unmount();
+                      if (
+                        !tbody?.querySelector("tr") ||
+                        Array.from(tbody.querySelectorAll("tr")).filter(
+                          tr =>
+                            tr.hidden === false &&
+                            parseFinite(
+                              getComputedStyle(tr).height.replace("px", "")
+                            ) > 0
+                        ).length === 1 ||
+                        Array.from(tbody.querySelectorAll("tr")).every(
+                          tr =>
+                            tr instanceof HTMLElement &&
+                            (getComputedStyle(tr).height === "0" ||
+                              tr.hidden === true)
+                        )
+                      ) {
+                        tbodyProps.root.render(
+                          <OrderRow
+                            key={"order_ph"}
+                            id={"order_ph"}
+                            quantity={"0"}
+                          />
+                        );
+                        setTimeout(() => {
+                          if (!document.getElementById("tr_order_ph")) {
+                            console.log("Failed first attempt. Retrying...");
+                            const tab =
+                              document.getElementById("productsTab") ??
+                              document.querySelector('table[id*="products"]') ??
+                              Array.from(document.querySelectorAll("table")).at(
+                                -1
+                              );
+                            if (!(tab instanceof HTMLTableElement))
+                              throw htmlElementNotFound(
+                                tab,
+                                `Validation of Table fetched`,
+                                ["HTMLTableElement"]
+                              );
+                            tbodyProps.root = undefined;
+                            const replaceTbody =
+                              document.createElement("tbody");
+                            replaceTbody.id = `tbodyOrders`;
+                            tab.append(replaceTbody);
+                            tbodyProps.ref = replaceTbody;
+                            tbodyProps.currentRef = replaceTbody;
+                            if (
+                              !tbodyProps.root ||
+                              !tbodyProps.root._internalRoot
+                            )
+                              tbodyProps.root = createRoot(replaceTbody);
+                            tbodyProps.root.render(
+                              <OrderRow id="order_ph" title="" />
+                            );
+                          }
+                        }, 500);
+                        const totalEl = document.getElementById("total");
+                        try {
+                          if (!totalEl)
+                            throw htmlElementNotFound(
+                              totalEl,
+                              `Element for total order value in procedure for defaulting table`,
+                              ["HTMLElement"]
+                            );
+                          totalEl.innerText =
+                            ` ${new Intl.NumberFormat("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            }).format(0)}` || totalEl.innerText;
+                        } catch (eP) {
+                          console.error(
+                            `Error defaulting total order value: \n${
+                              (eP as Error).message
+                            }`
+                          );
+                        }
+                      }
+                    }
+                  }, 200);
                   if (
-                    !tbodyProps.currentRef.querySelector("tr") ||
-                    Array.from(
-                      tbodyProps.currentRef.querySelectorAll("tr")
-                    ).filter(
+                    !tbody.querySelector("tr") ||
+                    Array.from(tbody.querySelectorAll("tr")).filter(
                       tr =>
                         tr.hidden === false &&
                         parseFinite(
                           getComputedStyle(tr).height.replace("px", "")
                         ) > 0
                     ).length === 1 ||
-                    Array.from(
-                      tbodyProps.currentRef.querySelectorAll("tr")
-                    ).every(
+                    Array.from(tbody.querySelectorAll("tr")).every(
                       tr =>
                         tr instanceof HTMLElement &&
                         (getComputedStyle(tr).height === "0" ||
@@ -723,6 +837,32 @@ export function handleMultipleOrder(
                         quantity={"0"}
                       />
                     );
+                    setTimeout(() => {
+                      if (!document.getElementById("tr_order_ph")) {
+                        console.log("Failed first attempt. Retrying...");
+                        const tab =
+                          document.getElementById("productsTab") ??
+                          document.querySelector('table[id*="products"]') ??
+                          Array.from(document.querySelectorAll("table")).at(-1);
+                        if (!(tab instanceof HTMLTableElement))
+                          throw htmlElementNotFound(
+                            tab,
+                            `Validation of Table fetched`,
+                            ["HTMLTableElement"]
+                          );
+                        tbodyProps.root = undefined;
+                        const replaceTbody = document.createElement("tbody");
+                        replaceTbody.id = `tbodyOrders`;
+                        tab.append(replaceTbody);
+                        tbodyProps.ref = replaceTbody;
+                        tbodyProps.currentRef = replaceTbody;
+                        if (!tbodyProps.root || !tbodyProps.root._internalRoot)
+                          tbodyProps.root = createRoot(replaceTbody);
+                        tbodyProps.root.render(
+                          <OrderRow id="order_ph" title="" />
+                        );
+                      }
+                    }, 500);
                     const totalEl = document.getElementById("total");
                     try {
                       if (!totalEl)
@@ -750,19 +890,38 @@ export function handleMultipleOrder(
                 console.warn(
                   `Error getting operation context for ${unfillableId}`
                 );
-                parseFinite(outpQuantCount, "int", 1) < 1 && relTr.remove();
+                if (parseFinite(outpQuantCount, "int", 1) < 1) {
+                  if (
+                    !tbodyProps.roots[`${relTr.id}`] ||
+                    !tbodyProps.roots[`${relTr.id}`]._internalRoot
+                  )
+                    tbodyProps.roots[`${relTr.id}`] = createRoot(relTr);
+                  tbodyProps.roots[`${relTr.id}`].unmount();
+                  setTimeout(() => {
+                    if (
+                      relTr.innerHTML === "" ||
+                      parseFinite(
+                        getComputedStyle(relTr).height.replace("px", "").trim()
+                      ) <= 0
+                    ) {
+                      tbodyProps.roots[`${relTr.id}`] = undefined;
+                      tbodyProps.roots[`${relTr.id}`] = createRoot(relTr);
+                      tbodyProps.roots[`${relTr.id}`].unmount();
+                    }
+                  }, 200);
+                }
             }
           }
         } catch (eTr) {
-          if (!tbodyProps.root) {
+          if (!tbodyProps.root || !tbodyProps.root._internalRoot) {
             console.warn(
               `no root validated in tbody props. initiating replacement.`
             );
             try {
-              tbodyProps.currentRef = document.getElementById("tbodyOrders");
-              if (!tbodyProps.currentRef)
+              const tbody = document.getElementById("tbodyOrders");
+              if (!tbody)
                 throw htmlElementNotFound(
-                  tbodyProps.currentRef,
+                  tbody,
                   `Reference for Orders Table Body`,
                   ["HTMLElement"]
                 );
@@ -796,13 +955,61 @@ export function handleMultipleOrder(
             } catch (eR) {
               console.error(`Error replacing tbodyProps data.
               Obtained props:
-              ${tbodyProps.currentRef ?? "nullish"}
+              ${tbody ?? "nullish"}
               ${tbodyProps.root ?? "nullish"}`);
             }
           } else {
             tbodyProps.root.render(
               <OrderRow key={"order_ph"} id={"order_ph"} quantity={"0"} />
             );
+            setTimeout(() => {
+              if (!document.getElementById("tr_order_ph")) {
+                console.log("Failed first attempt. Retrying...");
+                const tab =
+                  document.getElementById("productsTab") ??
+                  document.querySelector('table[id*="products"]') ??
+                  Array.from(document.querySelectorAll("table")).at(-1);
+                if (!(tab instanceof HTMLTableElement))
+                  throw htmlElementNotFound(
+                    tab,
+                    `Validation of Table fetched`,
+                    ["HTMLTableElement"]
+                  );
+                tbodyProps.root = undefined;
+                const replaceTbody = document.createElement("tbody");
+                replaceTbody.id = `tbodyOrders`;
+                tab.append(replaceTbody);
+                tbodyProps.ref = replaceTbody;
+                tbodyProps.currentRef = replaceTbody;
+                if (!tbodyProps.root || !tbodyProps.root._internalRoot)
+                  tbodyProps.root = createRoot(replaceTbody);
+                tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
+                setTimeout(() => {
+                  if (!document.getElementById("tr_order_ph")) {
+                    console.log("Failed first attempt. Retrying...");
+                    const tab =
+                      document.getElementById("productsTab") ??
+                      document.querySelector('table[id*="products"]') ??
+                      Array.from(document.querySelectorAll("table")).at(-1);
+                    if (!(tab instanceof HTMLTableElement))
+                      throw htmlElementNotFound(
+                        tab,
+                        `Validation of Table fetched`,
+                        ["HTMLTableElement"]
+                      );
+                    tbodyProps.root = undefined;
+                    const replaceTbody = document.createElement("tbody");
+                    replaceTbody.id = `tbodyOrders`;
+                    tab.append(replaceTbody);
+                    tbodyProps.ref = replaceTbody;
+                    tbodyProps.currentRef = replaceTbody;
+                    if (!tbodyProps.root || !tbodyProps.root._internalRoot)
+                      tbodyProps.root = createRoot(replaceTbody);
+                    tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
+                  }
+                }, 500);
+              }
+            }, 500);
             const totalEl = document.getElementById("total");
             try {
               if (!totalEl)
@@ -1077,7 +1284,6 @@ export function handleDoubleClick(inps: (nullishHTMLEl | undefined)[]): void {
             '<input type="radio"> || <input type="checkbox">',
           ]);
         inp.addEventListener("doubleclick", ev => {
-          console.log("double click listened");
           try {
             if (
               !(
@@ -1557,7 +1763,11 @@ export function recalculateByOption(
   }
 }
 
-export function applyVelvetCase(name: string, element: voidishHTMLEl) {
+export function applyVelvetCase(
+  name: string,
+  element: voidishHTMLEl,
+  cel?: HTMLElement
+) {
   try {
     if (typeof name !== "string")
       throw typeError(name, `validation of name argument in applyVelvetCase`, [
@@ -1568,24 +1778,34 @@ export function applyVelvetCase(name: string, element: voidishHTMLEl) {
         element,
         `validation of element argument in applyVelvetCase`
       );
-    const relDlg = element.closest("dialog");
-    if (!(relDlg instanceof HTMLElement))
-      throw htmlElementNotFound(relDlg, `validation of Related Dialog`);
+    const relParent = element.closest("dialog") || cel?.closest("tr");
+    if (!(relParent instanceof HTMLElement))
+      throw htmlElementNotFound(relParent, `validation of Related Dialog`);
     if (
       /velvet/gi.test(name) &&
-      /bolo/gi.test(relDlg.id) &&
-      /caseiro/gi.test(relDlg.id)
+      /bolo/gi.test(relParent.id) &&
+      /caseiro/gi.test(relParent.id)
     ) {
       const prevPrice = element.innerText;
-      element.innerText = new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-        maximumFractionDigits: 2,
-      }).format(
-        parseFloat(
-          element.innerText.replace(",", ".").replace("R$", "").trim()
-        ) * 1.33333
-      );
+      cel
+        ? (element.innerText = new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+            maximumFractionDigits: 2,
+          }).format(
+            parseFloat(
+              element.innerText.replace(",", ".").replace("R$", "").trim()
+            ) * 0.75
+          ))
+        : (element.innerText = new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+            maximumFractionDigits: 2,
+          }).format(
+            parseFloat(
+              element.innerText.replace(",", ".").replace("R$", "").trim()
+            ) * 1.33333
+          ));
       if (
         /NaN/g.test(element.innerText) ||
         /infinity/gi.test(element.innerText) ||
@@ -2141,7 +2361,13 @@ export function attemptRender(
       return true;
     } else return false;
   } catch (e) {
-    console.error(`Error executing attemptRender:\n${(e as Error).message}`);
+    setTimeout(() => {
+      document.querySelector("dialog")
+        ? console.error(
+            `Error executing attemptRender:\n${(e as Error).message}`
+          )
+        : console.warn(`No element for render attempt.`);
+    }, 500);
     return false;
   }
 }

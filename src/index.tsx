@@ -43,11 +43,8 @@ let mainRoot: voidishRoot = undefined;
   }
 })()
   .then(() => {
-    setTimeout((timeout) => {
+    setTimeout(timeout => {
       if (!document.querySelector(".caller")) {
-        console.log(
-          "!INIT: failed to load App with React context. Rendering default layout."
-        );
         (async () => {
           const mainEl = document.querySelector("main");
           try {
@@ -56,7 +53,6 @@ let mainRoot: voidishRoot = undefined;
                 "HTMLElement",
               ]);
             if (!mainRoot) mainRoot = createRoot(mainEl);
-            console.log("!INIT: rendering Home");
             mainRoot.render(<HomeFallback />);
           } catch (e) {
             console.error(
@@ -66,14 +62,13 @@ let mainRoot: voidishRoot = undefined;
             );
           }
         })().then(() => {
-          const buildAttempt = setInterval((interv) => {
+          const buildAttempt = setInterval(interv => {
             if (
               document.getElementById("logoHeader") ||
               (!document.querySelector(".spinner") &&
                 document.querySelector("td"))
             )
               clearInterval(interv);
-            console.log("!INIT: Rendering Fallback Home");
             const productRoot = document.querySelector("#productsRoot");
             try {
               if (productRoot instanceof HTMLElement) {
@@ -772,7 +767,7 @@ let mainRoot: voidishRoot = undefined;
       !document.getElementById("imagesNote") && footerNoteAttempt();
     }, 1000);
   })
-  .catch((err) => console.warn(err));
+  .catch(err => console.warn(err));
 
 try {
   const header = document.querySelector("header");
@@ -784,11 +779,4 @@ try {
     `Error rendering elements for Header:\n${(e as Error).message}`
   );
 }
-setTimeout(() => {
-  document.getElementById("logoHeader") &&
-    document.querySelector(".divProduct") &&
-    document.getElementById("divBtns")?.querySelector("button") &&
-    document.querySelector(".outp_orderTitle") &&
-    console.log(`finished`);
-}, 10000);
 watchLabels();

@@ -200,7 +200,7 @@ export default function ProductOptionsDlg({
               });
               const menuInterv = setInterval(interv => {
                 if (
-                  attemptRender(menuRoot, menuRef.current, ...optionsJsx) ||
+                  !attemptRender(menuRoot, menuRef.current, ...optionsJsx) ||
                   !menuRef.current ||
                   !document.querySelector("dialog")
                 )

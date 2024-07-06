@@ -171,10 +171,7 @@ export default function SuboptionsSubDiv({
             }. Be sure this is intended behavior`
           );
       }, 200);
-      setTimeout(() => {
-        console.log("first radio interval cleared.");
-        clearInterval(checkInterv);
-      }, 2000);
+      setTimeout(() => clearInterval(checkInterv), 2000);
     } catch (e) {
       console.error(
         `Error executing useLayoutEffect for checking first radio:\n${
