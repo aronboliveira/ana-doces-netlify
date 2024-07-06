@@ -461,7 +461,29 @@ export function handleMultipleOrder(
           tbodyProps.root && "_internalRoot" in tbodyProps.root
         }`
       );
-    const unfillableId = `${relLi.id || "unfilled"}`;
+    let productName = "";
+    try {
+      const relDlg = relLi.closest("dialog");
+      if (!(relDlg instanceof HTMLElement))
+        throw htmlElementNotFound(relDlg, `Validation of Related Modal`);
+      const productNameEl = relDlg.querySelector(".menuOpHNameChunk");
+      if (!(productNameEl instanceof HTMLElement))
+        throw htmlElementNotFound(
+          productNameEl,
+          `Validation of Related Product Name Element`
+        );
+      productName = productNameEl.id;
+    } catch (e) {
+      console.error(
+        `Error executing procedure for including main part of product id in handleMultipleOrder:\n${
+          (e as Error).message
+        }`
+      );
+    }
+    const unfillableId =
+      productName !== ""
+        ? `${productName}-${relLi.id || "unfilled"}`
+        : `${relLi.id || "unfilled"}`;
     let unfillableTitle = `${
       relLi.dataset.title
         ?.replace("gelada", "gelada de")
@@ -613,11 +635,11 @@ export function handleMultipleOrder(
         }`
       );
     }
-    if (tbodyProps.currentRef.querySelector("#tr_order_ph")) {
+    if (tbodyProps.currentRef.querySelector("#tr_order_ph"))
       tbodyProps.root.render(
         <OrderRow title={unfillableTitle} id={unfillableId} quantity={"1"} />
       );
-    } else {
+    else {
       const relTr = tbodyProps.currentRef.querySelector(`#tr_${unfillableId}`);
       if (!relTr) {
         if (context === "add") {

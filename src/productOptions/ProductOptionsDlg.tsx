@@ -323,6 +323,12 @@ export default function ProductOptionsDlg({
           const underLineIndex = optionHeader.innerText.indexOf("__") - 3;
           optionHeader.appendChild(
             Object.assign(document.createElement("span"), {
+              className: "menuOpHNameChunk",
+              id: `${sufixOptionsId
+                .replace("div-", "")
+                .slice(0, underLineIndex)
+                .replace("Pave", "Pavê")
+                .replace("pave", "pavê")}`,
               innerText: `${sufixOptionsId
                 .replace("div-", "")
                 .replaceAll("-", " ")
@@ -552,8 +558,17 @@ export default function ProductOptionsDlg({
         >
           <nav className="menuOpNav fade-in">
             <div className="flNoW menuOpMainDiv">
-              <h2 className="menuOpH">
-                <span>Opções — </span>
+              <h2
+                className="menuOpH"
+                id={`unfilled-heading-${options
+                  .map(option => option.opName)
+                  .toString()
+                  .replace("[", "")
+                  .replace("]", "")
+                  .replaceAll(",", "-")
+                  .replaceAll(" ", "_")}`}
+              >
+                <span className="menuOpHOptChunk">Opções — </span>
               </h2>
               <button
                 className="fade-in-mid btn btn-close"
