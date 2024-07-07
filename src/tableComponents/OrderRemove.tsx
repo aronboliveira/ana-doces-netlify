@@ -409,7 +409,7 @@ export function handleRemoveOrder(ref: HTMLElement): void {
           style: "currency",
           currency: "BRL",
           maximumFractionDigits: 2,
-        }).format(parseFinite(roundToTenth(diffPrice, 1, 2, true)));
+        }).format(Math.floor(parseFinite(roundToTenth(diffPrice, 1, 2, true))));
       } else if (productValue <= 0) {
         if (subopt) {
           factor = factorMaps.get(subopt);
@@ -448,7 +448,7 @@ export function handleRemoveOrder(ref: HTMLElement): void {
           style: "currency",
           currency: "BRL",
           maximumFractionDigits: 2,
-        }).format(parseFinite(roundToTenth(diffPrice, 1, 2, true)));
+        }).format(Math.floor(parseFinite(roundToTenth(diffPrice, 1, 2, true))));
       }
     }
     if (
@@ -520,7 +520,6 @@ export function handleRemoveOrder(ref: HTMLElement): void {
         tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
         setTimeout(() => {
           if (!document.getElementById("tr_order_ph")) {
-            console.log("Failed first attempt. Retrying...");
             const tab =
               document.getElementById("productsTab") ??
               document.querySelector('table[id*="products"]') ??
