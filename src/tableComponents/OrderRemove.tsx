@@ -3,6 +3,7 @@ import {
   baseFestValues,
   baseMappedValues,
   baseValues,
+  factorFestValues,
   factorMaps,
   roundToTenth,
 } from "src/handlersCmn";
@@ -336,7 +337,10 @@ export function handleRemoveOrder(ref: HTMLElement): void {
       if (!productValue)
         throw new Error(`Failed to fetch product value in map`);
       if (/ fit|fit /gi.test(opt)) productValue *= 1.1;
-      factor = factorMaps.get(subopt);
+      const factorMap = factorFestValues.get(subopt);
+      if (!factorMap)
+        throw new Error(`Failed to fetch factor map for bolo de festa product`);
+      factor = factorMap.get(opt);
       if (!factor)
         throw new Error(`Failed to get factor for product with options`);
       diffPrice =
@@ -357,7 +361,7 @@ export function handleRemoveOrder(ref: HTMLElement): void {
         style: "currency",
         currency: "BRL",
         maximumFractionDigits: 2,
-      }).format(parseFinite(roundToTenth(diffPrice, 1, 2, true)));
+      }).format(Math.floor(parseFinite(roundToTenth(diffPrice, 1, 2, true))));
     } else {
       if (productMainPart === "bolo caseiro") {
         switch (subopt) {
@@ -569,13 +573,10 @@ export function handleRemoveOrder(ref: HTMLElement): void {
         const celQuant = row.querySelector(".celQuant");
         const celName = row.querySelector(".celName");
         if (!(celQuant instanceof HTMLElement)) {
-          if (document.getElementById(`${row.id}`))
-            throw elementNotFound(
-              celQuant,
-              `validation of Relative Cell for Quantity`,
-              ["HTMLElement"]
-            );
-          else return;
+          if (document.getElementById(`${row.id}`)) {
+            console.warn(`Failed to fetch cel for quantity.`);
+            return;
+          } else return;
         }
         if (!(celName instanceof HTMLElement)) {
           if (document.getElementById(`${row.id}`))

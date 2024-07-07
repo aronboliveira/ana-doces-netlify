@@ -1937,15 +1937,12 @@ export function applyRelationBdfCases(
       appliedFactor = 1;
     }
     let relationBaseValue = baseFestValues.get(title);
-    if (!relationBaseValue) {
-      console.warn(
-        `Error getting relationBaseValue. Trying recovering...` + title
-      );
-      if (
-        (title.match(/®/g)?.length || /®/g.test(title.trim().slice(0, -1))) &&
-        /®\S/g.test(title)
-      )
-        title = title.replaceAll(/®/g, `® `).trim().replaceAll(/® ,/g, `®,`);
+    if (
+      !relationBaseValue &&
+      (title.match(/®/g)?.length || /®/g.test(title.trim().slice(0, -1))) &&
+      /®\S/g.test(title)
+    ) {
+      title = title.replaceAll(/®/g, `® `).trim().replaceAll(/® ,/g, `®,`);
       relationBaseValue = baseFestValues.get(title);
     }
     if (!relationBaseValue) {
