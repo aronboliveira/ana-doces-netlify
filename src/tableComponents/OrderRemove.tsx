@@ -63,7 +63,6 @@ export function handleRemoveOrder(ref: HTMLElement): void {
       tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
       setTimeout(() => {
         if (!document.getElementById("tr_order_ph")) {
-          console.log("Failed first attempt. Retrying...");
           const tab =
             document.getElementById("productsTab") ??
             document.querySelector('table[id*="products"]') ??
@@ -121,7 +120,6 @@ export function handleRemoveOrder(ref: HTMLElement): void {
             tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
             setTimeout(() => {
               if (!document.getElementById("tr_order_ph")) {
-                console.log("Failed first attempt. Retrying...");
                 const tab =
                   document.getElementById("productsTab") ??
                   document.querySelector('table[id*="products"]') ??
@@ -393,8 +391,6 @@ export function handleRemoveOrder(ref: HTMLElement): void {
             throw new Error(`Failed to get factor for product with options`);
         }
         if (/ fit|fit /gi.test(opt)) productValue *= 1.1;
-        console.log(`value before factor: ${productValue}`);
-        console.log(`value after factor: ${productValue * factor}`);
         diffPrice =
           parseFinite(
             `${total.innerText
@@ -477,13 +473,11 @@ export function handleRemoveOrder(ref: HTMLElement): void {
       total.innerText = iniPrice;
       const tbody = document.getElementById("tbodyOrders");
       if (total.innerText.trim() === "R$ 0,00" && tbody) {
-        console.log("No price detected. Trying recover...");
         if (!tbodyProps.root || !tbodyProps.root._internalRoot)
           tbodyProps.root = createRoot(tbody);
         tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
         setTimeout(() => {
           if (!document.getElementById("tr_order_ph")) {
-            console.log("Failed first attempt. Retrying...");
             const tab =
               document.getElementById("productsTab") ??
               document.querySelector('table[id*="products"]') ??
@@ -594,7 +588,6 @@ export function handleRemoveOrder(ref: HTMLElement): void {
             tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
             setTimeout(() => {
               if (!document.getElementById("tr_order_ph")) {
-                console.log("Failed first attempt. Retrying...");
                 const tab =
                   document.getElementById("productsTab") ??
                   document.querySelector('table[id*="products"]') ??

@@ -761,7 +761,6 @@ export function handleMultipleOrder(
                         );
                         setTimeout(() => {
                           if (!document.getElementById("tr_order_ph")) {
-                            console.log("Failed first attempt. Retrying...");
                             const tab =
                               document.getElementById("productsTab") ??
                               document.querySelector('table[id*="products"]') ??
@@ -839,7 +838,6 @@ export function handleMultipleOrder(
                     );
                     setTimeout(() => {
                       if (!document.getElementById("tr_order_ph")) {
-                        console.log("Failed first attempt. Retrying...");
                         const tab =
                           document.getElementById("productsTab") ??
                           document.querySelector('table[id*="products"]') ??
@@ -964,7 +962,6 @@ export function handleMultipleOrder(
             );
             setTimeout(() => {
               if (!document.getElementById("tr_order_ph")) {
-                console.log("Failed first attempt. Retrying...");
                 const tab =
                   document.getElementById("productsTab") ??
                   document.querySelector('table[id*="products"]') ??
@@ -986,7 +983,6 @@ export function handleMultipleOrder(
                 tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
                 setTimeout(() => {
                   if (!document.getElementById("tr_order_ph")) {
-                    console.log("Failed first attempt. Retrying...");
                     const tab =
                       document.getElementById("productsTab") ??
                       document.querySelector('table[id*="products"]') ??
@@ -2337,11 +2333,7 @@ export function attemptRender(
     if (!(root instanceof Object && "_internalRoot" in root))
       throw typeError(root, `validation of root in attemptRender`, ["Root"]);
     if (!(parent instanceof HTMLElement))
-      throw htmlElementNotFound(
-        parent,
-        `validation of parent argument for attemptRender`,
-        ["HTMLElement"]
-      );
+      throw new Error(`Failed to fetch parent element during render attempt.`);
     if (
       !(
         Array.isArray(children) &&

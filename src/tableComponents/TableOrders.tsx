@@ -106,7 +106,6 @@ export function TableOrders(): JSX.Element {
                 tbodyProps.root.render(<OrderRow id="order_ph" title="" />);
                 setTimeout(() => {
                   if (!document.getElementById("tr_order_ph")) {
-                    console.log("Failed first attempt. Retrying...");
                     const tab =
                       document.getElementById("productsTab") ??
                       document.querySelector('table[id*="products"]') ??
@@ -230,16 +229,9 @@ export function TableOrders(): JSX.Element {
                       getComputedStyle(row).height.replace("px", "").trim()
                     ) <= 0
                   ) {
-                    console.log(
-                      `No innerHTML in row ${row.id}. Attempting last recover...`
-                    );
-                    console.log(
-                      document.getElementById(`${rowId}`) || "ROW NOT FOUND"
-                    );
                     const retryRow = document.getElementById(`${rowId}`) ?? row;
                     tbodyProps.roots[`${rowId || retryRow.id}`] =
                       createRoot(retryRow);
-                    console.log(tbodyProps.roots[`${rowId || retryRow.id}`]);
                     tbodyProps.roots[`${rowId || retryRow.id}`].unmount();
                     document.getElementById(`${row.id}`)?.remove();
                   }
@@ -315,7 +307,6 @@ export function TableOrders(): JSX.Element {
                   );
                   setTimeout(() => {
                     if (!document.getElementById("tr_order_ph")) {
-                      console.log("Failed first attempt. Retrying...");
                       const tab =
                         document.getElementById("productsTab") ??
                         document.querySelector('table[id*="products"]') ??
