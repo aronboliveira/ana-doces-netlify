@@ -81,6 +81,58 @@ export default function DirectCaller({
         title={`Clique aqui para ${innerTextL
           .toLowerCase()
           .replace("chame", "chamar")}`}
+        onClick={ev => {
+          ev.preventDefault();
+          const anchor = ev.currentTarget.querySelector("a");
+          try {
+            if (!(anchor instanceof HTMLAnchorElement))
+              throw htmlElementNotFound(anchor, `Validation of call instance`, [
+                "HTMLAnchorElement",
+              ]);
+            const totalEl = document.getElementById("total");
+            if (!(totalEl instanceof HTMLElement))
+              throw htmlElementNotFound(
+                totalEl,
+                `HTMLElement for copying total price of message to clipboard`,
+                ["HTMLElement"]
+              );
+            const copyAlert = document.getElementById("copyAlert");
+            const orderMsg = concatProducts(
+              `_Olá, Ana_! 🖐 Gostaria de fazer um pedido:\n*Preço total 💲*:\n\t${
+                totalEl.innerText || "Não calculado"
+              }.\n*Produtos do pedido 🍰*:`
+            );
+            navigator.clipboard
+              .writeText(orderMsg)
+              .then(() => {
+                switchAlertOp(
+                  copyAlert,
+                  orderMsg,
+                  "copying message for WhatsApp"
+                );
+              })
+              .catch(err =>
+                console.error(`Error copying message: ${err.message}`)
+              );
+            orderMsg !==
+            "_Olá, Ana_! 🖐 Gostaria de fazer um pedido:*Preço total 💲*: R$ 0,00.*Produtos do pedido 🍰*: "
+              ? (anchor.href = `https://whatsa.me/5521983022926/?t=${orderMsg
+                  .replaceAll(" ", "+")
+                  .replace("pedido:", "pedido:+")
+                  .replace("*Produtos", "+*Produtos")
+                  .replace("🍰*:", "🍰*:+")}`)
+              : (anchor.href = `https://whatsa.me/5521983022926/?t=_Olá, Ana_! 🖐 Gostaria de fazer um pedido:\n*Produtos do pedido 🍰*:\n`);
+            open(anchor.href, "_blank");
+          } catch (e) {
+            console.error(
+              `Error executing callback for ${
+                ev.currentTarget.id ||
+                ev.currentTarget.className ||
+                ev.currentTarget.tagName
+              }:\n${(e as Error).message}`
+            );
+          }
+        }}
       >
         {readCase()}
         <a
@@ -97,6 +149,7 @@ export default function DirectCaller({
             .replace("chame", "chamar")}`}
           style={{ zIndex: 10, width: "fit-content" }}
           onClick={ev => {
+            ev.preventDefault();
             try {
               const totalEl = document.getElementById("total");
               if (!(totalEl instanceof HTMLElement))
@@ -123,6 +176,15 @@ export default function DirectCaller({
                 .catch(err =>
                   console.error(`Error copying message: ${err.message}`)
                 );
+              orderMsg !==
+              "_Olá, Ana_! 🖐 Gostaria de fazer um pedido:\n*Preço total 💲*:\n\tR$ 0,00.*Produtos do pedido 🍰*:"
+                ? (ev.currentTarget.href = `https://whatsa.me/5521983022926/?t=${orderMsg
+                    .replaceAll(" ", "+")
+                    .replace("pedido:", "pedido:+")
+                    .replace("*Produtos", "+*Produtos")
+                    .replace("🍰*:", "🍰*:+")}`)
+                : (ev.currentTarget.href = `https://whatsa.me/5521983022926/?t=_Olá, Ana_! 🖐 Gostaria de fazer um pedido:\n*Produtos do pedido 🍰*:\n`);
+              open(ev.currentTarget.href, "_blank");
             } catch (e) {
               console.error(
                 `Error executing callback for ${

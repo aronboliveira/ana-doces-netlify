@@ -112,7 +112,7 @@ export default function CopyButtonsDiv(): JSX.Element {
         target="_blank"
         rel="noopener noreferrer nofollow contact"
         color="#ffff"
-        href="https://whatsa.me/5521983022926/?t=Ol%C3%A1,+Ana!+Gostaria+de+fazer+um+pedido+%E2%9C%89%F0%9F%8D%B0"
+        href='https://whatsa.me/5521983022926/?t=Ol%C3%A1,+Ana!+*(Substitua+copiando+sua+mensagem+aqui+com+"_Colar_"*)+%E2%9C%89%F0%9F%8D%B0'
         hreflang="pt-BR"
         ComponentCase="whatsapp"
       />
