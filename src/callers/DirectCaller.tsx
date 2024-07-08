@@ -4,7 +4,9 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
 import {
   capitalizeFirstLetter,
+  concatProducts,
   normalizeSpacing,
+  switchAlertOp,
   syncAriaStates,
 } from "../handlersCmn";
 import { DirectCallerProps } from "../declarations/interfaces";
@@ -76,6 +78,9 @@ export default function DirectCaller({
           "!",
           ""
         )}
+        title={`Clique aqui para ${innerTextL
+          .toLowerCase()
+          .replace("chame", "chamar")}`}
       >
         {readCase()}
         <a
@@ -91,6 +96,43 @@ export default function DirectCaller({
             .toLowerCase()
             .replace("chame", "chamar")}`}
           style={{ zIndex: 10, width: "fit-content" }}
+          onClick={ev => {
+            try {
+              const totalEl = document.getElementById("total");
+              if (!(totalEl instanceof HTMLElement))
+                throw htmlElementNotFound(
+                  totalEl,
+                  `HTMLElement for copying total price of message to clipboard`,
+                  ["HTMLElement"]
+                );
+              const copyAlert = document.getElementById("copyAlert");
+              const orderMsg = concatProducts(
+                `_Olá, Ana_! 🖐 Gostaria de fazer um pedido:\n*Preço total 💲*:\n\t${
+                  totalEl.innerText || "Não calculado"
+                }.\n*Produtos do pedido 🍰*:`
+              );
+              navigator.clipboard
+                .writeText(orderMsg)
+                .then(() => {
+                  switchAlertOp(
+                    copyAlert,
+                    orderMsg,
+                    "copying message for WhatsApp"
+                  );
+                })
+                .catch(err =>
+                  console.error(`Error copying message: ${err.message}`)
+                );
+            } catch (e) {
+              console.error(
+                `Error executing callback for ${
+                  ev.currentTarget.id ||
+                  ev.currentTarget.className ||
+                  ev.currentTarget.tagName
+                }:\n${(e as Error).message}`
+              );
+            }
+          }}
         >{`${innerTextL}`}</a>
       </button>
     </ErrorBoundary>

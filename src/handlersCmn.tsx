@@ -1055,61 +1055,6 @@ export function addListenerCopyMessage() {
         ["HTMLElement"]
       );
     const copyAlert = document.getElementById("copyAlert");
-    const concatProducts = (orderMsg: string): string => {
-      try {
-        if (!(tbodyProps.currentRef instanceof HTMLElement))
-          throw htmlElementNotFound(
-            tbodyProps.currentRef,
-            `Reference for Orders in Table Body`,
-            ["HTMLElement"]
-          );
-        Array.from(tbodyProps.currentRef.querySelectorAll("tr")).forEach(tr => {
-          try {
-            const titleEl = tr.querySelector(".outp_orderTitle");
-            if (!(titleEl instanceof HTMLElement))
-              throw htmlElementNotFound(
-                titleEl,
-                `Title Element for Table Row id ${tr.id || "Unidentified"}`,
-                ["HTMLElement"]
-              );
-            if (
-              !/\w/g.test(titleEl.innerText) ||
-              /undefined/gi.test(titleEl.innerText) ||
-              /unfilled/gi.test(titleEl.innerText) ||
-              /null/gi.test(titleEl.innerText)
-            )
-              throw stringError(
-                titleEl.innerText,
-                "letters, not containing undefined, unfilled or null"
-              );
-            const title = titleEl.innerText;
-            const quantEl = tr.querySelector(".outp_orderQuant");
-            if (!(quantEl instanceof HTMLElement))
-              throw htmlElementNotFound(
-                quantEl,
-                `quantity Element for Table Row id ${tr.id || "Unidentified"}`,
-                ["HTMLElement"]
-              );
-            const quant = quantEl.innerText;
-            if (!Number.isFinite(parseInt(quant)))
-              console.warn(
-                `Quantity of product ??? not finite. Process aborted.`
-              );
-            orderMsg += `\n\t${title} (${quant})`;
-          } catch (eC) {
-            console.error(
-              `Error concatening product for clipboard message:${
-                (eC as Error).message
-              }`
-            );
-          }
-        });
-      } catch (eM) {
-        console.error(`Error generating clipboard message:
-      ${(eM as Error).message}`);
-      }
-      return orderMsg;
-    };
     try {
       const copyBtnWp = document.getElementById("copyBtnWp");
       if (!(copyBtnWp instanceof HTMLButtonElement))
@@ -1168,6 +1113,61 @@ export function addListenerCopyMessage() {
     console.error(`Error executing addListenerCopyMessage:
     ${(e as Error).message}`);
   }
+}
+
+export function concatProducts(orderMsg: string): string {
+  try {
+    const tbody =
+      document.getElementById("tbodyOrders") ||
+      Array.from(document.querySelectorAll("tbody")).at(-1);
+    if (!(tbody instanceof HTMLElement))
+      throw htmlElementNotFound(tbody, `Reference for Orders in Table Body`, [
+        "HTMLElement",
+      ]);
+    Array.from(tbody.querySelectorAll("tr")).forEach(tr => {
+      try {
+        const titleEl = tr.querySelector(".outp_orderTitle");
+        if (!(titleEl instanceof HTMLElement))
+          throw htmlElementNotFound(
+            titleEl,
+            `Title Element for Table Row id ${tr.id || "Unidentified"}`,
+            ["HTMLElement"]
+          );
+        if (
+          !/\w/g.test(titleEl.innerText) ||
+          /undefined/gi.test(titleEl.innerText) ||
+          /unfilled/gi.test(titleEl.innerText) ||
+          /null/gi.test(titleEl.innerText)
+        )
+          throw stringError(
+            titleEl.innerText,
+            "letters, not containing undefined, unfilled or null"
+          );
+        const title = titleEl.innerText;
+        const quantEl = tr.querySelector(".outp_orderQuant");
+        if (!(quantEl instanceof HTMLElement))
+          throw htmlElementNotFound(
+            quantEl,
+            `quantity Element for Table Row id ${tr.id || "Unidentified"}`,
+            ["HTMLElement"]
+          );
+        const quant = quantEl.innerText;
+        if (!Number.isFinite(parseInt(quant)))
+          console.warn(`Quantity of product ??? not finite. Process aborted.`);
+        orderMsg += `\n\t${title} (${quant})`;
+      } catch (eC) {
+        console.error(
+          `Error concatening product for clipboard message:${
+            (eC as Error).message
+          }`
+        );
+      }
+    });
+  } catch (eM) {
+    console.error(`Error generating clipboard message:
+    ${(eM as Error).message}`);
+  }
+  return orderMsg;
 }
 
 export function switchAlertOp(
