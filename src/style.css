@@ -1032,7 +1032,7 @@ table th span.tabCelSpan {
 }
 
 #copyAlert {
-  transform: translate(0.7rem, 2.7rem);
+  transform: translate(-1.3rem, 2.7rem);
   color: #57a7bc;
 }
 
@@ -1302,7 +1302,7 @@ button.opBtn {
 }
 @media screen and (max-width: 1420px) {
   #copyAlert {
-    transform: translate(0.7rem, -4.6rem);
+    transform: translate(0.7rem, -7rem);
     color: #57a7bc;
   }
   div#divBtns,
