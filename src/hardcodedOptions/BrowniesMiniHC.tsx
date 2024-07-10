@@ -283,30 +283,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
@@ -337,8 +314,96 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Doce-de-Leite__05-002"
-                id="li-Doce-de-Leite__05-002"
+                className="opLi opLi-Brigadeiro-de-Pistache__05-002"
+                id="li-Brigadeiro-de-Pistache__05-002"
+                data-title="Mini brownie recheado brigadeiro de pistache"
+                aria-hidden="false"
+              >
+                <div
+                  className="fade-in-mid opLiDiv opInfoDiv opInfoDiv-Brigadeiro-de-Pistache"
+                  aria-hidden="false"
+                >
+                  <strong
+                    className="opSpan opSpanName opSpan-Brigadeiro-de-Pistache"
+                    id="Brigadeiro-de-Pistache-title"
+                    aria-hidden="false"
+                  >
+                    Brigadeiro de Pistache
+                  </strong>
+                  <span
+                    className="opSpan opSpanDesc opSpan-Brigadeiro-de-Pistache"
+                    id="Brigadeiro-de-Pistache-desc"
+                    aria-hidden="false"
+                  >
+                    Acentuado sabor do pistache em um recheio cremoso único.
+                  </span>
+                  <span
+                    className="opSpan opSpanPrice opSpan-Brigadeiro-de-Pistache"
+                    id="Brigadeiro-de-Pistache-price"
+                    aria-hidden="false"
+                  >
+                    R$ 4,00
+                  </span>
+                </div>
+                <div
+                  className="fade-in-late opLiDiv opBtnsDiv opBtnsDiv-Brigadeiro-de-Pistache"
+                  id="Brigadeiro-de-Pistache-btnsDiv"
+                  aria-hidden="false"
+                >
+                  <span
+                    className="addAlert"
+                    id="addAlert__05-002"
+                    aria-hidden="false"
+                  >
+                    Item adicionado!
+                  </span>
+                  <button
+                    type="button"
+                    className="biBtn opBtn opBtnAdd opBtn-Brigadeiro-de-Pistache opBtnAdd-Brigadeiro-de-Pistache"
+                    id="btnAdd__05-002"
+                    aria-hidden="false"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-plus-square-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
+                    </svg>
+                  </button>
+                  <span
+                    className="minusAlert"
+                    id="minusAlert__05-002"
+                    aria-hidden="false"
+                  >
+                    Item removido!
+                  </span>
+                  <button
+                    type="button"
+                    className="biBtn opBtn opBtnRemove opBtn-Brigadeiro-de-Pistache opBtnRemove-Brigadeiro-de-Pistache"
+                    id="btnSubt__05-002"
+                    aria-hidden="false"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-dash-square-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm2.5 7.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1"></path>
+                    </svg>
+                  </button>
+                  <span className="errorAlert" aria-hidden="false"></span>
+                </div>
+              </li>
+              <li
+                className="opLi opLi-Doce-de-Leite__05-003"
+                id="li-Doce-de-Leite__05-003"
                 data-title="Mini brownie recheado doce de leite"
                 aria-hidden="false"
               >
@@ -376,7 +441,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-002"
+                    id="addAlert__05-003"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -384,7 +449,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Doce-de-Leite opBtnAdd-Doce-de-Leite"
-                    id="btnAdd__05-002"
+                    id="btnAdd__05-003"
                     aria-hidden="false"
                   >
                     <svg
@@ -395,35 +460,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-002"
+                    id="minusAlert__05-003"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -431,7 +473,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Doce-de-Leite opBtnRemove-Doce-de-Leite"
-                    id="btnSubt__05-002"
+                    id="btnSubt__05-003"
                     aria-hidden="false"
                   >
                     <svg
@@ -449,8 +491,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Kinder-Bueno®__05-003"
-                id="li-Kinder-Bueno®__05-003"
+                className="opLi opLi-Kinder-Bueno®__05-004"
+                id="li-Kinder-Bueno®__05-004"
                 data-title="Mini brownie recheado kinder bueno®"
                 aria-hidden="false"
               >
@@ -496,7 +538,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-003"
+                    id="addAlert__05-004"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -504,7 +546,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Kinder-Bueno® opBtnAdd-Kinder-Bueno®"
-                    id="btnAdd__05-003"
+                    id="btnAdd__05-004"
                     aria-hidden="false"
                   >
                     <svg
@@ -515,35 +557,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-003"
+                    id="minusAlert__05-004"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -551,7 +570,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Kinder-Bueno® opBtnRemove-Kinder-Bueno®"
-                    id="btnSubt__05-003"
+                    id="btnSubt__05-004"
                     aria-hidden="false"
                   >
                     <svg
@@ -569,8 +588,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Kit-Kat®__05-004"
-                id="li-Kit-Kat®__05-004"
+                className="opLi opLi-Kit-Kat®__05-005"
+                id="li-Kit-Kat®__05-005"
                 data-title="Mini brownie recheado kit kat®"
                 aria-hidden="false"
               >
@@ -616,7 +635,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-004"
+                    id="addAlert__05-005"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -624,7 +643,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Kit-Kat® opBtnAdd-Kit-Kat®"
-                    id="btnAdd__05-004"
+                    id="btnAdd__05-005"
                     aria-hidden="false"
                   >
                     <svg
@@ -635,35 +654,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-004"
+                    id="minusAlert__05-005"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -671,7 +667,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Kit-Kat® opBtnRemove-Kit-Kat®"
-                    id="btnSubt__05-004"
+                    id="btnSubt__05-005"
                     aria-hidden="false"
                   >
                     <svg
@@ -689,8 +685,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Limão__05-005"
-                id="li-Limão__05-005"
+                className="opLi opLi-Limão__05-006"
+                id="li-Limão__05-006"
                 data-title="Mini brownie recheado limão"
                 aria-hidden="false"
               >
@@ -728,7 +724,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-005"
+                    id="addAlert__05-006"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -736,7 +732,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Limão opBtnAdd-Limão"
-                    id="btnAdd__05-005"
+                    id="btnAdd__05-006"
                     aria-hidden="false"
                   >
                     <svg
@@ -747,35 +743,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-005"
+                    id="minusAlert__05-006"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -783,7 +756,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Limão opBtnRemove-Limão"
-                    id="btnSubt__05-005"
+                    id="btnSubt__05-006"
                     aria-hidden="false"
                   >
                     <svg
@@ -801,8 +774,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Maracujá__05-006"
-                id="li-Maracujá__05-006"
+                className="opLi opLi-Maracujá__05-007"
+                id="li-Maracujá__05-007"
                 data-title="Mini brownie recheado maracujá"
                 aria-hidden="false"
               >
@@ -840,7 +813,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-006"
+                    id="addAlert__05-007"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -848,7 +821,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Maracujá opBtnAdd-Maracujá"
-                    id="btnAdd__05-006"
+                    id="btnAdd__05-007"
                     aria-hidden="false"
                   >
                     <svg
@@ -859,35 +832,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-006"
+                    id="minusAlert__05-007"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -895,7 +845,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Maracujá opBtnRemove-Maracujá"
-                    id="btnSubt__05-006"
+                    id="btnSubt__05-007"
                     aria-hidden="false"
                   >
                     <svg
@@ -913,8 +863,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Ninho®__05-007"
-                id="li-Ninho®__05-007"
+                className="opLi opLi-Ninho®__05-008"
+                id="li-Ninho®__05-008"
                 data-title="Mini brownie recheado ninho®"
                 aria-hidden="false"
               >
@@ -960,7 +910,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-007"
+                    id="addAlert__05-008"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -968,7 +918,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Ninho® opBtnAdd-Ninho®"
-                    id="btnAdd__05-007"
+                    id="btnAdd__05-008"
                     aria-hidden="false"
                   >
                     <svg
@@ -979,35 +929,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-007"
+                    id="minusAlert__05-008"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -1015,7 +942,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Ninho® opBtnRemove-Ninho®"
-                    id="btnSubt__05-007"
+                    id="btnSubt__05-008"
                     aria-hidden="false"
                   >
                     <svg
@@ -1033,8 +960,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Ninho®-com-Nutella®__05-008"
-                id="li-Ninho®-com-Nutella®__05-008"
+                className="opLi opLi-Ninho®-com-Nutella®__05-009"
+                id="li-Ninho®-com-Nutella®__05-009"
                 data-title="Mini brownie recheado ninho® com nutella®"
                 aria-hidden="false"
               >
@@ -1105,7 +1032,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-008"
+                    id="addAlert__05-009"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -1113,7 +1040,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Ninho®-com-Nutella® opBtnAdd-Ninho®-com-Nutella®"
-                    id="btnAdd__05-008"
+                    id="btnAdd__05-009"
                     aria-hidden="false"
                   >
                     <svg
@@ -1124,35 +1051,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-008"
+                    id="minusAlert__05-009"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -1160,7 +1064,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Ninho®-com-Nutella® opBtnRemove-Ninho®-com-Nutella®"
-                    id="btnSubt__05-008"
+                    id="btnSubt__05-009"
                     aria-hidden="false"
                   >
                     <svg
@@ -1178,8 +1082,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Nutella®__05-009"
-                id="li-Nutella®__05-009"
+                className="opLi opLi-Nutella®__05-010"
+                id="li-Nutella®__05-010"
                 data-title="Mini brownie recheado nutella®"
                 aria-hidden="false"
               >
@@ -1225,7 +1129,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-009"
+                    id="addAlert__05-010"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -1233,7 +1137,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Nutella® opBtnAdd-Nutella®"
-                    id="btnAdd__05-009"
+                    id="btnAdd__05-010"
                     aria-hidden="false"
                   >
                     <svg
@@ -1244,35 +1148,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-009"
+                    id="minusAlert__05-010"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -1280,7 +1161,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Nutella® opBtnRemove-Nutella®"
-                    id="btnSubt__05-009"
+                    id="btnSubt__05-010"
                     aria-hidden="false"
                   >
                     <svg
@@ -1298,8 +1179,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Nutella®-com-Morango__05-010"
-                id="li-Nutella®-com-Morango__05-010"
+                className="opLi opLi-Nutella®-com-Morango__05-011"
+                id="li-Nutella®-com-Morango__05-011"
                 data-title="Mini brownie recheado nutella® com morango"
                 aria-hidden="false"
               >
@@ -1359,7 +1240,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-010"
+                    id="addAlert__05-011"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -1367,7 +1248,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Nutella®-com-Morango opBtnAdd-Nutella®-com-Morango"
-                    id="btnAdd__05-010"
+                    id="btnAdd__05-011"
                     aria-hidden="false"
                   >
                     <svg
@@ -1378,35 +1259,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-010"
+                    id="minusAlert__05-011"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -1414,7 +1272,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Nutella®-com-Morango opBtnRemove-Nutella®-com-Morango"
-                    id="btnSubt__05-010"
+                    id="btnSubt__05-011"
                     aria-hidden="false"
                   >
                     <svg
@@ -1432,8 +1290,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Oreo®__05-011"
-                id="li-Oreo®__05-011"
+                className="opLi opLi-Oreo®__05-012"
+                id="li-Oreo®__05-012"
                 data-title="Mini brownie recheado oreo®"
                 aria-hidden="false"
               >
@@ -1479,7 +1337,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-011"
+                    id="addAlert__05-012"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -1487,7 +1345,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Oreo® opBtnAdd-Oreo®"
-                    id="btnAdd__05-011"
+                    id="btnAdd__05-012"
                     aria-hidden="false"
                   >
                     <svg
@@ -1498,35 +1356,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-011"
+                    id="minusAlert__05-012"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -1534,7 +1369,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Oreo® opBtnRemove-Oreo®"
-                    id="btnSubt__05-011"
+                    id="btnSubt__05-012"
                     aria-hidden="false"
                   >
                     <svg
@@ -1552,8 +1387,8 @@ export default function BrowniesMiniHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Prestígio®__05-012"
-                id="li-Prestígio®__05-012"
+                className="opLi opLi-Prestígio®__05-013"
+                id="li-Prestígio®__05-013"
                 data-title="Mini brownie recheado prestígio®"
                 aria-hidden="false"
               >
@@ -1599,7 +1434,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__05-012"
+                    id="addAlert__05-013"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -1607,7 +1442,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Prestígio® opBtnAdd-Prestígio®"
-                    id="btnAdd__05-012"
+                    id="btnAdd__05-013"
                     aria-hidden="false"
                   >
                     <svg
@@ -1618,35 +1453,12 @@ export default function BrowniesMiniHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-              M2 0
-              a 2 2 0 0 0-2 2
-              v12
-              a 2 2 0 0 0 2 2
-              h12
-              a 2 2 0 0 0 2-2
-              V2
-              a 2 2 0 0 0-2-2
-              zm6.5 4.5
-              v3
-              h3
-              a .5 .5 0 0 1 0 1
-              h-3
-              v3
-              a .5 .5 0 0 1-1 0
-              v-3
-              h-3
-              a .5 .5 0 0 1 0-1
-              h3
-              v-3
-              a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__05-012"
+                    id="minusAlert__05-013"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -1654,7 +1466,7 @@ export default function BrowniesMiniHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Prestígio® opBtnRemove-Prestígio®"
-                    id="btnSubt__05-012"
+                    id="btnSubt__05-013"
                     aria-hidden="false"
                   >
                     <svg
