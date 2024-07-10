@@ -225,8 +225,97 @@ export default function CookiesHC(): JSX.Element {
             <menu className="menuOpMenu" aria-hidden="false">
               <SearchBar />
               <li
-                className="opLi opLi-Chocolatudo__08-001"
-                id="li-Chocolatudo__08-001"
+                className="opLi opLi-Chocolate-com-Maracujá__08-001"
+                id="li-Chocolate-com-Maracujá__08-001"
+                data-title="Cookie recheado chocolate com maracujá"
+                aria-hidden="false"
+              >
+                <div
+                  className="fade-in-mid opLiDiv opInfoDiv opInfoDiv-Chocolate-com-Maracujá"
+                  aria-hidden="false"
+                >
+                  <strong
+                    className="opSpan opSpanName opSpan-Chocolate-com-Maracujá"
+                    id="Chocolate-com-Maracujá-title"
+                    aria-hidden="false"
+                  >
+                    Chocolate com Maracujá
+                  </strong>
+                  <span
+                    className="opSpan opSpanDesc opSpan-Chocolate-com-Maracujá"
+                    id="Chocolate-com-Maracujá-desc"
+                    aria-hidden="false"
+                  >
+                    Deliciosa massa de chocolate preto meio-amargo combinado com
+                    o frescor do recheio de brigadeiro de maracujá!
+                  </span>
+                  <span
+                    className="opSpan opSpanPrice opSpan-Chocolate-com-Maracujá"
+                    id="Chocolate-com-Maracujá-price"
+                    aria-hidden="false"
+                  >
+                    R$ 10,00
+                  </span>
+                </div>
+                <div
+                  className="fade-in-late opLiDiv opBtnsDiv opBtnsDiv-Chocolate-com-Maracujá"
+                  id="Chocolate-com-Maracujá-btnsDiv"
+                  aria-hidden="false"
+                >
+                  <span
+                    className="addAlert"
+                    id="addAlert__08-001"
+                    aria-hidden="false"
+                  >
+                    Item adicionado!
+                  </span>
+                  <button
+                    type="button"
+                    className="biBtn opBtn opBtnAdd opBtn-Chocolate-com-Maracujá opBtnAdd-Chocolate-com-Maracujá"
+                    id="btnAdd__08-001"
+                    aria-hidden="false"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-plus-square-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
+                    </svg>
+                  </button>
+                  <span
+                    className="minusAlert"
+                    id="minusAlert__08-001"
+                    aria-hidden="false"
+                  >
+                    Item removido!
+                  </span>
+                  <button
+                    type="button"
+                    className="biBtn opBtn opBtnRemove opBtn-Chocolate-com-Maracujá opBtnRemove-Chocolate-com-Maracujá"
+                    id="btnSubt__08-001"
+                    aria-hidden="false"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-dash-square-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm2.5 7.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1"></path>
+                    </svg>
+                  </button>
+                  <span className="errorAlert" aria-hidden="false"></span>
+                </div>
+              </li>
+              <li
+                className="opLi opLi-Chocolatudo__08-002"
+                id="li-Chocolatudo__08-002"
                 data-title="Cookie recheado chocolatudo"
                 aria-hidden="false"
               >
@@ -264,7 +353,7 @@ export default function CookiesHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__08-001"
+                    id="addAlert__08-002"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -272,7 +361,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Chocolatudo opBtnAdd-Chocolatudo"
-                    id="btnAdd__08-001"
+                    id="btnAdd__08-002"
                     aria-hidden="false"
                   >
                     <svg
@@ -283,35 +372,12 @@ export default function CookiesHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-            M2 0
-            a 2 2 0 0 0-2 2
-            v12
-            a 2 2 0 0 0 2 2
-            h12
-            a 2 2 0 0 0 2-2
-            V2
-            a 2 2 0 0 0-2-2
-            zm6.5 4.5
-            v3
-            h3
-            a .5 .5 0 0 1 0 1
-            h-3
-            v3
-            a .5 .5 0 0 1-1 0
-            v-3
-            h-3
-            a .5 .5 0 0 1 0-1
-            h3
-            v-3
-            a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__08-001"
+                    id="minusAlert__08-002"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -319,7 +385,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Chocolatudo opBtnRemove-Chocolatudo"
-                    id="btnSubt__08-001"
+                    id="btnSubt__08-002"
                     aria-hidden="false"
                   >
                     <svg
@@ -337,8 +403,8 @@ export default function CookiesHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Duochoco__08-002"
-                id="li-Duochoco__08-002"
+                className="opLi opLi-Duochoco__08-003"
+                id="li-Duochoco__08-003"
                 data-title="Cookie recheado duochoco"
                 aria-hidden="false"
               >
@@ -376,7 +442,7 @@ export default function CookiesHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__08-002"
+                    id="addAlert__08-003"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -384,7 +450,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Duochoco opBtnAdd-Duochoco"
-                    id="btnAdd__08-002"
+                    id="btnAdd__08-003"
                     aria-hidden="false"
                   >
                     <svg
@@ -395,35 +461,12 @@ export default function CookiesHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-            M2 0
-            a 2 2 0 0 0-2 2
-            v12
-            a 2 2 0 0 0 2 2
-            h12
-            a 2 2 0 0 0 2-2
-            V2
-            a 2 2 0 0 0-2-2
-            zm6.5 4.5
-            v3
-            h3
-            a .5 .5 0 0 1 0 1
-            h-3
-            v3
-            a .5 .5 0 0 1-1 0
-            v-3
-            h-3
-            a .5 .5 0 0 1 0-1
-            h3
-            v-3
-            a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__08-002"
+                    id="minusAlert__08-003"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -431,7 +474,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Duochoco opBtnRemove-Duochoco"
-                    id="btnSubt__08-002"
+                    id="btnSubt__08-003"
                     aria-hidden="false"
                   >
                     <svg
@@ -449,8 +492,8 @@ export default function CookiesHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Ferrero-Rocher®__08-003"
-                id="li-Ferrero-Rocher®__08-003"
+                className="opLi opLi-Ferrero-Rocher®__08-004"
+                id="li-Ferrero-Rocher®__08-004"
                 data-title="Cookie recheado ferrero rocher®"
                 aria-hidden="false"
               >
@@ -496,7 +539,7 @@ export default function CookiesHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__08-003"
+                    id="addAlert__08-004"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -504,7 +547,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Ferrero-Rocher® opBtnAdd-Ferrero-Rocher®"
-                    id="btnAdd__08-003"
+                    id="btnAdd__08-004"
                     aria-hidden="false"
                   >
                     <svg
@@ -515,35 +558,12 @@ export default function CookiesHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-            M2 0
-            a 2 2 0 0 0-2 2
-            v12
-            a 2 2 0 0 0 2 2
-            h12
-            a 2 2 0 0 0 2-2
-            V2
-            a 2 2 0 0 0-2-2
-            zm6.5 4.5
-            v3
-            h3
-            a .5 .5 0 0 1 0 1
-            h-3
-            v3
-            a .5 .5 0 0 1-1 0
-            v-3
-            h-3
-            a .5 .5 0 0 1 0-1
-            h3
-            v-3
-            a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__08-003"
+                    id="minusAlert__08-004"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -551,7 +571,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Ferrero-Rocher® opBtnRemove-Ferrero-Rocher®"
-                    id="btnSubt__08-003"
+                    id="btnSubt__08-004"
                     aria-hidden="false"
                   >
                     <svg
@@ -569,8 +589,8 @@ export default function CookiesHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Nutella®__08-004"
-                id="li-Nutella®__08-004"
+                className="opLi opLi-Nutella®__08-005"
+                id="li-Nutella®__08-005"
                 data-title="Cookie recheado nutella®"
                 aria-hidden="false"
               >
@@ -616,7 +636,7 @@ export default function CookiesHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__08-004"
+                    id="addAlert__08-005"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -624,7 +644,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Nutella® opBtnAdd-Nutella®"
-                    id="btnAdd__08-004"
+                    id="btnAdd__08-005"
                     aria-hidden="false"
                   >
                     <svg
@@ -635,35 +655,12 @@ export default function CookiesHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-            M2 0
-            a 2 2 0 0 0-2 2
-            v12
-            a 2 2 0 0 0 2 2
-            h12
-            a 2 2 0 0 0 2-2
-            V2
-            a 2 2 0 0 0-2-2
-            zm6.5 4.5
-            v3
-            h3
-            a .5 .5 0 0 1 0 1
-            h-3
-            v3
-            a .5 .5 0 0 1-1 0
-            v-3
-            h-3
-            a .5 .5 0 0 1 0-1
-            h3
-            v-3
-            a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__08-004"
+                    id="minusAlert__08-005"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -671,7 +668,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Nutella® opBtnRemove-Nutella®"
-                    id="btnSubt__08-004"
+                    id="btnSubt__08-005"
                     aria-hidden="false"
                   >
                     <svg
@@ -689,8 +686,8 @@ export default function CookiesHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Pistache__08-005"
-                id="li-Pistache__08-005"
+                className="opLi opLi-Pistache__08-006"
+                id="li-Pistache__08-006"
                 data-title="Cookie recheado pistache"
                 aria-hidden="false"
               >
@@ -729,7 +726,7 @@ export default function CookiesHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__08-005"
+                    id="addAlert__08-006"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -737,7 +734,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Pistache opBtnAdd-Pistache"
-                    id="btnAdd__08-005"
+                    id="btnAdd__08-006"
                     aria-hidden="false"
                   >
                     <svg
@@ -748,35 +745,12 @@ export default function CookiesHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-            M2 0
-            a 2 2 0 0 0-2 2
-            v12
-            a 2 2 0 0 0 2 2
-            h12
-            a 2 2 0 0 0 2-2
-            V2
-            a 2 2 0 0 0-2-2
-            zm6.5 4.5
-            v3
-            h3
-            a .5 .5 0 0 1 0 1
-            h-3
-            v3
-            a .5 .5 0 0 1-1 0
-            v-3
-            h-3
-            a .5 .5 0 0 1 0-1
-            h3
-            v-3
-            a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__08-005"
+                    id="minusAlert__08-006"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -784,7 +758,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Pistache opBtnRemove-Pistache"
-                    id="btnSubt__08-005"
+                    id="btnSubt__08-006"
                     aria-hidden="false"
                   >
                     <svg
@@ -802,8 +776,8 @@ export default function CookiesHC(): JSX.Element {
                 </div>
               </li>
               <li
-                className="opLi opLi-Red-Velvet-com-Chocolate-branco__08-006"
-                id="li-Red-Velvet-com-Chocolate-branco__08-006"
+                className="opLi opLi-Red-Velvet-com-Chocolate-branco__08-007"
+                id="li-Red-Velvet-com-Chocolate-branco__08-007"
                 data-title="Cookie recheado red velvet com chocolate branco"
                 aria-hidden="false"
               >
@@ -841,7 +815,7 @@ export default function CookiesHC(): JSX.Element {
                 >
                   <span
                     className="addAlert"
-                    id="addAlert__08-006"
+                    id="addAlert__08-007"
                     aria-hidden="false"
                   >
                     Item adicionado!
@@ -849,7 +823,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnAdd opBtn-Red-Velvet-com-Chocolate-branco opBtnAdd-Red-Velvet-com-Chocolate-branco"
-                    id="btnAdd__08-006"
+                    id="btnAdd__08-007"
                     aria-hidden="false"
                   >
                     <svg
@@ -860,35 +834,12 @@ export default function CookiesHC(): JSX.Element {
                       className="bi bi-plus-square-fill"
                       viewBox="0 0 16 16"
                     >
-                      <path
-                        d="
-            M2 0
-            a 2 2 0 0 0-2 2
-            v12
-            a 2 2 0 0 0 2 2
-            h12
-            a 2 2 0 0 0 2-2
-            V2
-            a 2 2 0 0 0-2-2
-            zm6.5 4.5
-            v3
-            h3
-            a .5 .5 0 0 1 0 1
-            h-3
-            v3
-            a .5 .5 0 0 1-1 0
-            v-3
-            h-3
-            a .5 .5 0 0 1 0-1
-            h3
-            v-3
-            a .5 .5 0 0 1 1 0"
-                      ></path>
+                      <path d=" M2 0 a 2 2 0 0 0-2 2 v12 a 2 2 0 0 0 2 2 h12 a 2 2 0 0 0 2-2 V2 a 2 2 0 0 0-2-2 zm6.5 4.5 v3 h3 a .5 .5 0 0 1 0 1 h-3 v3 a .5 .5 0 0 1-1 0 v-3 h-3 a .5 .5 0 0 1 0-1 h3 v-3 a .5 .5 0 0 1 1 0"></path>
                     </svg>
                   </button>
                   <span
                     className="minusAlert"
-                    id="minusAlert__08-006"
+                    id="minusAlert__08-007"
                     aria-hidden="false"
                   >
                     Item removido!
@@ -896,7 +847,7 @@ export default function CookiesHC(): JSX.Element {
                   <button
                     type="button"
                     className="biBtn opBtn opBtnRemove opBtn-Red-Velvet-com-Chocolate-branco opBtnRemove-Red-Velvet-com-Chocolate-branco"
-                    id="btnSubt__08-006"
+                    id="btnSubt__08-007"
                     aria-hidden="false"
                   >
                     <svg
