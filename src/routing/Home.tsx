@@ -25,9 +25,6 @@ export default function Home(): JSX.Element {
               />
             </a>
             <div className="tips">
-              {/* <span className="tip tipB">
-                Os pedidos são adicionados ou removidos na tabela ao final
-              </span> */}
               <span className="tip tipB">
                 Dica: Clique nos produtos para acessar as opções
               </span>

@@ -80,7 +80,7 @@ export default function AnaDocesApp(): JSX.Element {
       prodTry().then(() => {
         prodTry().then(() => {
           if (!document.getElementById("productsRoot")) {
-            const prodInterv = setInterval((interv) => {
+            const prodInterv = setInterval(interv => {
               if (document.getElementById("productsRoot")) {
                 !loaded && setLoaded(true);
                 clearInterval(interv);
@@ -102,7 +102,7 @@ export default function AnaDocesApp(): JSX.Element {
           }
         });
       });
-      const prodInterv = setInterval((interv) => {
+      const prodInterv = setInterval(interv => {
         if (document.getElementById("productsRoot")) {
           setLoaded(true);
           clearInterval(interv);
@@ -137,7 +137,7 @@ export default function AnaDocesApp(): JSX.Element {
         );
       if (!loaded)
         throw new Error(`Home wasn't loaded. Aborting build attempts.`);
-      const buildAttempt = setInterval((interv) => {
+      const buildAttempt = setInterval(interv => {
         if (
           mounted === 3 ||
           (document.querySelectorAll(".divProduct").length > 2 &&
@@ -334,6 +334,11 @@ export default function AnaDocesApp(): JSX.Element {
                       "Com brigadeiro irresistível, cremoso e repleto de chocolate, perfeito para qualquer ocasião!",
                     ],
                     [
+                      "Brigadeiro de Pistache",
+                      "",
+                      "Acentuado sabor do pistache em um recheio cremoso único.",
+                    ],
+                    [
                       "Doce de Leite",
                       "",
                       "Camadas generosas de doce de leite, um mimo deliciosamente indulgente.",
@@ -396,6 +401,11 @@ export default function AnaDocesApp(): JSX.Element {
                   "/img/cookie_generic.jpeg",
                   "Feito com Brown Butter, gotas de chocolate e uma camada generosa de recheio à sua escolha.",
                   Product.fabricOption([
+                    [
+                      "Chocolate com Maracujá",
+                      "",
+                      "Deliciosa massa de chocolate preto meio-amargo combinado com o frescor do recheio de brigadeiro de maracujá!",
+                    ],
                     [
                       "Chocolatudo",
                       "",
@@ -872,8 +882,8 @@ export default function AnaDocesApp(): JSX.Element {
                     return 1;
                   }
                 })
-                .map((product) => {
-                  return product.map((element) => {
+                .map(product => {
+                  return product.map(element => {
                     if (typeof element === "string") {
                       const brandTest =
                         /kinder|kit kat|ninho|nutella|prestígio|sonho de valsa/gis;
@@ -967,7 +977,7 @@ export default function AnaDocesApp(): JSX.Element {
               !document.querySelector(".caller") ||
               document.querySelector(".spinner")
             ) {
-              const renderAttempt = setInterval((interv) => {
+              const renderAttempt = setInterval(interv => {
                 if (
                   document.getElementById("logoHeader") &&
                   document.getElementById("copyBtnWp") &&
