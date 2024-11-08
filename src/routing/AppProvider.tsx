@@ -1,8 +1,4 @@
-import {
-  createContext,
-  useReducer,
-  // useEffect
-} from "react";
+import { createContext, useReducer } from "react";
 import { Root } from "react-dom/client";
 import { RootAction, voidishAppContext } from "src/declarations/types";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";

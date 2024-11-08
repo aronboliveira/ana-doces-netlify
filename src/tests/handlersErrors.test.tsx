@@ -1,4 +1,3 @@
-// htmlElementNotFound.test.ts
 import {
   argsError,
   elementNotFound,
