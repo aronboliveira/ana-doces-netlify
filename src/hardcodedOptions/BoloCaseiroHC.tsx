@@ -479,7 +479,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Banana-price"
                     aria-hidden="false"
                   >
-                    R$ 45,00
+                    R$ 35,00
                   </span>
                 </div>
                 <div
@@ -591,7 +591,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Banana-Fit-price"
                     aria-hidden="false"
                   >
-                    R$&nbsp;50,00
+                    R$&nbsp;40,00
                   </span>
                 </div>
                 <div
@@ -815,7 +815,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Cenoura-price"
                     aria-hidden="false"
                   >
-                    R$ 45,00
+                    R$ 40,00
                   </span>
                 </div>
                 <div
@@ -927,7 +927,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Cenoura-Fit-price"
                     aria-hidden="false"
                   >
-                    R$&nbsp;50,00
+                    R$&nbsp;45,00
                   </span>
                 </div>
                 <div
@@ -1039,7 +1039,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Chocolate-price"
                     aria-hidden="false"
                   >
-                    R$ 45,00
+                    R$ 35,00
                   </span>
                 </div>
                 <div
@@ -1152,7 +1152,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Chocolate-Fit-price"
                     aria-hidden="false"
                   >
-                    R$&nbsp;50,00
+                    R$&nbsp;45,00
                   </span>
                 </div>
                 <div
@@ -1264,7 +1264,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Coco-price"
                     aria-hidden="false"
                   >
-                    R$ 45,00
+                    R$ 40,00
                   </span>
                 </div>
                 <div
@@ -1376,7 +1376,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Formigueiro-price"
                     aria-hidden="false"
                   >
-                    R$ 45,00
+                    R$ 40,00
                   </span>
                 </div>
                 <div
@@ -1488,7 +1488,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Laranja-price"
                     aria-hidden="false"
                   >
-                    R$ 45,00
+                    R$ 40,00
                   </span>
                 </div>
                 <div
@@ -1599,7 +1599,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Limão-price"
                     aria-hidden="false"
                   >
-                    R$ 45,00
+                    R$ 40,00
                   </span>
                 </div>
                 <div
@@ -1711,7 +1711,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Limão-Fit-price"
                     aria-hidden="false"
                   >
-                    R$&nbsp;50,00
+                    R$&nbsp;45,00
                   </span>
                 </div>
                 <div
@@ -1934,7 +1934,7 @@ export default function BoloCaseiroHC(): JSX.Element {
                     id="Milho-price"
                     aria-hidden="false"
                   >
-                    R$ 45,00
+                    R$ 40,00
                   </span>
                 </div>
                 <div

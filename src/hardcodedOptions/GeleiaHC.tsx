@@ -12,7 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
 import { htmlElementNotFound } from "../handlersErrors";
 import SearchBar from "../interactives/SearchBar";
-
+//TODO
 export default function GeleiaHC(): JSX.Element {
   const optionsRef = useRef<nullishDlg>(null);
   const [shouldShowOptions, setOptions] = useState(true);
@@ -366,7 +366,7 @@ export default function GeleiaHC(): JSX.Element {
                     id="Maracujá-price"
                     aria-hidden="false"
                   >
-                    R$ 20,00
+                    R$ 25,00
                   </span>
                 </div>
                 <div
@@ -478,7 +478,7 @@ export default function GeleiaHC(): JSX.Element {
                     id="Morango-price"
                     aria-hidden="false"
                   >
-                    R$ 20,00
+                    R$ 25,00
                   </span>
                 </div>
                 <div
@@ -590,7 +590,7 @@ export default function GeleiaHC(): JSX.Element {
                     id="Pessego-price"
                     aria-hidden="false"
                   >
-                    R$ 20,00
+                    R$ 25,00
                   </span>
                 </div>
                 <div

@@ -12,7 +12,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
 import { htmlElementNotFound } from "../handlersErrors";
 import SearchBar from "../interactives/SearchBar";
-
 export default function BrowniesRechHC(): JSX.Element {
   const optionsRef = useRef<nullishDlg>(null);
   const [shouldShowOptions, setOptions] = useState(true);
@@ -254,7 +253,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Brigadeiro-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -365,7 +364,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Brigadeiro-de-Pistache-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -477,7 +476,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Doce-de-Leite-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -597,7 +596,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Kinder-Bueno®-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -709,7 +708,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Limão-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -821,7 +820,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Maracujá-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -941,7 +940,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Ninho®-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -1086,7 +1085,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Ninho®-com-Nutella®-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -1206,7 +1205,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Nutella®-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -1340,7 +1339,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Nutella®-com-Morango-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -1460,7 +1459,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Oreo®-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -1580,7 +1579,7 @@ export default function BrowniesRechHC(): JSX.Element {
                     id="Prestígio®-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div

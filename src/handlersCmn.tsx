@@ -2118,6 +2118,14 @@ export function applyFactorProductCase(
           if (!/[0-9]/g.test(priceEl.value))
             throw stringError(priceEl.value, "/[0-9]/g");
           const prevPrice = priceEl.value;
+          console.log([
+            appliedFactor,
+            targBaseValue,
+            correctionFactor,
+            refClass,
+            //@ts-ignore
+            scope.id,
+          ]);
           priceEl.value = Intl.NumberFormat("pt-BR", {
             style: "currency",
             currency: "BRL",
@@ -2141,20 +2149,108 @@ export function applyFactorProductCase(
           if (!/[0-9]/g.test(priceEl.innerText))
             throw stringError(priceEl.innerText, "/[0-9]/g");
           const prevPrice = priceEl.innerText;
-          priceEl.innerText = Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-            maximumFractionDigits: 2,
-          }).format(
-            Math.round(
-              parseFinite(
-                roundToTenth(
-                  targBaseValue * appliedFactor * correctionFactor * fitFactor
+          console.log([
+            appliedFactor,
+            targBaseValue,
+            correctionFactor,
+            priceEl.id,
+            priceEl.closest("dialog")?.id,
+          ]);
+          // Preço é aplicado aqui
+          const defApply = () => {
+            priceEl.innerText = Intl.NumberFormat("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+              maximumFractionDigits: 2,
+            }).format(
+              Math.round(
+                parseFinite(
+                  roundToTenth(
+                    targBaseValue * appliedFactor * correctionFactor * fitFactor
+                  )
                 )
               )
-            )
-          );
-          checkVelvetPrices();
+            );
+            checkVelvetPrices();
+          };
+          const dlg = priceEl.closest("dialog");
+          if (dlg && /bolo/gi.test(dlg.id) && /caseiro/gi.test(dlg.id)) {
+            if (appliedFactor === 1) {
+              if (
+                /banana/gi.test(priceEl.id) ||
+                (/chocolate/gi.test(priceEl.id) &&
+                  !/cenoura/gi.test(priceEl.id)) ||
+                /coco/gi.test(priceEl.id) ||
+                /laranja/gi.test(priceEl.id) ||
+                /lim[ãa]o/gi.test(priceEl.id)
+              ) {
+                /fit/gi.test(priceEl.id)
+                  ? (priceEl.innerText = Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      maximumFractionDigits: 2,
+                    }).format(40.0))
+                  : (priceEl.innerText = Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      maximumFractionDigits: 2,
+                    }).format(35.0));
+              } else if (
+                /formigueiro/gi.test(priceEl.id) ||
+                /cenoura/gi.test(priceEl.id) ||
+                /milho/gi.test(priceEl.id)
+              ) {
+                /fit/gi.test(priceEl.id)
+                  ? (priceEl.innerText = Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      maximumFractionDigits: 2,
+                    }).format(45.0))
+                  : (priceEl.innerText = Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      maximumFractionDigits: 2,
+                    }).format(40.0));
+              } else defApply();
+            } else {
+              if (
+                /banana/gi.test(priceEl.id) ||
+                (/chocolate/gi.test(priceEl.id) &&
+                  !/cenoura/gi.test(priceEl.id)) ||
+                /coco/gi.test(priceEl.id) ||
+                /laranja/gi.test(priceEl.id) ||
+                /lim[ãa]o/gi.test(priceEl.id)
+              ) {
+                /fit/gi.test(priceEl.id)
+                  ? (priceEl.innerText = Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      maximumFractionDigits: 2,
+                    }).format(55.0))
+                  : (priceEl.innerText = Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      maximumFractionDigits: 2,
+                    }).format(50.0));
+              } else if (
+                /formigueiro/gi.test(priceEl.id) ||
+                /cenoura/gi.test(priceEl.id) ||
+                /milho/gi.test(priceEl.id)
+              ) {
+                /fit/gi.test(priceEl.id)
+                  ? (priceEl.innerText = Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      maximumFractionDigits: 2,
+                    }).format(60.0))
+                  : (priceEl.innerText = Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                      maximumFractionDigits: 2,
+                    }).format(55.0));
+              } else defApply();
+            }
+          } else defApply();
           if (
             /NaN/gs.test(priceEl.innerText) ||
             /Infinity/gis.test(priceEl.innerText)

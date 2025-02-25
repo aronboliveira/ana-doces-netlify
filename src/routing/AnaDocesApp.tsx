@@ -256,7 +256,7 @@ export default function AnaDocesApp(): JSX.Element {
                 ],
                 [
                   "Brownie Recheado",
-                  "10,00",
+                  "12,00",
                   "/img/brownie_generic.jpeg",
                   `Massa cremosa e macia, feita com o mais puro chocolate nobre, com diversos sabores de recheios especiais disponíveis. Duas fatias de brownies unidas por uma camada saborosa de recheio.`,
                   Product.fabricOption([
@@ -397,7 +397,7 @@ export default function AnaDocesApp(): JSX.Element {
                 ],
                 [
                   "Cookie Recheado",
-                  "10,00 – 12,00",
+                  "12,00",
                   "/img/cookie_generic.jpeg",
                   "Feito com Brown Butter, gotas de chocolate e uma camada generosa de recheio à sua escolha.",
                   Product.fabricOption([
@@ -463,7 +463,7 @@ export default function AnaDocesApp(): JSX.Element {
                 ],
                 [
                   "Geleia Artesanal",
-                  "20,00 – 25,00",
+                  "25,00 – 30,00",
                   "/img/geleia-de-morango.jpeg",
                   "Geleias caseiras feitas com frutas frescas, selecionadas cuidadosamente para complementar massas e outros doces!",
                   Product.fabricOption([
@@ -491,7 +491,7 @@ export default function AnaDocesApp(): JSX.Element {
                 ],
                 [
                   "Palha Gourmet — conjunto",
-                  "8,00",
+                  "12,00",
                   "/img/palha-gourmet-2.jpeg",
                   "Massa de chocolate nobre meio-amargo com leite condensado. Leve toque especial de sementes de pistache e cereja, equilibrando maciez e crocância!",
                   Product.fabricOption([
@@ -547,7 +547,7 @@ export default function AnaDocesApp(): JSX.Element {
                 ],
                 [
                   "Pavê de Pote",
-                  "15,00",
+                  "18,00",
                   "/img/pave-no-pote.jpeg",
                   "Camadas de biscoitos macios, creme suave e recheios à escolha. Servidos em um pote conveniente e prático.",
                   Product.fabricOption([
@@ -618,7 +618,7 @@ export default function AnaDocesApp(): JSX.Element {
                 ],
                 [
                   "Bolo Caseiro",
-                  "45,00 – 80,00",
+                  "35,00 – 80,00",
                   "/img/bolo-red-velvet.jpg",
                   "Diversos sabores com um toque especial de doce caseiro. Autênticos e convidativos para todas as horas.",
                   Product.fabricOption([
@@ -629,7 +629,7 @@ export default function AnaDocesApp(): JSX.Element {
                     ],
                     [
                       "Banana Fit",
-                      "",
+                      "40,00",
                       "Versão com uso de Adoçantes e Farelo de Aveia. Ideal para sobremesas mais balanceadas!",
                     ],
                     [
@@ -639,7 +639,7 @@ export default function AnaDocesApp(): JSX.Element {
                     ],
                     [
                       "Cenoura",
-                      "",
+                      "40,00",
                       "Clássico, macio e saboroso, com a sensação de receita de família!",
                     ],
                     [
@@ -649,37 +649,37 @@ export default function AnaDocesApp(): JSX.Element {
                     ],
                     [
                       "Chocolate",
-                      "",
+                      "35,00",
                       "Rico, indulgente e sempre certeiro! Uma verdadeira tentação para qualquer hora.",
                     ],
                     [
                       "Chocolate Fit",
-                      "",
+                      "45",
                       "Intenso sabor preservando o equilíbrio nutricional! Feito com Cacau em pó e substituindo a Manteiga por Óleos vegetais.",
                     ],
                     [
                       "Coco",
-                      "",
+                      "40",
                       "Leve, fofo e com toques de fibra vegetal, é a dose perfeita de doçura tropical.",
                     ],
                     [
                       "Formigueiro",
-                      "",
+                      "40",
                       "Equilibrando suavidade com toques de intensidade do chocolate meio-amargo, sempre uma boa opção!",
                     ],
                     [
                       "Laranja",
-                      "",
+                      "40",
                       "Fresco e cítrico, uma fatia cheia de sabor e frescor com intensidade certeira.",
                     ],
                     [
                       "Limão",
-                      "",
+                      "40",
                       "Ácido e doce na medida certa, um deleite provocante!",
                     ],
                     [
                       "Limão Fit",
-                      "",
+                      "45",
                       "Versão utilizando Adoçantes no lugar de Açúcar, para refeições mais equilibradas.",
                     ],
                     [
@@ -689,7 +689,7 @@ export default function AnaDocesApp(): JSX.Element {
                     ],
                     [
                       "Milho",
-                      "",
+                      "40",
                       "Cremoso e reconfortante, um clássico com sabor de casa.",
                     ],
                     [

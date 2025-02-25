@@ -201,7 +201,7 @@ export default function ProductOptionGrid({
           const relMainPrice =
             relMainProduct.querySelector(".divProductPrice") ||
             Array.from(relMainProduct.querySelectorAll("*")).filter(
-              (element) =>
+              element =>
                 element instanceof HTMLElement && /R\$/g.test(element.innerText)
             )[0];
           if (!(relMainPrice instanceof HTMLElement))
@@ -232,6 +232,16 @@ export default function ProductOptionGrid({
           if (/preço/gi.test(priceRef.current.innerText)) {
             console.warn(`Price invalidated for option id ${_id}`);
             priceRef.current.innerText = "Indefinido";
+          }
+          const dlg = priceRef.current.closest("dialog");
+          if (dlg && /caseiro/gis.test(dlg.id ?? "")) {
+            if (
+              /banana/gis.test(priceRef.current.classList.toString()) ||
+              (priceRef.current.closest("li") &&
+                /banana/gis.test(priceRef.current.closest("li")!.id))
+            ) {
+              console.log();
+            }
           }
           if (
             /fit/gis.test(priceRef.current.classList.toString()) ||
@@ -396,7 +406,7 @@ export default function ProductOptionGrid({
               opNameRef.current.style.position = `relative`;
               opNameRef.current.innerText = ``;
               usedStrings
-                .map((usedString) => {
+                .map(usedString => {
                   const currentSpan = Object.assign(
                     document.createElement("span"),
                     {
@@ -476,17 +486,17 @@ export default function ProductOptionGrid({
               );
               opNameRef.current.append(remainingSpan);
               Array.from(opNameRef.current.childNodes)
-                .filter((child) => child instanceof Text)
-                .forEach((child) => {
+                .filter(child => child instanceof Text)
+                .forEach(child => {
                   child.textContent === "®" && child.remove();
                 });
               Array.from(opNameRef.current.children)
                 .filter(
-                  (child) =>
+                  child =>
                     child instanceof HTMLElement &&
                     !child.classList.contains(".brandSpan")
                 )
-                .forEach((child) => {
+                .forEach(child => {
                   if (child.textContent && /®/g.test(child.textContent))
                     child.textContent.replaceAll("®", "");
                 });

@@ -12,7 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
 import { htmlElementNotFound } from "../handlersErrors";
 import SearchBar from "../interactives/SearchBar";
-
+//TODO
 export default function PaveHC(): JSX.Element {
   const optionsRef = useRef<nullishDlg>(null);
   const [shouldShowOptions, setOptions] = useState(true);
@@ -254,7 +254,7 @@ export default function PaveHC(): JSX.Element {
                     id="Doce-de-leite-price"
                     aria-hidden="false"
                   >
-                    R$ 15,00
+                    R$ 18,00
                   </span>
                 </div>
                 <div
@@ -373,7 +373,7 @@ export default function PaveHC(): JSX.Element {
                     id="Kinder-Bueno®-price"
                     aria-hidden="false"
                   >
-                    R$ 15,00
+                    R$ 18,00
                   </span>
                 </div>
                 <div
@@ -493,7 +493,7 @@ export default function PaveHC(): JSX.Element {
                     id="Sonho-de-Valsa®-price"
                     aria-hidden="false"
                   >
-                    R$ 15,00
+                    R$ 18,00
                   </span>
                 </div>
                 <div

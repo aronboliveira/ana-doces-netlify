@@ -12,7 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
 import { htmlElementNotFound } from "../handlersErrors";
 import SearchBar from "../interactives/SearchBar";
-
+//TODO
 export default function CookiesHC(): JSX.Element {
   const optionsRef = useRef<nullishDlg>(null);
   const [shouldShowOptions, setOptions] = useState(true);
@@ -254,7 +254,7 @@ export default function CookiesHC(): JSX.Element {
                     id="Chocolate-com-Maracujá-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -343,7 +343,7 @@ export default function CookiesHC(): JSX.Element {
                     id="Chocolatudo-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -432,7 +432,7 @@ export default function CookiesHC(): JSX.Element {
                     id="Duochoco-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -626,7 +626,7 @@ export default function CookiesHC(): JSX.Element {
                     id="Nutella®-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -716,7 +716,7 @@ export default function CookiesHC(): JSX.Element {
                     id="Pistache-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -805,7 +805,7 @@ export default function CookiesHC(): JSX.Element {
                     id="Red-Velvet-com-Chocolate-branco-price"
                     aria-hidden="false"
                   >
-                    R$ 10,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div

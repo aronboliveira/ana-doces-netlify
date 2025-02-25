@@ -15,7 +15,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
 import { htmlElementNotFound } from "../handlersErrors";
 import SearchBar from "../interactives/SearchBar";
-
+//TODO
 export default function PalhaHC(): JSX.Element {
   const optionsRef = useRef<nullishDlg>(null);
   const defOptRef = useRef<nullishInp>(null);
@@ -475,7 +475,7 @@ export default function PalhaHC(): JSX.Element {
                     id="Com-Castanha-price"
                     aria-hidden="false"
                   >
-                    R$ 8,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -587,7 +587,7 @@ export default function PalhaHC(): JSX.Element {
                     id="Com-Castanha-e-Nozes-price"
                     aria-hidden="false"
                   >
-                    R$ 8,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
@@ -699,7 +699,7 @@ export default function PalhaHC(): JSX.Element {
                     id="Com-Nozes-price"
                     aria-hidden="false"
                   >
-                    R$ 8,00
+                    R$ 12,00
                   </span>
                 </div>
                 <div
