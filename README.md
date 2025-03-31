@@ -1,13 +1,38 @@
-COPYRIGHTED BY: Aron Barbosa de Oliveira (https://github.com/aronboliveira), under GNU/GPL license.
+Ana Doces Digital Menu
 
-# pt-BR
+Version: React.js (Create React App)
+License: GNU/GPLAuthor: Aron Barbosa de Oliveira
 
-Esta é uma aplicação React.js (construída com Create React App) feita para representar o Cardápio Digital interativo da confeita Ana Doces: Confeitaria Criativa, localizada no Rio de Janeiro, RJ, Brasil.
+🌐 Live Demo
 
-O deploy pode ser encontrado em: https://anadocesapp.netlify.app/
+Website: https://anadocesapp.netlify.app/
 
-# en-US
+📄 About
 
-This React.js app (built with Create React App) was made to represent the interactive Digital Menu for the Ana Doces: Confeitaria Criativa candy shop, found in Rio de Janeiro, RJ, Brasil.
+🇧🇷 pt-BR
 
-Its deploy can be found in: https://anadocesapp.netlify.app/
+Esta é uma aplicação em React.js (construída com Create React App) desenvolvida para representar o Cardápio Digital Interativo da Ana Doces: Confeitaria Criativa, localizada no Rio de Janeiro, RJ, Brasil.
+
+🇺🇸 en-US
+
+This is a React.js application (built with Create React App) designed to showcase the Interactive Digital Menu of Ana Doces: Confeitaria Criativa, a candy shop located in Rio de Janeiro, RJ, Brazil.
+
+🇪🇸 es
+
+Esta es una aplicación en React.js (creada con Create React App) diseñada para presentar el Menú Digital Interactivo de Ana Doces: Confeitaria Criativa, una pastelería ubicada en Río de Janeiro, RJ, Brasil.
+
+🇫🇷 français
+
+Il s'agit d'une application React.js (développée avec Create React App) conçue pour présenter le Menu Numérique Interactif de Ana Doces: Confeitaria Criativa, une confiserie située à Rio de Janeiro, RJ, Brésil.
+
+🇷🇺 русский
+
+Это приложение на React.js (созданное с помощью Create React App), предназначенное для отображения Интерактивного Цифрового Меню кондитерской Ana Doces: Confeitaria Criativa, расположенной в Рио-де-Жанейро, Бразилия.
+
+🇨🇳 中文 (Simplified Chinese)
+
+这是一个用 React.js (通过 Create React App 构建)开发的应用程序，用于展示位于巴西里约热内卢的糖果店 Ana Doces: Confeitaria Criativa 的互动数字菜单。
+
+🇯🇵 日本語
+
+この React.js アプリケーションは (Create React App で構築)、ブラジルのリオデジャネイロにあるお菓子屋 Ana Doces: Confeitaria Criativa の インタラクティブ・デジタルメニュー を簡潔に表示するために作成されました。
