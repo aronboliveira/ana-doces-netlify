@@ -21,8 +21,7 @@
     "watch-t": "tsc -w"
   },
   "repository": {
-    "type": "git",
-    "url": "github.com/aronboliveira/app-jogo-unnamed"
+    "type": "git"
   },
   "keywords": [
     "gamedev",

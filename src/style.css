@@ -183,23 +183,23 @@ button:hover {
   animation: highlight 2s ease-in-out infinite;
 }
 
-h1,
+/* h1, */
 hr,
 img,
-nav,
+/* nav, */
 .btn-close,
 #mainFirstDiv {
   filter: drop-shadow(2px 2px 2px rgba(168, 166, 166, 0.768627451));
 }
 
-h2,
+/* h2, */
 .btn {
   filter: drop-shadow(0.3px 0.3px 0 rgba(168, 166, 166, 0.768627451));
 }
 
-h3 {
-  filter: drop-shadow(1px 1px 1px rgba(168, 166, 166, 0.768627451));
-}
+/* h3 { */
+/* filter: drop-shadow(1px 1px 1px rgba(168, 166, 166, 0.768627451)); */
+/* } */
 
 hr {
   min-width: 90%;
@@ -520,7 +520,7 @@ table th span.tabCelSpan {
   font-size: 0.5rem;
   text-align: center;
   border-radius: 50%;
-  filter: drop-shadow(0 0 0 transparent);
+  /* filter: drop-shadow(0 0 0 transparent); */
 }
 .authorMainDiv .authorDesc {
   display: flex;
