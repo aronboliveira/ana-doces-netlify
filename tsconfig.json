@@ -40,6 +40,13 @@
   },
   "include": ["src"],
   "exclude": [
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**",
     "src/**/*.spec.ts",
     "src/**/*.spec.tsx",
     "src/**/*.test.ts",
@@ -47,6 +54,7 @@
     "**/types.ts",
     "**/types.tsx",
     "**/test.tsx",
-    "**/test.ts"
+    "**/test.ts",
+    "node_modules"
   ]
 }
