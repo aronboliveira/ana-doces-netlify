@@ -129,7 +129,7 @@ body {
     ),
     linear-gradient(to right, #df8192, #bb5e8c);
   margin: auto auto;
-  height: 100vh;
+  height: 100% !important;
   width: 100vw;
   animation: fadeIn 1s ease-in-out;
 }
