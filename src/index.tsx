@@ -296,7 +296,7 @@ let mainRoot: voidishRoot = undefined;
                           Product.fabricOption([
                             [
                               "Frutas Vermelhas",
-                              "25,00",
+                              "30,00",
                               "Um clássico conquistador! A combinação de frutas vermelhas é garantia de doçura equilibrada e paladar requintado.",
                             ],
                             [
