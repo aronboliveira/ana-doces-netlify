@@ -254,7 +254,7 @@ export default function GeleiaHC(): JSX.Element {
                     id="Frutas-Vermelhas-price"
                     aria-hidden="false"
                   >
-                    R$&nbsp;25,00
+                    R$&nbsp;30,00
                   </span>
                 </div>
                 <div
