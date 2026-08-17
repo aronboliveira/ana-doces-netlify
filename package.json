@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "npx tsc --noEmit && npx vite build",
+    "build": "node_modules/.bin/tsc --noEmit && node_modules/.bin/vite build",
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
