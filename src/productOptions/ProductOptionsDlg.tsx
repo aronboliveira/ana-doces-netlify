@@ -22,6 +22,7 @@ import ErrorMessageComponent from "../errors/ErrorMessageComponent";
 import ProductOptionGrid from "./ProductOptionGrid";
 import {
   adjustIdentifiers,
+  applySubOptParam,
   attemptRender,
   clearURLAfterModal,
   isClickOutside,
@@ -458,7 +459,23 @@ export default function ProductOptionsDlg({
         const activeQuery = /\?q=/g.test(location.href)
           ? `${location.href.slice(location.href.indexOf("?q="))}`
           : "";
-        history.pushState({}, "", `${activeQuery}?&${optionTextRef}`);
+        // Preserve any pre-existing &Op-<suboption> suffix (e.g. from a
+        // deep link) instead of overwriting it with the bare product slug.
+        const activeOpSuffix = /&Op-/g.test(location.href)
+          ? location.href.slice(location.href.indexOf("&Op-"))
+          : "";
+        history.pushState(
+          {},
+          "",
+          `${activeQuery}?&${optionTextRef}${activeOpSuffix}`
+        );
+        if (activeOpSuffix) {
+          setTimeout(() => {
+            optionsRef.current
+              ?.querySelectorAll<HTMLElement>(".opSubGroup")
+              .forEach(group => applySubOptParam(group));
+          }, 300);
+        }
       }
     } catch (e) {
       console.error(
