@@ -268,13 +268,15 @@ section.sectMain {
   background: linear-gradient(to right, $chocolate-mid, $chocolate-light);
 }
 
-table {
+table.table {
   min-width: min-content;
   width: 99%;
   margin-inline: auto;
-  // Bootstrap's .table reads background/text/border colors from these
-  // custom properties; left unset they default to a light theme, giving
-  // white cells and near-black text regardless of the page's dark palette.
+  // Bootstrap's own .table rule also sets --bs-table-bg (and friends) at
+  // the same (class) specificity — a bare `table` element selector loses
+  // that tie regardless of source order, so cells keep Bootstrap's white
+  // default. Matching `.table`'s specificity here is what makes the
+  // override actually win.
   --bs-table-bg: transparent;
   --bs-table-color: #{$cream};
   --bs-table-border-color: #{rgba($gold, 0.3)};
