@@ -36,11 +36,11 @@ export default function QRCWpCaller({
         );
       const aRoot = createRoot(aRef.current);
       if (_color) aRef.current.style.color = _color;
-      const imgInterv = setInterval(interv => {
+      const imgInterv = setInterval(() => {
         if (!aRef.current?.querySelector(".qrcode-img")) {
           aRef.current instanceof HTMLElement
             ? renderQRCodeImg(aRoot, src)
-            : clearInterval(interv);
+            : clearInterval(imgInterv);
         }
       }, 100);
       setTimeout(() => {

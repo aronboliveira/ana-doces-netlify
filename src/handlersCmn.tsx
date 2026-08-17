@@ -910,7 +910,7 @@ export function handleMultipleOrder(
                 }
             }
           }
-        } catch (eTr) {
+        } catch (_eTr) {
           if (!tbodyProps.root || !tbodyProps.root._internalRoot) {
             console.warn(
               `no root validated in tbody props. initiating replacement.`
@@ -950,7 +950,7 @@ export function handleMultipleOrder(
                   }`
                 );
               }
-            } catch (eR) {
+            } catch (_eR) {
               console.error(`Error replacing tbodyProps data.
               Obtained props:
               ${tbody ?? "nullish"}

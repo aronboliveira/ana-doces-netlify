@@ -1,7 +1,7 @@
 import { Root, Dispatch, SetStateAction } from "react";
-import { Product } from "../controller";
+import { Product } from "./classes";
 import { ReactText, looseNum, nullishEl, voidishEl } from "./types";
-import { ProductOption } from "./classes";
+
 import { NavigateFunction, SetURLSearchParams } from "react-router-dom";
 
 export interface AppContextProps {

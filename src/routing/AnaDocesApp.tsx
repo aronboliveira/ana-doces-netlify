@@ -80,10 +80,10 @@ export default function AnaDocesApp(): JSX.Element {
       prodTry().then(() => {
         prodTry().then(() => {
           if (!document.getElementById("productsRoot")) {
-            const prodInterv = setInterval(interv => {
+            const prodInterv = setInterval(() => {
               if (document.getElementById("productsRoot")) {
                 !loaded && setLoaded(true);
-                clearInterval(interv);
+                clearInterval(prodInterv);
               }
               const mainEl = document.getElementById("mainRoot");
               if (!(mainEl instanceof HTMLElement))
@@ -102,10 +102,10 @@ export default function AnaDocesApp(): JSX.Element {
           }
         });
       });
-      const prodInterv = setInterval(interv => {
+      const prodInterv = setInterval(() => {
         if (document.getElementById("productsRoot")) {
           setLoaded(true);
-          clearInterval(interv);
+          clearInterval(prodInterv);
         }
         const mainEl = document.getElementById("mainRoot");
         if (mainEl instanceof HTMLElement) {
@@ -137,14 +137,14 @@ export default function AnaDocesApp(): JSX.Element {
         );
       if (!loaded)
         throw new Error(`Home wasn't loaded. Aborting build attempts.`);
-      const buildAttempt = setInterval(interv => {
+      const buildAttempt = setInterval(() => {
         if (
           mounted === 3 ||
           (document.querySelectorAll(".divProduct").length > 2 &&
             document.querySelector("table") &&
             document.getElementById("anchorChame_no_Whatsapp"))
         ) {
-          clearInterval(interv);
+          clearInterval(buildAttempt);
           return;
         }
         const productRoot = document.getElementById("productsRoot");
@@ -977,7 +977,7 @@ export default function AnaDocesApp(): JSX.Element {
               !document.querySelector(".caller") ||
               document.querySelector(".spinner")
             ) {
-              const renderAttempt = setInterval(interv => {
+              const renderAttempt = setInterval(() => {
                 if (
                   document.getElementById("logoHeader") &&
                   document.getElementById("copyBtnWp") &&
@@ -985,7 +985,7 @@ export default function AnaDocesApp(): JSX.Element {
                   document.querySelector(".caller") &&
                   !document.querySelector(".spinner")
                 )
-                  clearInterval(interv);
+                  clearInterval(renderAttempt);
                 renderTry();
               });
               setTimeout(() => {

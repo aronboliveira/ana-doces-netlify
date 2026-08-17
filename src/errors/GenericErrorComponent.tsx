@@ -27,7 +27,7 @@ export default function GenericErrorComponent({
           }, 2000);
         } else
           throw elementNotFound(altRoot, "validating altRoot", ["Element"]);
-      } catch (err) {
+      } catch (_err) {
         setTimeout(() => {
           document.getElementById("productsRoot")!.innerHTML = `
           <div>A página não conseguiu se recuperar automaticamente! 😭 
