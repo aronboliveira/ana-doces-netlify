@@ -268,12 +268,16 @@ export function TableOrders(): JSX.Element {
       FallbackComponent={() => (
         <GenericErrorComponent
           message={"Erro carregando tabela de produtos!"}
-          altRoot={tabRef.current!.parentElement!}
+          altRoot={tabRef.current?.parentElement ?? document.body}
           altJsx={<TableOrders />}
         />
       )}
     >
-      <table className="table table-bordered table-hover" id="productsTab">
+      <table
+        className="table table-bordered table-hover"
+        id="productsTab"
+        ref={tabRef}
+      >
         <caption id="productsTabCapt">
           <div id="productsTabTitle">
             <h3 className="bolded" id="ordersCaption">
