@@ -1,7 +1,10 @@
 import { render } from "@testing-library/react";
 import AuthorText from "src/interactives/AuthorText";
 import * as handlersCmn from "../../../handlersCmn";
-import * as handlersErrors from "../../../handlersErrors";
+// Plain require, not `import * as React` -- Babel's namespace-import
+// interop returns a copy of the module namespace, so spying on it
+// wouldn't affect the `useRef` the component's own named import reads.
+const ReactModule = require("react");
 
 jest.mock("../../../handlersCmn");
 jest.mock("../../../handlersErrors");
@@ -56,15 +59,14 @@ describe("AuthorText Component", () => {
 
   test("handles error in useEffect gracefully", () => {
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-    const htmlElementNotFoundMock =
-      handlersErrors.htmlElementNotFound as jest.Mock;
-    htmlElementNotFoundMock.mockImplementation(() => {
-      throw new Error("Test Error");
-    });
+    const useRefSpy = jest
+      .spyOn(ReactModule, "useRef")
+      .mockReturnValueOnce(undefined);
 
     render(<AuthorText {...defaultProps} />);
 
     expect(consoleErrorSpy).toHaveBeenCalled();
     consoleErrorSpy.mockRestore();
+    useRefSpy.mockRestore();
   });
 });

@@ -1,7 +1,10 @@
 import { render } from "@testing-library/react";
 import AuthorCard from "src/interactives/AuthorCard";
 import * as handlersCmn from "../../../handlersCmn";
-import * as handlersErrors from "../../../handlersErrors";
+// Plain require, not `import * as React` -- Babel's namespace-import
+// interop returns a copy of the module namespace, so spying on it
+// wouldn't affect the `useRef` the component's own named import reads.
+const ReactModule = require("react");
 
 jest.mock("../../../handlersCmn");
 jest.mock("../../../handlersErrors");
@@ -40,20 +43,19 @@ describe("AuthorCard Component", () => {
   });
 
   test("handles missing mainRef gracefully", () => {
-    const htmlElementNotFoundMock =
-      handlersErrors.htmlElementNotFound as jest.Mock;
-    htmlElementNotFoundMock.mockImplementation(() => {
-      throw new Error("Test Error");
-    });
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+    const useRefSpy = jest
+      .spyOn(ReactModule, "useRef")
+      .mockReturnValueOnce(undefined);
 
     render(<AuthorCard {...defaultProps} />);
 
+    // The component logs a single concatenated string, not (message, Error).
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      expect.stringContaining("Error executing useEffect for AuthorCard"),
-      expect.any(Error)
+      expect.stringContaining("Error executing useEffect for AuthorCard")
     );
 
     consoleErrorSpy.mockRestore();
+    useRefSpy.mockRestore();
   });
 });
