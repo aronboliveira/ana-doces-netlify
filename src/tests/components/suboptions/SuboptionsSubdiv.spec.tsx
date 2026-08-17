@@ -4,7 +4,6 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import SuboptionsSubDiv from "../../../suboptions/SuboptionSubdiv";
 import { SubotpionsSubDivProps } from "../../../declarations/interfaces";
-import * as handlersErrors from "../../../handlersErrors";
 import * as handlersCmn from "../../../handlersCmn";
 
 jest.mock("../../../handlersErrors");
@@ -49,16 +48,26 @@ describe("SuboptionsSubDiv Component", () => {
   });
 
   test("handles errors in useEffect and useLayoutEffect gracefully", () => {
+    // mainRef.current is always a real HTMLElement on a normal jsdom
+    // render, so the ref-guard branches are unreachable via mocking
+    // alone, and forcing useRef itself to fail isn't viable here either:
+    // several of this component's own catch blocks read mainRef.current
+    // directly (not optional-chained on mainRef itself) for their error
+    // message, so an invalidated mainRef crashes those handlers too.
+    // handleDoubleClick, called inside the first useLayoutEffect's own
+    // try block against a genuinely valid ref, is a reachable, real
+    // failure point without touching refs at all.
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-    const htmlElementNotFoundMock =
-      handlersErrors.htmlElementNotFound as jest.Mock;
-    htmlElementNotFoundMock.mockImplementation(() => {
+    const handleDoubleClickMock = handlersCmn.handleDoubleClick as jest.Mock;
+    handleDoubleClickMock.mockImplementation(() => {
       throw new Error("Test Error");
     });
 
     render(<SuboptionsSubDiv {...defaultProps} />);
 
-    expect(consoleErrorSpy).toHaveBeenCalled();
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringContaining("Error executing useLayoutEffect for inputs")
+    );
     consoleErrorSpy.mockRestore();
   });
 });

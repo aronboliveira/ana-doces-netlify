@@ -1,8 +1,6 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import SuboptionsCont from "src/suboptions/SuboptionsCont";
 import { SuboptionsContProps } from "src/declarations/interfaces";
-import * as handlersErrors from "../../../handlersErrors";
 import * as handlersCmn from "../../../handlersCmn";
 
 jest.mock("../../../handlersErrors");
@@ -12,11 +10,10 @@ jest.mock("../../../handlersCmn", () => ({
 jest.mock("../../../suboptions/SuboptionSubdiv", () =>
   jest.fn(() => <div>SuboptionsSubDiv</div>)
 );
-jest.mock("react-error-boundary", () => ({
-  ErrorBoundary: ({ children }: { children: React.ReactNode }) => (
-    <>{children}</>
-  ),
-}));
+// Plain require, not `import * as React` -- Babel's namespace-import
+// interop returns a copy of the module namespace, so spying on it
+// wouldn't affect the `useRef` the component's own named import reads.
+const ReactModule = require("react");
 
 describe("SuboptionsCont Component", () => {
   const defaultProps: SuboptionsContProps = {
@@ -42,23 +39,27 @@ describe("SuboptionsCont Component", () => {
     expect(container).toHaveAttribute("id");
   });
 
-  test("calls syncAriaStates in useEffect", () => {
+  test("calls syncAriaStates in useEffect", async () => {
     const syncAriaStatesMock = handlersCmn.syncAriaStates as jest.Mock;
     render(<SuboptionsCont {...defaultProps} />);
-    expect(syncAriaStatesMock).toHaveBeenCalled();
+    // syncAriaStates fires from a setTimeout(..., 300) in the effect.
+    await waitFor(() => expect(syncAriaStatesMock).toHaveBeenCalled());
   });
 
   test("handles errors in useEffect gracefully", () => {
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-    const htmlElementNotFoundMock =
-      handlersErrors.htmlElementNotFound as jest.Mock;
-    htmlElementNotFoundMock.mockImplementation(() => {
-      throw new Error("Test Error");
-    });
+    // mainRef.current is always a real HTMLElement on a normal jsdom
+    // render, so the ref-guard branch is unreachable via mocking alone;
+    // forcing useRef to return undefined makes the .current read itself
+    // throw, exercising the catch branch.
+    const useRefSpy = jest
+      .spyOn(ReactModule, "useRef")
+      .mockReturnValueOnce(undefined);
 
     render(<SuboptionsCont {...defaultProps} />);
 
     expect(consoleErrorSpy).toHaveBeenCalled();
     consoleErrorSpy.mockRestore();
+    useRefSpy.mockRestore();
   });
 });
