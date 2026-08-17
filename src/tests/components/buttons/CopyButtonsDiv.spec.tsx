@@ -1,8 +1,17 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import * as handlersCmn from "../../../handlersCmn";
 import CopyButtonsDiv from "src/buttons/CopyButtonsDiv";
 jest.mock("../../../handlersCmn");
 jest.mock("../../../handlersErrors");
+// DirectCaller isn't what this file tests, and handlersCmn is
+// automocked wholesale above -- DirectCaller calls capitalizeFirstLetter/
+// normalizeSpacing directly while constructing its own JSX (not inside
+// an effect), so their automocked `undefined` return crashes it during
+// render, tripping CopyButtonsDiv's own ancestor ErrorBoundary before
+// any of these tests get a chance to run.
+jest.mock("../../../callers/DirectCaller", () =>
+  jest.fn(() => <div>DirectCaller</div>)
+);
 describe("CopyButtonsDiv Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -34,7 +43,9 @@ describe("CopyButtonsDiv Component", () => {
     fireEvent.click(button);
     expect(concatProductsMock).toHaveBeenCalled();
     expect(writeTextMock).toHaveBeenCalledWith("Mocked Message");
-    expect(switchAlertOpMock).toHaveBeenCalled();
+    // switchAlertOp fires from the writeText promise's .then(), a
+    // microtask that hasn't resolved yet right after fireEvent.click.
+    await waitFor(() => expect(switchAlertOpMock).toHaveBeenCalled());
   });
   test('copies WhatsApp formatted message when "Copiar Texto para o WhatsApp" is clicked', async () => {
     const concatProductsMock = handlersCmn.concatProducts;
@@ -51,7 +62,7 @@ describe("CopyButtonsDiv Component", () => {
     fireEvent.click(button);
     expect(concatProductsMock).toHaveBeenCalled();
     expect(writeTextMock).toHaveBeenCalledWith("Mocked WhatsApp Message");
-    expect(switchAlertOpMock).toHaveBeenCalled();
+    await waitFor(() => expect(switchAlertOpMock).toHaveBeenCalled());
   });
 
   test("handles errors gracefully when total element is missing", () => {
