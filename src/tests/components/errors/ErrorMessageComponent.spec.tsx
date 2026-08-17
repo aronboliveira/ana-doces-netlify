@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import ErrorMessageComponent from "src/errors/ErrorMessageComponent";
 describe("ErrorMessageComponent", () => {
   test("renders with default message", () => {
-    const { getByText } = render(<ErrorMessageComponent message="Error" />);
+    const { getByText } = render(<ErrorMessageComponent {...({} as any)} />);
     expect(getByText("Erro indefinido")).toBeInTheDocument();
   });
   test("renders with custom message", () => {

@@ -2,13 +2,7 @@ import { render } from "@testing-library/react";
 import Spinner from "src/callers/Spinner";
 describe("Spinner Component", () => {
   test("renders with default props", () => {
-    const { container } = render(
-      <Spinner
-        spinnerClass={"spinner-grow"}
-        spinnerColor={"btn-info"}
-        message="loading"
-      />
-    );
+    const { container } = render(<Spinner {...({} as any)} />);
     expect(container.querySelector(".spinner-border")).toBeInTheDocument();
     expect(container.querySelector(".visually-hidden")).toHaveTextContent(
       "Loading..."
