@@ -1,7 +1,30 @@
 @use '../styles/abstracts/variables' as *;
 
 .header {}                    // block (not used yet, reserved)
-.header__instagram {}          // .instDiv — Instagram icon container
-.header__tips {}              // .tips — tips text container
-.header__tip-title {}         // .tipT — tip title span
+
+.header__instagram {
+  align-items: center;
+  gap: $space-sm;
+  padding-inline: $space-md;
+}
+
+.header__tips {
+  display: flex;
+  align-items: center;
+}
+
+.header__tip-title {
+  // The old plain `.tips`/`.tip` selectors this layout used to rely on
+  // no longer match once the JSX moved to CSS-module classnames, so the
+  // row fell back to default inline wrapping across 3 lines.
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  gap: 0.25em;
+  font-style: italic;
+  opacity: 0.85;
+  font-size: 0.85rem;
+}
+
 .header__author-btn {}        // .biBtn "Sobre & Autores" button

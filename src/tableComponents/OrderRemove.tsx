@@ -19,7 +19,7 @@ import OrderRow from "./OrderRow";
 
 export default function OrderRemove(props: OrderProps): JSX.Element {
   return (
-    <td className={`celRemove ${styles['order-row__remove']}`} style={{ paddingRight: "3.2rem" }}>
+    <td className={`celRemove ${styles['order-row__remove']}`}>
       <button
         type="button"
         className="biBtn opBtn opBtnRemove tabRemove"

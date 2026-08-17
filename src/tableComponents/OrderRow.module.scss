@@ -1,8 +1,24 @@
 @use '../styles/abstracts/variables' as *;
 
 .order-row {}                 // block: <tr> wrapper
-.order-row__title {}          // element: product name cell
-.order-row__quantity {}       // element: quantity cell
-.order-row__remove {}         // element: remove button cell
+
+.order-row__title {
+  text-align: left;
+}
+
+.order-row__quantity {
+  text-align: center;
+}
+
+.order-row__remove {
+  // Stays a normal table-cell (not flex) so it keeps participating in the
+  // table's column layout/alignment with its <th>; centering the button
+  // is enough without changing the cell's display type.
+  text-align: center;
+}
+
 .order-row__output-title {}   // element: title output
-.order-row__output-quant {}   // element: quantity output
+
+.order-row__output-quant {
+  display: inline-block;
+}
