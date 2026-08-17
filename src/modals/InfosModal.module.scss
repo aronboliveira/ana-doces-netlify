@@ -1,0 +1,8 @@
+@use '../styles/abstracts/variables' as *;
+
+.info-modal {}                // block
+.info-modal__dialog {}        // element: dialog wrapper
+.info-modal__header {}        // element: header section
+.info-modal__heading {}       // element: h2 heading
+.info-modal__close {}         // element: close button
+.info-modal__body {}          // element: article body

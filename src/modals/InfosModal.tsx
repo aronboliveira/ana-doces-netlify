@@ -18,10 +18,41 @@ import DeliveryOption from "../interactives/DeliveryOption";
 import WpIcon from "../icons/WpIcon";
 import InstIcon from "../icons/InstIcon";
 import AuthorDetails from "../interactives/AuthorDetails";
+import styles from "./InfosModal.module.scss";
 
 export default function InfosModal({ dispatch, state }: DlgProps): JSX.Element {
   const accordionId = "accordionSobre";
   const dlgRef = useRef<nullishDlg>(null);
+  useEffect(() => {
+    const dialog = dlgRef.current;
+    if (!dialog) return;
+    const previousFocus = document.activeElement as HTMLElement;
+    dialog.focus();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const focusableElements = dialog.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
+    dialog.addEventListener("keydown", handleKeyDown);
+    return () => {
+      dialog.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus();
+    };
+  }, []);
   useEffect(() => {
     const handleKeyPress = (press: KeyboardEvent) => {
       if (press.key === "Escape") {
@@ -268,12 +299,12 @@ export default function InfosModal({ dispatch, state }: DlgProps): JSX.Element {
           }
         }, 1000);
       } else history.pushState({}, "", `${basePath}${activeQuery}?&info`);
-      const collapsesInterv = setInterval((interv) => {
+      const collapsesInterv = setInterval(() => {
         try {
           if (!dlgRef.current) return;
           if (!document.getElementById("accordionSobre")) {
             history.pushState({}, "", `${basePath}${activeQuery}`);
-            clearInterval(interv);
+            clearInterval(collapsesInterv);
             return;
           }
           if (
@@ -487,9 +518,11 @@ export default function InfosModal({ dispatch, state }: DlgProps): JSX.Element {
     >
       {state && (
         <dialog
-          className="modal-content"
+          className={`modal-content ${styles['info-modal__dialog']}`}
           id="infoModalDlg"
           ref={dlgRef}
+          aria-labelledby="infoHeadingMain"
+          aria-modal="true"
           onClick={(click) => {
             if (
               isClickOutside(click, dlgRef.current!).some(
@@ -502,16 +535,16 @@ export default function InfosModal({ dispatch, state }: DlgProps): JSX.Element {
             }
           }}
         >
-          <section className="flNoW" aria-hidden="false" id="infoHeader">
+          <section className={`flNoW ${styles['info-modal__header']}`} aria-hidden="false" id="infoHeader">
             <h2
-              className="infoHeading"
+              className={`infoHeading ${styles['info-modal__heading']}`}
               aria-hidden="false"
               id="infoHeadingMain"
             >
               <span aria-hidden="false">Informações</span>
             </h2>
             <button
-              className="fade-in-mid btn btn-close"
+              className={`fade-in-mid btn btn-close ${styles['info-modal__close']}`}
               aria-hidden="false"
               onClick={() => {
                 dispatch && dispatch(!state);
