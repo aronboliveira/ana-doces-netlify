@@ -1,0 +1,5 @@
+@use '../styles/abstracts/variables' as *;
+
+.search-bar {}                // block
+.search-bar__container {}     // element: form-control wrapper
+.search-bar__input {}         // element: search input

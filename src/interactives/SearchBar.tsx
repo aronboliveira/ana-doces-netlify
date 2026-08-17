@@ -1,5 +1,5 @@
 import SearchIcon from "../icons/SearchIcon";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState, useDeferredValue } from "react";
 import { nullishDiv, nullishInp } from "../declarations/types";
 import { htmlElementNotFound } from "../handlersErrors";
 import {
@@ -9,11 +9,13 @@ import {
   textTransformPascal,
 } from "../handlersCmn";
 import { SearchBarProps } from "../declarations/interfaces";
+import styles from "./SearchBar.module.scss";
 
 export default function SearchBar(props: SearchBarProps): JSX.Element {
   const searchRef = useRef<nullishDiv>(null);
   const searchInpRef = useRef<nullishInp>(null);
-  const setSearch = useState("")[1];
+  const [searchValue, setSearchValue] = useState("");
+  const deferredValue = useDeferredValue(searchValue);
   useEffect(() => {
     try {
       if (!(searchRef.current instanceof HTMLElement))
@@ -99,19 +101,6 @@ export default function SearchBar(props: SearchBarProps): JSX.Element {
               "li"
             );
         }, 1000);
-        setTimeout(() => {
-          searchInpRef.current &&
-            searchInpRef.current.value === "" &&
-            handleSearchFilter(
-              searchInpRef.current,
-              searchInpRef.current.closest("menu") ||
-                searchInpRef.current.closest("ul") ||
-                searchInpRef.current.closest("ol") ||
-                searchInpRef.current.closest("dl"),
-              searchInpRef.current.value,
-              "li"
-            );
-        }, 1000);
       }
     } catch (e) {
       console.error(
@@ -135,21 +124,12 @@ export default function SearchBar(props: SearchBarProps): JSX.Element {
           );
         else throw new Error(`Error validating Event Target instance`);
       }
-      handleSearchFilter(
-        ev.currentTarget,
-        ev.currentTarget.closest("menu") ||
-          ev.currentTarget.closest("ul") ||
-          ev.currentTarget.closest("ol") ||
-          ev.currentTarget.closest("dl"),
-        ev.currentTarget.value,
-        "li"
-      );
+      setSearchValue(ev.currentTarget.value);
       if (props.searchParams && props.setSearchParams && props.navigate) {
         const params = new URLSearchParams(location.search);
         ev.currentTarget.value !== ""
           ? params.set("q", ev.currentTarget.value)
           : params.delete("q");
-        setSearch(ev.currentTarget.value);
         props.setSearchParams(params);
         const qParams = `?${params.toString()}`;
         history.pushState({}, "", `${location.pathname}${qParams}`);
@@ -179,6 +159,20 @@ export default function SearchBar(props: SearchBarProps): JSX.Element {
     }
   };
   useEffect(() => {
+    const input = searchInpRef.current;
+    if (input instanceof HTMLInputElement) {
+      handleSearchFilter(
+        input,
+        input.closest("menu") ||
+          input.closest("ul") ||
+          input.closest("ol") ||
+          input.closest("dl"),
+        deferredValue,
+        "li"
+      );
+    }
+  }, [deferredValue]);
+  useEffect(() => {
     if (
       !/\?q=/g.test(location.href) &&
       document.querySelector(".searchBarInp") instanceof HTMLInputElement
@@ -186,11 +180,12 @@ export default function SearchBar(props: SearchBarProps): JSX.Element {
       (document.querySelector(".searchBarInp") as HTMLInputElement).value = "";
   }, []);
   return (
-    <div className="form-control searchBarDiv" ref={searchRef}>
+    <div className={`form-control searchBarDiv ${styles['search-bar__container']}`} ref={searchRef}>
       <input
-        className="searchBarInp"
+        className={`searchBarInp ${styles['search-bar__input']}`}
         type="search"
         ref={searchInpRef}
+        aria-label="Buscar produtos"
         onInput={(ev) => {
           handleChange(ev);
         }}
