@@ -12,7 +12,7 @@ jest.mock("../../../handlersCmn", () => ({
   syncAriaStates: jest.fn(),
   handleDoubleClick: jest.fn(),
 }));
-jest.mock("../../../../suboptions/SuboptionInp", () =>
+jest.mock("../../../suboptions/SuboptionInp", () =>
   jest.fn(() => <div>SuboptionInp</div>)
 );
 jest.mock("react-error-boundary", () => ({

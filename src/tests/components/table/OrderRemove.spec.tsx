@@ -16,7 +16,7 @@ jest.mock("src/handlersCmn", () => ({
   factorMaps: new Map(),
   roundToTenth: jest.fn(),
 }));
-jest.mock("./OrderRow", () => jest.fn(() => <div>OrderRow</div>));
+jest.mock("../../../tableComponents/OrderRow", () => jest.fn(() => <div>OrderRow</div>));
 
 describe("OrderRemove Component", () => {
   const defaultProps: OrderProps = {

@@ -3,8 +3,8 @@ import BehanceIcon from "src/icons/BehanceIcon";
 import * as handlersCmn from "../../../handlersCmn";
 import * as handlersErrors from "../../../handlersErrors";
 
-jest.mock("../handlersCmn");
-jest.mock("../handlersErrors");
+jest.mock("../../../handlersCmn");
+jest.mock("../../../handlersErrors");
 
 describe("BehanceIcon Component", () => {
   beforeEach(() => {

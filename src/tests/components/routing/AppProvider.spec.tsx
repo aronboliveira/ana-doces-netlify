@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import AppProvider from "src/routing/AppProvider";
-jest.mock("./AnaDocesApp", () => jest.fn(() => <div>AnaDocesApp</div>));
+jest.mock("../../../routing/AnaDocesApp", () => jest.fn(() => <div>AnaDocesApp</div>));
 
 describe("AppProvider Component", () => {
   test("renders without crashing and provides context", () => {

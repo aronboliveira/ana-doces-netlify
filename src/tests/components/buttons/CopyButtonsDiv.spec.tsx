@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import * as handlersCmn from "../../../handlersCmn";
 import CopyButtonsDiv from "src/buttons/CopyButtonsDiv";
-jest.mock("../../handlersCmn");
-jest.mock("../../handlersErrors");
+jest.mock("../../../handlersCmn");
+jest.mock("../../../handlersErrors");
 describe("CopyButtonsDiv Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();

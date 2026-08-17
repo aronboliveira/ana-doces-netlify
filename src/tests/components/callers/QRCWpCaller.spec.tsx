@@ -1,8 +1,8 @@
 import { render, waitFor } from "@testing-library/react";
 import QRCWpCaller from "src/callers/QRCWpCaller";
 import * as handlersCmn from "../../../handlersCmn";
-jest.mock("../../handlersCmn");
-jest.mock("../../handlersErrors");
+jest.mock("../../../handlersCmn");
+jest.mock("../../../handlersErrors");
 describe("QRCWpCaller Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();

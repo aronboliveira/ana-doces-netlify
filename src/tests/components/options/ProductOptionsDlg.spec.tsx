@@ -12,7 +12,7 @@ jest.mock("../../../suboptions/SuboptionsCont", () =>
   jest.fn(() => <div>SuboptionsCont</div>)
 );
 jest.mock("../../../callers/Spinner", () => jest.fn(() => <div>Spinner</div>));
-jest.mock("../../../interactives/ProductOptionGrid", () =>
+jest.mock("../../../productOptions/ProductOptionGrid", () =>
   jest.fn(() => <div>ProductOptionGrid</div>)
 );
 jest.mock("react-router-dom", () => ({

@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import GenericErrorComponent from "src/errors/GenericErrorComponent";
 import { act } from "react";
-jest.mock("../handlersErrors");
+jest.mock("../../../handlersErrors");
 describe("GenericErrorComponent", () => {
   beforeEach(() => {
     jest.clearAllMocks();

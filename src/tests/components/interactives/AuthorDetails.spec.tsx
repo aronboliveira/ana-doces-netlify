@@ -5,7 +5,7 @@ import * as handlersErrors from "../../../handlersErrors";
 
 jest.mock("../../../handlersCmn");
 jest.mock("../../../handlersErrors");
-jest.mock("./AuthorText", () => jest.fn(() => <div>AuthorText Component</div>));
+jest.mock("../../../interactives/AuthorText", () => jest.fn(() => <div>AuthorText Component</div>));
 
 describe("AuthorDetails Component", () => {
   beforeEach(() => {

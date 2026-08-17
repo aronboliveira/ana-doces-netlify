@@ -3,8 +3,8 @@ import GithubIcon from "src/icons/GitHubIcon";
 import * as handlersCmn from "../../../handlersCmn";
 import * as handlersErrors from "../../../handlersErrors";
 
-jest.mock("../handlersCmn");
-jest.mock("../handlersErrors");
+jest.mock("../../../handlersCmn");
+jest.mock("../../../handlersErrors");
 
 describe("GithubIcon Component", () => {
   beforeEach(() => {

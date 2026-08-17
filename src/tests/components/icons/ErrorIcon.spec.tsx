@@ -2,8 +2,8 @@ import { render } from "@testing-library/react";
 import * as handlersCmn from "../../../handlersCmn";
 import ErrorIcon from "src/icons/ErrorIcon";
 
-jest.mock("../../handlersCmn");
-jest.mock("../../handlersErrors");
+jest.mock("../../../handlersCmn");
+jest.mock("../../../handlersErrors");
 
 describe("ErrorIcon Component", () => {
   beforeEach(() => {

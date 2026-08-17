@@ -1,8 +1,8 @@
 import { render, fireEvent } from "@testing-library/react";
 import DirectCaller from "src/callers/DirectCaller";
 import * as handlersCmn from "../../../handlersCmn";
-jest.mock("../handlersCmn");
-jest.mock("../handlersErrors");
+jest.mock("../../../handlersCmn");
+jest.mock("../../../handlersErrors");
 describe("DirectCaller Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();

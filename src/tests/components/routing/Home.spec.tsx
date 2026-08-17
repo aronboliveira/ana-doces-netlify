@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Home from "src/routing/Home";
 
-jest.mock("../callers/Spinner", () => jest.fn(() => <div>Spinner</div>));
+jest.mock("../../../callers/Spinner", () => jest.fn(() => <div>Spinner</div>));
 jest.mock("react-error-boundary", () => ({
   ErrorBoundary: ({ children }: { children: React.ReactNode }) => (
     <>{children}</>
