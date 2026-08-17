@@ -29,8 +29,10 @@ export default function GenericErrorComponent({
           throw elementNotFound(altRoot, "validating altRoot", ["Element"]);
       } catch (_err) {
         setTimeout(() => {
-          document.getElementById("productsRoot")!.innerHTML = `
-          <div>A página não conseguiu se recuperar automaticamente! 😭 
+          const productsRoot = document.getElementById("productsRoot");
+          if (productsRoot)
+            productsRoot.innerHTML = `
+          <div>A página não conseguiu se recuperar automaticamente! 😭
             <p><strong>Recarregando em 5 segundos</strong>.</p>
           </div>
         `;
