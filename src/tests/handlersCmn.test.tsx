@@ -209,6 +209,10 @@ describe("switchAlertOp", () => {
   let alertEl: HTMLElement;
   beforeEach(() => {
     alertEl = document.createElement("div");
+    // The opacity-animation interval bails out (and immediately clears
+    // itself) unless it can re-find the element via
+    // document.querySelector(`#${alertEl.id}`), so it needs a real id.
+    alertEl.id = "alertEl";
     alertEl.style.opacity = "0";
     document.body.appendChild(alertEl);
   });
@@ -379,10 +383,17 @@ describe("recalculateByOption", () => {
     scope = document.getElementById("bolo-caseiro") as HTMLElement;
   });
   test('should adjust price for "grande" size', () => {
+    // "bolo caseiro" base price (R$ 45,00) is multiplied by BOTH
+    // factorMaps["grande"] (1.7778, the size factor) AND the
+    // bolo-caseiro-specific correctionFactor for "grande" (0.75):
+    // 45 * 1.7778 * 0.75 ~= R$ 60,00. R$ 33,75 (45 * 0.75 alone) would
+    // skip the size factor entirely.
     recalculateByOption(".opSpanPrice", scope, "grande");
+    // Intl.NumberFormat("pt-BR", ...) inserts a non-breaking space
+    // (U+00A0) between "R$" and the amount, not a regular space.
     expect(
       (scope.querySelector(".opSpanPrice") as HTMLElement).textContent
-    ).toContain("R$ 33,75");
+    ).toMatch(/R\$\s*60,00/);
   });
   test("should adjust price for unknown factor with default appliedFactor", () => {
     const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
@@ -454,9 +465,11 @@ describe("fetchRelationBdfCases", () => {
     scope = document.getElementById("scope") as HTMLElement;
   });
   test("should fetch relation price data", () => {
+    // The first element is bdfPrice.id -- a real DOM id property always
+    // reads back "" when unset, never the string "undefined".
     expect(fetchRelationBdfCases(scope)).toEqual([
-      ["undefined", "chocolate", "R$ 80,00"],
-      ["undefined", "morango", "R$ 90,00"],
+      ["", "chocolate", "R$ 80,00"],
+      ["", "morango", "R$ 90,00"],
     ]);
   });
   test("should handle empty scope gracefully", () => {
@@ -503,8 +516,16 @@ describe("applyFactorProductCase", () => {
     expect(priceEl.innerText).toContain("R$ 75,00");
   });
   test("should handle invalid price elements gracefully", () => {
+    // scope.querySelectorAll(refClass).forEach(...) never runs its body
+    // at all on an empty/childless scope, so there's nothing to log --
+    // a real .price element without a dialog/.modal-content ancestor is
+    // what reaches (and gracefully logs from) the "invalid" path.
     const consoleSpy = jest.spyOn(console, "error").mockImplementation();
-    applyFactorProductCase(1.5, 50, 1, ".price", document.createElement("div"));
+    const scope = document.createElement("div");
+    const priceEl = document.createElement("div");
+    priceEl.classList.add("price");
+    scope.appendChild(priceEl);
+    applyFactorProductCase(1.5, 50, 1, ".price", scope);
     expect(consoleSpy).toHaveBeenCalled();
     consoleSpy.mockRestore();
   });
@@ -559,7 +580,11 @@ describe("attemptRender", () => {
   });
   test("should render when parent is ready", () => {
     container.innerHTML = '<div class="spinner"></div>';
-    expect(attemptRender(root, container, <div>Content</div>)).toBe(true);
+    let rendered = false;
+    act(() => {
+      rendered = attemptRender(root, container, <div>Content</div>);
+    });
+    expect(rendered).toBe(true);
     expect(container.textContent).toBe("Content");
   });
   test("should not render when parent already has content", () => {
