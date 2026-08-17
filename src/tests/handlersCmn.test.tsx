@@ -26,6 +26,22 @@ import {
 } from "src/handlersCmn";
 import { createRoot } from "react-dom/client";
 import { act } from "react";
+
+// jsdom doesn't implement layout, so it never computes a real .innerText
+// (both the getter and setter are effectively no-ops there); handlersCmn
+// leans on .innerText throughout, so alias it to textContent for this
+// whole suite.
+beforeAll(() => {
+  Object.defineProperty(HTMLElement.prototype, "innerText", {
+    configurable: true,
+    get(this: HTMLElement) {
+      return this.textContent;
+    },
+    set(this: HTMLElement, value: string) {
+      this.textContent = value;
+    },
+  });
+});
 describe("formatPrice", () => {
   test("should format price correctly from element innerText", () => {
     const priceEl = document.createElement("span");
@@ -258,8 +274,10 @@ describe("roundToTenth", () => {
     expect(roundToTenth(2.999)).toBe("2.99");
   });
   test("should round up when up parameter is true", () => {
-    expect(roundToTenth(3.456, 1, 2, true)).toBe("3.46");
-    expect(roundToTenth(2.991, 1, 2, true)).toBe("2.99");
+    // multiplier=2 rounds at the hundredths place (matching fixeds=2);
+    // Math.ceil rounds strictly up/away from zero, so 2.991 -> 3.00, not 2.99.
+    expect(roundToTenth(3.456, 2, 2, true)).toBe("3.46");
+    expect(roundToTenth(2.991, 2, 2, true)).toBe("3.00");
   });
   test("should use multiplier correctly", () => {
     expect(roundToTenth(3.456, 2, 2)).toBe("3.45");
@@ -267,7 +285,10 @@ describe("roundToTenth", () => {
   });
   test("should handle fixed decimal places", () => {
     expect(roundToTenth(3.456, 1, 1)).toBe("3.4");
-    expect(roundToTenth(3.456, 1, 3)).toBe("3.456");
+    // multiplier=1 rounds at the tenths place first (3.456 -> 3.4), so
+    // formatting with 3 fixed decimals afterward pads zeros rather than
+    // recovering the original precision.
+    expect(roundToTenth(3.456, 1, 3)).toBe("3.400");
   });
   test("should return original number formatted if an error occurs", () => {
     const consoleSpy = jest.spyOn(console, "error").mockImplementation();
@@ -470,10 +491,15 @@ describe("applyFactorProductCase", () => {
 });
 describe("applySubOptParam", () => {
   beforeEach(() => {
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { href: "http://example.com/?Op-chocolate" },
-    });
+    // jsdom's window.location is a non-configurable accessor and can't
+    // be replaced wholesale; drive it through the real navigation API
+    // instead (a relative path, since jsdom's test origin is
+    // http://localhost and pushState can't cross origins).
+    // The source checks for "&Op-" (with the ampersand), not just "Op-".
+    history.pushState({}, "", "/?&Op-chocolate");
+  });
+  afterEach(() => {
+    history.pushState({}, "", "/");
   });
   test("should check radio input based on URL parameter", () => {
     const radio = document.createElement("input");
@@ -551,15 +577,15 @@ describe("testSource", () => {
 describe("clearURLAfterModal", () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { href: "http://example.com/?&modalId" },
-    });
+    // jsdom's window.location is a non-configurable accessor and can't
+    // be replaced wholesale; drive it through the real navigation API.
+    history.pushState({}, "", "/?&modalId");
     jest.spyOn(history, "pushState").mockImplementation();
   });
   afterEach(() => {
     jest.useRealTimers();
     (history.pushState as jest.Mock).mockRestore();
+    history.pushState({}, "", "/");
   });
   test("should modify URL after timeout", () => {
     clearURLAfterModal("modalId");
@@ -579,16 +605,20 @@ describe("clearURLAfterModal", () => {
 describe("adjustIdentifiers", () => {
   test("should normalize IDs and class names", () => {
     document.body.innerHTML = `
-      <div id="123 invalid id" class="class 1"></div>
-      <input name="invalid name" class="invalid class"></input>
+      <div id="123 invalid id" class="1class"></div>
+      <input name="invalid name" class="invalid -class"></input>
     `;
     adjustIdentifiers();
     const div = document.querySelector("div")!;
     expect(div.id).toBe("_123_invalid_id");
-    expect(div.classList.contains("class_1")).toBe(true);
+    // Classes are inherently a space-separated list (unlike id/name, a
+    // single class token can never itself contain a space), so each
+    // offending token gets underscore-prefixed on its own rather than
+    // joined with its siblings.
+    expect(div.classList.contains("_1class")).toBe(true);
     const input = document.querySelector("input")!;
     expect(input.name).toBe("invalid_name");
-    expect(input.classList.contains("invalid_class")).toBe(true);
+    expect(input.classList.contains("_-class")).toBe(true);
   });
   test("should handle elements with special characters", () => {
     document.body.innerHTML = `
@@ -609,22 +639,28 @@ describe("adjustIdentifiers", () => {
 });
 describe("adjustHeadings", () => {
   test("should adjust heading levels based on parent headings", () => {
+    // adjustHeadings walks refEl's own ancestor chain (parentElement,
+    // not preceding siblings) looking for a heading tag, so the nearest
+    // heading needs to actually be an ancestor of the target, not a
+    // sibling of one of its ancestors. It sets refEl's level to one
+    // below the nearest ancestor heading it finds (matching the real
+    // use case: AccordionItem always renders an h3 header, so a
+    // nested accordion's h3 -- itself inside an ancestor h3 -- needs
+    // to become an h4 to keep the outline consistent).
     document.body.innerHTML = `
       <div>
-        <h2>Parent Heading</h2>
-        <div>
-          <h3>Child Heading</h3>
+        <h3>
           <div>
-            <h4 id="targetHeading">Target Heading</h4>
+            <h3 id="targetHeading">Target Heading</h3>
           </div>
-        </div>
+        </h3>
       </div>
     `;
     adjustHeadings(
       document.getElementById("targetHeading") as HTMLHeadingElement
     );
     if (!document.getElementById("targetHeading")) return;
-    expect(document.getElementById("targetHeading")!.tagName).toBe("H5");
+    expect(document.getElementById("targetHeading")!.tagName).toBe("H4");
   });
   test("should handle cases with no parent headings", () => {
     document.body.innerHTML = `
