@@ -1,5 +1,6 @@
 import { OrderProps } from "../declarations/interfaces";
 import { ErrorBoundary } from "react-error-boundary";
+import styles from "./OrderRow.module.scss";
 import OrderTitle from "./OrderTitle";
 import OrderQuantity from "./OrderQuantity";
 import OrderRemove from "./OrderRemove";
@@ -20,7 +21,7 @@ export default function OrderRow(props: OrderProps): JSX.Element {
         </tr>
       )}
     >
-      <tr id={`tr_${props.id || "unfilled"}`}>
+      <tr id={`tr_${props.id || "unfilled"}`} className={styles['order-row']}>
         <OrderTitle title={props.title ?? ""} id={props.id || "unfilled"} />
         <OrderQuantity
           quantity={props.quantity ?? "0"}

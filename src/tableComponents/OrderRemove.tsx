@@ -1,4 +1,5 @@
 import { OrderProps } from "src/declarations/interfaces";
+import styles from "../tableComponents/OrderRow.module.scss";
 import {
   baseFestValues,
   baseMappedValues,
@@ -18,7 +19,7 @@ import OrderRow from "./OrderRow";
 
 export default function OrderRemove(props: OrderProps): JSX.Element {
   return (
-    <td className="celRemove" style={{ paddingRight: "3.2rem" }}>
+    <td className={`celRemove ${styles['order-row__remove']}`} style={{ paddingRight: "3.2rem" }}>
       <button
         type="button"
         className="biBtn opBtn opBtnRemove tabRemove"
@@ -26,7 +27,9 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
           props.id
         }`}
         aria-hidden="false"
+        aria-label="Remover item"
         onClick={ev => handleRemoveOrder(ev.currentTarget)}
+        style={{ minWidth: "44px", minHeight: "44px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

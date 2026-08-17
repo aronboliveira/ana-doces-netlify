@@ -36,7 +36,7 @@ export function TableOrders(): JSX.Element {
       tbodyProps.root.render(
         <OrderRow key={"order_ph"} id={"order_ph"} quantity={"0"} />
       );
-      const tbodyInterv = setInterval(interv => {
+      const tbodyInterv = setInterval(() => {
         try {
           const tab =
             document.getElementById("productsTab") ??
@@ -91,7 +91,7 @@ export function TableOrders(): JSX.Element {
                 )
                   tbodyProps.root.unmount();
                 if (!tab) {
-                  clearInterval(interv);
+                  clearInterval(tbodyInterv);
                   return;
                 }
                 if (document.getElementById("tbodyOrders")) return;
@@ -171,11 +171,11 @@ export function TableOrders(): JSX.Element {
               (e as Error).message
             }`
           );
-          clearInterval(interv);
-          interv && setTimeout(() => clearInterval(interv), 1000);
+          clearInterval(tbodyInterv);
+          tbodyInterv && setTimeout(() => clearInterval(tbodyInterv), 1000);
         }
       }, 200);
-      const rowInterv = setInterval(interv => {
+      const rowInterv = setInterval(() => {
         try {
           const tab =
             document.getElementById("productsTab") ??
@@ -249,8 +249,8 @@ export function TableOrders(): JSX.Element {
           console.error(
             `Error executing interval for rows:\n${(e as Error).message}`
           );
-          clearInterval(interv);
-          interv && setTimeout(() => clearInterval(interv), 1000);
+          clearInterval(rowInterv);
+          rowInterv && setTimeout(() => clearInterval(rowInterv), 1000);
         }
       }, 2000);
       return () => {

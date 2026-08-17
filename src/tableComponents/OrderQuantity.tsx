@@ -1,5 +1,6 @@
 import { OrderQuant } from "../declarations/interfaces";
 import { useRef, useEffect } from "react";
+import styles from "../tableComponents/OrderRow.module.scss";
 import { nullishCel, nullishOutp } from "../declarations/types";
 import { htmlElementNotFound } from "../handlersErrors";
 
@@ -29,11 +30,11 @@ export default function OrderQuantity(props: OrderQuant): JSX.Element {
     <td
       ref={quantCelRef}
       id={`quantCel_${props.id || "unfilled"}`}
-      className="celQuant"
+      className={`celQuant ${styles['order-row__quantity']}`}
     >
       <output
         id={`quantOutp_${props.id || "unfilled"}`}
-        className={`outp_orderQuant`}
+        className={`outp_orderQuant ${styles['order-row__output-quant']}`}
         ref={quantRef}
       >
         {props.quantity}

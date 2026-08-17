@@ -1,0 +1,8 @@
+@use '../styles/abstracts/variables' as *;
+
+.order-row {}                 // block: <tr> wrapper
+.order-row__title {}          // element: product name cell
+.order-row__quantity {}       // element: quantity cell
+.order-row__remove {}         // element: remove button cell
+.order-row__output-title {}   // element: title output
+.order-row__output-quant {}   // element: quantity output
