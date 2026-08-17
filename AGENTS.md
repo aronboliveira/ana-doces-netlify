@@ -216,8 +216,19 @@ Use for touch-target sizing adjustments for elderly users on mobile.
 - **Accessibility audit**: COMPLETE — critical + important fixes applied.
 - **SEO**: COMPLETE — meta tags, JSON-LD, semantic HTML.
 - **Task B (Maintenance)**: COMPLETE — useMaintenanceMode hook, MaintenanceModal, MaintenanceBar.
-- **~36 test suites still failing**: Pre-existing issues (jest.mock path resolution, `resetMocks` systemic bug).
-- **Nothing committed yet**: All changes uncommitted. Commit granularly per the split in handoff-20260816.md section 3.
+- **Test suites**: ALL 40 suites passing (232/232 tests) after Claude agent's fixes.
+- **CI/CD**: GitHub Actions workflow + push rule added. Ready for pipeline test.
+
+## CI/CD
+
+- **GitHub Actions**: `.github/workflows/ci.yml` — runs lint, test, build on push to `main` and PRs. Node 22.
+- **Netlify**: Auto-deploys on push to `main` via Netlify's own integration (`netlify.toml` configured).
+- **Pipeline gates**: All three jobs (lint, test, build) must pass before merge.
+
+## Rules
+
+- **NEVER push unless the user explicitly tells you to.** This is a hard rule. Commit locally all you want, but do not run `git push` without explicit user instruction.
+- After a push, monitor GitHub Actions (`gh run watch`) and Netlify deploy until both are green. Iterate corrections on any failures.
 
 ## Conventions
 
