@@ -617,7 +617,9 @@ table.table {
 }
 
 .celRemove .tabRemove {
-  transform: translate(15%, 5%);
+  // transform lives in styleFix.scss (loaded after this file, and already
+  // the sole owner of this selector's per-breakpoint sizing) so there's
+  // only ever one place setting it.
   min-width: 1rem;
   min-height: 1rem;
 }

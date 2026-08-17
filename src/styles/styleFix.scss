@@ -46,7 +46,11 @@ thead,
 }
 
 .celRemove .tabRemove {
-  transform: translate(calc(1.8vw), -7%);
+  // Single source of truth for this transform -- it used to also be
+  // reasserted (with 3 different values) inside the breakpoints below,
+  // which won the cascade over any override elsewhere (this file loads
+  // last) and varied by viewport width instead of staying put.
+  transform: translate(15%, 5%);
 }
 
 .opBtnAdd {
@@ -127,18 +131,6 @@ thead,
   }
 }
 
-@include bp-range(1010px, $bp-wide) {
-  .celRemove .tabRemove {
-    transform: translate(1.6vw, -7%);
-  }
-}
-
-@include bp(1010px) {
-  .celRemove .tabRemove {
-    transform: translate(1.3rem, -7%);
-  }
-}
-
 @include bp($bp-desktop-sm) {
   #btnsTip {
     width: 74vw;
@@ -146,9 +138,6 @@ thead,
 }
 
 @include bp($bp-mobile-sm) {
-  .celRemove .tabRemove {
-    transform: translate(1.4rem, -7%);
-  }
   #btnsTip {
     width: 70vw;
   }
