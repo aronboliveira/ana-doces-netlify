@@ -1,0 +1,12 @@
+@use '../styles/abstracts/variables' as *;
+
+.option {}                    // block: <li> wrapper per option
+.option__info {}              // element: info container (name, desc, price)
+.option__name {}              // element: option name (strong)
+.option__description {}       // element: option description (span)
+.option__price {}             // element: option price (span)
+.option__buttons {}           // element: add/remove buttons container
+.option__btn-add {}           // element: add button
+.option__btn-remove {}        // element: remove button
+.option__alert-add {}         // element: add feedback alert
+.option__alert-remove {}      // element: remove feedback alert

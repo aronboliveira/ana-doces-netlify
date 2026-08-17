@@ -31,6 +31,7 @@ import SuboptionsCont from "../suboptions/SuboptionsCont";
 import Spinner from "../callers/Spinner";
 import { useParams } from "react-router-dom";
 import SearchBar from "../interactives/SearchBar";
+import styles from "./ProductOptionsDlg.module.scss";
 
 export default function ProductOptionsDlg({
   shouldShowOptions = true,
@@ -198,13 +199,13 @@ export default function ProductOptionsDlg({
                   </ErrorBoundary>
                 );
               });
-              const menuInterv = setInterval(interv => {
+              const menuInterv = setInterval(() => {
                 if (
                   !attemptRender(menuRoot, menuRef.current, ...optionsJsx) ||
                   !menuRef.current ||
                   !document.querySelector("dialog")
                 )
-                  clearInterval(interv);
+                  clearInterval(menuInterv);
               }, 200);
               const clearInterv = setInterval(() => {
                 if (!document.querySelector("dialog"))
@@ -379,6 +380,36 @@ export default function ProductOptionsDlg({
     return () => removeEventListener("keydown", handleKeyPress);
   }, [optionsRef, setOptions, shouldShowOptions]);
   useEffect(() => {
+    const dialog = optionsRef.current;
+    if (!dialog) return;
+    const previousFocus = document.activeElement as HTMLElement;
+    dialog.focus();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const focusableElements = dialog.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
+    dialog.addEventListener("keydown", handleKeyDown);
+    return () => {
+      dialog.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus();
+    };
+  }, []);
+  useEffect(() => {
     try {
       if (!(optionsRef.current instanceof HTMLElement))
         throw htmlElementNotFound(
@@ -448,11 +479,11 @@ export default function ProductOptionsDlg({
   }, [finished]);
   useEffect(() => {
     const idRef = optionsRef.current?.id;
-    const modalInterv = setInterval(interv => {
+    const modalInterv = setInterval(() => {
       if (optionsRef.current?.open === false) {
         optionsRef.current.close();
         setOptions && setOptions(false);
-        clearInterval(interv);
+        clearInterval(modalInterv);
       }
     }, 100);
     const clearAddInterv = setInterval(() => {
@@ -529,8 +560,10 @@ export default function ProductOptionsDlg({
     >
       {shouldShowOptions && (
         <dialog
-          className="modal-content"
+          className={`modal-content ${styles['product-options__dialog']}`}
           ref={optionsRef}
+          aria-labelledby={`heading-${options.map(option => option.opName).toString().replace("[", "").replace("]", "").replaceAll(",", "-").replaceAll(" ", "_")}`}
+          aria-modal="true"
           onClick={click => {
             if (
               isClickOutside(click, optionsRef.current!).some(
@@ -555,10 +588,10 @@ export default function ProductOptionsDlg({
             .replaceAll(",", "-")
             .replaceAll(" ", "_")}`}
         >
-          <nav className="menuOpNav fade-in">
-            <div className="flNoW menuOpMainDiv">
+          <nav className={`menuOpNav fade-in ${styles['product-options__nav']}`}>
+            <div className={`flNoW menuOpMainDiv ${styles['product-options__main']}`}>
               <h2
-                className="menuOpH"
+                className={`menuOpH ${styles['product-options__heading']}`}
                 id={`heading-${options
                   .map(option => option.opName)
                   .toString()
@@ -570,7 +603,7 @@ export default function ProductOptionsDlg({
                 <span className="menuOpHOptChunk">Opções — </span>
               </h2>
               <button
-                className="fade-in-mid btn btn-close"
+                className={`fade-in-mid btn btn-close ${styles['product-options__close']}`}
                 onClick={() => {
                   setOptions && setOptions(!shouldShowOptions);
                   shouldShowOptions

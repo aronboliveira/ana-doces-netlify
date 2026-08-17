@@ -1,0 +1,9 @@
+@use '../styles/abstracts/variables' as *;
+
+.product-options {}           // block
+.product-options__dialog {}   // element: dialog wrapper
+.product-options__nav {}      // element: nav container
+.product-options__main {}     // element: main div (heading + close btn row)
+.product-options__heading {}  // element: h2 heading
+.product-options__close {}    // element: close button
+.product-options__menu {}     // element: menu container for option grids

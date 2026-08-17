@@ -1,5 +1,6 @@
 import { ProductOptionsProps } from "../declarations/interfaces";
-import { useRef, useEffect } from "react";
+import { memo, useRef, useEffect } from "react";
+import styles from "./ProductOptionGrid.module.scss";
 import {
   nullishBtn,
   nullishLi,
@@ -26,7 +27,7 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import GenericErrorComponent from "../errors/GenericErrorComponent";
 
-export default function ProductOptionGrid({
+const ProductOptionGrid = memo(function ProductOptionGrid({
   opName,
   price,
   desc,
@@ -110,7 +111,7 @@ export default function ProductOptionGrid({
           );
         }
       );
-    } catch (err) {
+    } catch (_err) {
       console.error(
         `Error reading addRef in useEffect() for ProductOptionGrid id ${
           mainRef.current?.id || "UNIDENTIFIED"
@@ -145,7 +146,7 @@ export default function ProductOptionGrid({
           );
         }
       );
-    } catch (err) {
+    } catch (_err) {
       console.error(
         `Error reading minusRef in useEffect() for ProductOptionGrid id ${
           mainRef.current?.id || "UNIDENTIFIED"
@@ -522,7 +523,7 @@ export default function ProductOptionGrid({
   return (
     <li
       key={`#${opNameHifen}`}
-      className={`opLi opLi-${opNameHifen}${__id}`}
+      className={`opLi opLi-${opNameHifen}${__id} ${styles.option}`}
       id={`li-${opNameHifen}${__id}`}
       ref={mainRef}
       data-title={`unfilled`}
@@ -547,24 +548,24 @@ export default function ProductOptionGrid({
         )}
       >
         <div
-          className={`fade-in-mid opLiDiv opInfoDiv opInfoDiv-${opNameHifen}`}
+          className={`fade-in-mid opLiDiv opInfoDiv opInfoDiv-${opNameHifen} ${styles['option__info']}`}
         >
           <strong
-            className={`opSpan opSpanName opSpan-${opNameHifen}`}
+            className={`opSpan opSpanName opSpan-${opNameHifen} ${styles['option__name']}`}
             id={`${opNameHifen}-title`}
             ref={opNameRef}
           >
             {opName || `Nome indefinido`}
           </strong>
           <span
-            className={`opSpan opSpanDesc opSpan-${opNameHifen}`}
+            className={`opSpan opSpanDesc opSpan-${opNameHifen} ${styles['option__description']}`}
             ref={descRef}
             id={`${opNameHifen}-desc`}
           >
             {desc || `Descrição não fornecida`}
           </span>
           <span
-            className={`opSpan opSpanPrice opSpan-${opNameHifen}`}
+            className={`opSpan opSpanPrice opSpan-${opNameHifen} ${styles['option__price']}`}
             ref={priceRef}
             id={`${opNameHifen}-price`}
           >
@@ -572,17 +573,19 @@ export default function ProductOptionGrid({
           </span>
         </div>
         <div
-          className={`fade-in-late opLiDiv opBtnsDiv opBtnsDiv-${opNameHifen}`}
+          className={`fade-in-late opLiDiv opBtnsDiv opBtnsDiv-${opNameHifen} ${styles['option__buttons']}`}
           id={`${opNameHifen}-btnsDiv`}
         >
-          <span className="addAlert" id={`addAlert${__id}`}>
+          <span className={`addAlert ${styles['option__alert-add']}`} id={`addAlert${__id}`}>
             Item adicionado!
           </span>
           <button
             type="button"
-            className={`biBtn opBtn opBtnAdd opBtn-${opNameHifen} opBtnAdd-${opNameHifen}`}
+            className={`biBtn opBtn opBtnAdd opBtn-${opNameHifen} opBtnAdd-${opNameHifen} ${styles['option__btn-add']}`}
             id="btnAddunfilled"
             ref={addRef}
+            aria-label="Adicionar"
+            style={{ minWidth: "44px", minHeight: "44px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -626,14 +629,16 @@ export default function ProductOptionGrid({
               */}
             </svg>
           </button>
-          <span className="minusAlert" id={`minusAlert${__id}`}>
+          <span className={`minusAlert ${styles['option__alert-remove']}`} id={`minusAlert${__id}`}>
             Item removido!
           </span>
           <button
             type="button"
-            className={`biBtn opBtn opBtnRemove opBtn-${opNameHifen} opBtnRemove-${opNameHifen}`}
+            className={`biBtn opBtn opBtnRemove opBtn-${opNameHifen} opBtnRemove-${opNameHifen} ${styles['option__btn-remove']}`}
             id="btnSubtunfilled"
             ref={minusRef}
+            aria-label="Remover"
+            style={{ minWidth: "44px", minHeight: "44px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -651,4 +656,6 @@ export default function ProductOptionGrid({
       </ErrorBoundary>
     </li>
   );
-}
+});
+
+export default ProductOptionGrid;
