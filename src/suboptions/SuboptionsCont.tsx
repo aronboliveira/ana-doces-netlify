@@ -23,7 +23,7 @@ export default function SuboptionsCont({
         );
       if (mainRef.current.id === "")
         mainRef.current.id = `cont${
-          mainRef.current.closest("menu")!.id
+          mainRef.current.closest("menu")?.id ?? "unfilled"
         }_${subOptions
           .toString()
           .replace("[", "")
@@ -47,7 +47,11 @@ export default function SuboptionsCont({
         <ErrorMessageComponent message="Error rendering Options Container" />
       )}
     >
-      <div className={`opGroup ${styles.suboptions}`} ref={mainRef}>
+      <div
+        className={`opGroup ${styles.suboptions}`}
+        ref={mainRef}
+        role="group"
+      >
         {subOptions.some((opt) => opt.length > 0) &&
           subOptions.map((opt, i) => (
             <SuboptionsSubDiv

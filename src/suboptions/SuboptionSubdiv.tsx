@@ -24,7 +24,7 @@ export default function SuboptionsSubDiv({
         );
       if (mainRef.current.id === "")
         mainRef.current.id = `cont${
-          mainRef.current.closest("menu")!.id
+          mainRef.current.closest("menu")?.id ?? "unfilled"
         }_${subOptionsList
           .toString()
           .replace("[", "")
@@ -187,7 +187,11 @@ export default function SuboptionsSubDiv({
         <ErrorMessageComponent message="Error rendering Options Container" />
       )}
     >
-      <div className={`opSubGroup form-check ${styles['suboptions__group']}`} ref={mainRef}>
+      <div
+        className={`opSubGroup form-check ${styles['suboptions__group']}`}
+        ref={mainRef}
+        role="group"
+      >
         {subOptionsList.map((opt, i) => (
           <SuboptionInp
             option={opt}
