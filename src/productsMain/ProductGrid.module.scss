@@ -1,0 +1,9 @@
+@use '../styles/abstracts/variables' as *;
+
+.product {}                   // block: <li> wrapper
+.product__info {}             // element: product info container
+.product__name {}             // element: product name (h3)
+.product__details {}          // element: product details (description)
+.product__price {}            // element: product price
+.product__image {}            // element: image container
+.product__image--invalid {}   // modifier: invalid price state

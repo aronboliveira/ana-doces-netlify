@@ -1,5 +1,6 @@
 import { ProductGridProps } from "../declarations/interfaces";
-import { useState, useRef, useEffect } from "react";
+import { Suspense, lazy, memo, useState, useRef, useEffect } from "react";
+import styles from "./ProductGrid.module.scss";
 import {
   elementNotFound,
   stringError,
@@ -8,10 +9,10 @@ import {
 import { nullishLi, nullishSpan } from "../declarations/types";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
-import ProductOptionsDlg from "../productOptions/ProductOptionsDlg";
+const ProductOptionsDlg = lazy(() => import("../productOptions/ProductOptionsDlg"));
 import { syncAriaStates } from "../handlersCmn";
 
-export default function ProductGrid(props: ProductGridProps): JSX.Element {
+const ProductGrid = memo(function ProductGrid(props: ProductGridProps): JSX.Element {
   const [shouldShowOptions, setOptions] = useState(false);
   const handleClick = (id: string) => {
     if (refLi.current && new RegExp(id, "g").test(refLi.current.id))
@@ -89,7 +90,9 @@ export default function ProductGrid(props: ProductGridProps): JSX.Element {
         id={`div-${props.name
           .replaceAll(/\s/g, "-")
           .replaceAll(/[êéèë]/g, "e")}__${props.id}`}
-        className="divProduct"
+        className={`divProduct ${styles.product}`}
+        role="button"
+        tabIndex={0}
         onClick={event => {
           event.stopPropagation();
           handleClick(
@@ -98,23 +101,33 @@ export default function ProductGrid(props: ProductGridProps): JSX.Element {
               .replaceAll(/[êéèë]/g, "e")}__${props.id}`
           );
         }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleClick(
+              `div-${props.name
+                .replaceAll(/\s/g, "-")
+                .replaceAll(/[êéèë]/g, "e")}__${props.id}`
+            );
+          }
+        }}
         title={`Clique aqui para abrir o menu de opções para ${props.name}`}
       >
-        <div className="divProductInfo">
-          <h3 className="divProductName">
+        <div className={`divProductInfo ${styles['product__info']}`}>
+          <h3 className={`divProductName ${styles['product__name']}`}>
             <strong>{`${props.name.slice(0, 1).toLocaleUpperCase()}${props.name
               .slice(1)
               .toLocaleLowerCase()}`}</strong>
           </h3>
-          <div className="divProductDetails">
+          <div className={`divProductDetails ${styles['product__details']}`}>
             <small>{`${props.detail}`}</small>
           </div>
           <span
-            className="divProductPrice"
+            className={`divProductPrice ${styles['product__price']}`}
             ref={priceRef}
           >{`R$ ${props.price}`}</span>
         </div>
-        <div className="divProductImg">
+        <div className={`divProductImg ${styles['product__image']}`}>
           <img
             id={`img_${props.name.replaceAll(" ", "-").toLowerCase()}__${
               props.id
@@ -127,14 +140,18 @@ export default function ProductGrid(props: ProductGridProps): JSX.Element {
         </div>
       </li>
       {shouldShowOptions && (
-        <ProductOptionsDlg
-          setOptions={setOptions}
-          shouldShowOptions={shouldShowOptions}
-          root={props.options?.at(0)?.root ?? undefined}
-          options={props.options}
-          subOptions={props.subOptions}
-        />
+        <Suspense fallback={null}>
+          <ProductOptionsDlg
+            setOptions={setOptions}
+            shouldShowOptions={shouldShowOptions}
+            root={props.options?.at(0)?.root ?? undefined}
+            options={props.options}
+            subOptions={props.subOptions}
+          />
+        </Suspense>
       )}
     </ErrorBoundary>
   );
-}
+});
+
+export default ProductGrid;
