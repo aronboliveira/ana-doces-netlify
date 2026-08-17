@@ -55,10 +55,82 @@ src/
 
 ### Key Patterns
 
-- **Compound Pattern**: `ProductGrid` renders one `<li>` + conditionally renders `ProductOptionsDlg` as a JSX sibling (DOM adjacency is load-bearing).
-- **Query-param modal**: `ProductsProvider` reads `location.href` for `?&<slug>`, dispatches a click on the matching `<li>` to open the real options modal.
-- **Mount detection**: Poll `mainItems.listMainItems` + 1000ms settle timeout before dispatching.
-- **Modals**: `<dialog>` element, `showModal()`, Escape-key handling, `adjustIdentifiers`/`syncAriaStates` from `handlersCmn`.
+#### Compound Pattern (`ProductGrid` + `ProductOptionsDlg`)
+
+`ProductGrid` (`src/productsMain/ProductGrid.tsx`) renders exactly one `<li ref={refLi}>`
+per product, and — only while its local `shouldShowOptions` state is true — a lazy-loaded
+`ProductOptionsDlg` **as a JSX sibling of that `<li>`**, inside the same `<ErrorBoundary>`,
+never nested inside it:
+
+```jsx
+<ErrorBoundary ...>
+  <li ref={refLi} id={productId} onClick={...} onKeyDown={...}>...</li>
+  {shouldShowOptions && (
+    <Suspense fallback={null}>
+      <ProductOptionsDlg ... />
+    </Suspense>
+  )}
+</ErrorBoundary>
+```
+
+This sibling placement is **load-bearing**, not stylistic: `ProductOptionGrid`
+(`src/productOptions/ProductOptionGrid.tsx:55`) — rendered inside `ProductOptionsDlg`'s
+dialog — has to relate each option row back to its *product*, and it does so purely by
+DOM adjacency, not by prop-drilling an id:
+
+```ts
+let productLi = mainRef.current.closest("dialog")?.previousElementSibling;
+if (!(productLi instanceof HTMLLIElement))
+  productLi = document.querySelector(`[id*="${...}"]`); // id-substring fallback
+```
+
+If `ProductOptionsDlg` were ever rendered *inside* the `<li>` instead of next to it,
+`closest("dialog")?.previousElementSibling` would resolve to the wrong element (or
+`null`), silently breaking option-price/name derivation that reads the product's price
+and name off `productLi`. The id-substring `querySelector` fallback exists for exactly
+this fragility — but it's a fallback, not a replacement; keep the sibling structure.
+
+#### Query-param modal dispatch
+
+`ProductsProvider` (`src/productsMain/ProductsProvider.tsx`) never renders modal content
+from the URL directly. Instead, once the menu has mounted, it finds the real `<li>` that
+matches the URL and **calls `.click()` on it**, reusing `ProductGrid`'s own `onClick`
+handler (and therefore the Compound Pattern above) instead of duplicating render logic
+for a "deep-linked" product:
+
+- URL format: `?&<slug>` selects a product (e.g. `?&brownie-simples__01`); an optional
+  `&Op-<suboption>` suffix is carved out of the match window so sub-option deep links
+  don't get swallowed into the product-slug regex.
+- The `<li>` id (`div-<name>__<id>`) is normalized (strip `div-`/`®`/`-—-conjunto`,
+  lowercase) and compared against the URL slice via `RegExp.test`.
+- When a match is found: `matchedItem.scrollIntoView()`, then `matchedItem.click()` —
+  this is the *only* code path that opens a query-param-driven modal; there's no
+  separate "render this product's dialog because the URL says so" branch anywhere else.
+- No match (and the URL isn't just `/`): logs a warning and resets the URL to `basePath`
+  via `history.pushState`, so a stale/invalid slug doesn't leave the page stuck on a dead
+  link.
+
+#### Mount detection
+
+Because `renderProducts` is async-ish from the DOM's perspective (React renders, then the
+browser paints, then refs settle), `ProductsProvider`'s query-param dispatch effect can't
+just run on mount — the `<menu>`'s `<li>`s may not exist yet. It uses two guards:
+
+1. `mainItems.listMainItems` (from `src/index.tsx`) is populated by querying
+   `document.querySelector("menu")` and mapping every `<li>` to a normalized id — this is
+   also the id→index map `SearchBar` and other consumers rely on, so it doubles as the
+   "menu is populated" signal.
+2. A flat `setTimeout(..., 1000)` settle delay before attempting the click-dispatch match,
+   giving the product list time to finish mounting after the initial render pass.
+
+This is intentionally an informal, timing-based mechanism (not a `MutationObserver` or a
+ref-count), so if deep-linking flakes intermittently, check this timeout first before
+assuming the matching regex logic is at fault.
+
+#### Modals
+
+`<dialog>` element, `showModal()`, Escape-key handling, `adjustIdentifiers`/`syncAriaStates`
+from `handlersCmn`.
 
 ## CSS Migration Plan
 
