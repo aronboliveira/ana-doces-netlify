@@ -29,13 +29,14 @@ describe("OrderTitle Component", () => {
   });
 
   test("handles missing id prop", () => {
-    render(<OrderTitle id="1" title="No ID" />);
+    render(<OrderTitle {...({ id: undefined, title: "No ID" } as any)} />);
     const td = screen.getByText("No ID").closest("td");
     expect(td).toHaveAttribute("id", "titleCel_unfilled");
   });
 
   test("handles missing title prop", () => {
-    render(<OrderTitle id="2" title="id" />);
-    expect(screen.getByText("")).toBeInTheDocument();
+    render(<OrderTitle {...({ id: "2", title: undefined } as any)} />);
+    const output = document.getElementById("titleOutp_2");
+    expect(output).toHaveTextContent("");
   });
 });

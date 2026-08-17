@@ -1,8 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import OrderRow from "../../../tableComponents/OrderRow";
+import OrderTitle from "../../../tableComponents/OrderTitle";
 import { OrderProps } from "../../../declarations/interfaces";
-import * as ReactErrorBoundary from "react-error-boundary";
-import GenericErrorComponent from "src/errors/GenericErrorComponent";
 
 jest.mock("../../../tableComponents/OrderTitle", () =>
   jest.fn(() => <td>OrderTitle</td>)
@@ -13,9 +12,9 @@ jest.mock("../../../tableComponents/OrderQuantity", () =>
 jest.mock("../../../tableComponents/OrderRemove", () =>
   jest.fn(() => <td>OrderRemove</td>)
 );
-jest.mock("src/errors/GenericErrorComponent", () =>
-  jest.fn(() => <div>Error</div>)
-);
+// GenericErrorComponent is deliberately NOT mocked here -- the second
+// test needs its real rendering (which shows the `message` prop) to
+// verify OrderRow's own ErrorBoundary fallback text.
 
 describe("OrderRow Component", () => {
   const defaultProps: OrderProps = {
@@ -36,14 +35,19 @@ describe("OrderRow Component", () => {
   });
 
   test("renders error fallback when error occurs", () => {
-    render(
-      <ReactErrorBoundary.ErrorBoundary
-        FallbackComponent={() => <GenericErrorComponent message="Error" />}
-      >
-        <GenericErrorComponent message="Error" />
-      </ReactErrorBoundary.ErrorBoundary>
-    );
+    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+    // Force a real render-time throw from one of OrderRow's children so
+    // its own ErrorBoundary actually trips (an effect-scoped throw,
+    // caught internally by the child, never would).
+    (OrderTitle as jest.Mock).mockImplementation(() => {
+      throw new Error("Test error");
+    });
 
-    expect(screen.getByText(/Erro criando linha para/)).toBeInTheDocument();
+    render(<OrderRow {...defaultProps} />);
+
+    expect(
+      screen.getByText(/Erro criando linha para Test Product/)
+    ).toBeInTheDocument();
+    consoleErrorSpy.mockRestore();
   });
 });
