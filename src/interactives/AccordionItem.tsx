@@ -1,7 +1,7 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { AccordItemProps } from "../declarations/interfaces";
 import ErrorMessageComponent from "../errors/ErrorMessageComponent";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback, type MouseEvent } from "react";
 import { nullishBtn, nullishDiv, nullishHeading } from "../declarations/types";
 import { htmlElementNotFound } from "../handlersErrors";
 import {
@@ -74,6 +74,21 @@ export default function AccordionItem({
       );
     }
   }, [btnRef, collapseRef]);
+  const handleToggle = useCallback(
+    (ev: MouseEvent<HTMLButtonElement>) => {
+      const activeQuery = /\?q=/g.test(location.href)
+        ? `${location.href.slice(
+            location.href.indexOf("?q="),
+            location.href.indexOf("?&")
+          )}`
+        : "";
+      history.pushState({}, "", `${basePath}${activeQuery}?&info`);
+      if (!ev.currentTarget.classList.contains("collapsed") || defShow)
+        history.pushState({}, "", `${location.href}&${baseId}`);
+      else history.pushState({}, "", `${basePath}${activeQuery}?&info`);
+    },
+    [baseId, defShow]
+  );
   return (
     <ErrorBoundary
       FallbackComponent={() => (
@@ -99,18 +114,7 @@ export default function AccordionItem({
             data-bs-target={`#${baseId}`}
             aria-expanded={!defShow ? false : true}
             aria-controls={`${baseId}`}
-            onClick={(ev) => {
-              const activeQuery = /\?q=/g.test(location.href)
-                ? `${location.href.slice(
-                    location.href.indexOf("?q="),
-                    location.href.indexOf("?&")
-                  )}`
-                : "";
-              history.pushState({}, "", `${basePath}${activeQuery}?&info`);
-              if (!ev.currentTarget.classList.contains("collapsed") || defShow)
-                history.pushState({}, "", `${location.href}&${baseId}`);
-              else history.pushState({}, "", `${basePath}${activeQuery}?&info`);
-            }}
+            onClick={handleToggle}
           >
             {headerText}
           </button>

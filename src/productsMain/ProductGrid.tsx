@@ -1,5 +1,5 @@
 import { ProductGridProps } from "../declarations/interfaces";
-import { Suspense, lazy, memo, useState, useRef, useEffect } from "react";
+import { Suspense, lazy, memo, useState, useRef, useEffect, useMemo, useCallback } from "react";
 import styles from "./ProductGrid.module.scss";
 import {
   elementNotFound,
@@ -14,12 +14,19 @@ import { syncAriaStates } from "../handlersCmn";
 
 const ProductGrid = memo(function ProductGrid(props: ProductGridProps): JSX.Element {
   const [shouldShowOptions, setOptions] = useState(false);
-  const handleClick = (id: string) => {
-    if (refLi.current && new RegExp(id, "g").test(refLi.current.id))
-      setOptions(!shouldShowOptions);
-  };
   const refLi = useRef<nullishLi>(null);
   const priceRef = useRef<nullishSpan>(null);
+  const productId = useMemo(
+    () =>
+      `div-${props.name
+        .replaceAll(/\s/g, "-")
+        .replaceAll(/[êéèë]/g, "e")}__${props.id}`,
+    [props.name, props.id]
+  );
+  const handleClick = useCallback((id: string) => {
+    if (refLi.current && new RegExp(id, "g").test(refLi.current.id))
+      setOptions(prev => !prev);
+  }, []);
   // console.log(props.subOptions ?? "none");
   useEffect(() => {
     setTimeout(() => {
@@ -87,28 +94,18 @@ const ProductGrid = memo(function ProductGrid(props: ProductGridProps): JSX.Elem
     >
       <li
         ref={refLi}
-        id={`div-${props.name
-          .replaceAll(/\s/g, "-")
-          .replaceAll(/[êéèë]/g, "e")}__${props.id}`}
+        id={productId}
         className={`divProduct ${styles.product}`}
         role="button"
         tabIndex={0}
         onClick={event => {
           event.stopPropagation();
-          handleClick(
-            `div-${props.name
-              .replaceAll(/\s/g, "-")
-              .replaceAll(/[êéèë]/g, "e")}__${props.id}`
-          );
+          handleClick(productId);
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            handleClick(
-              `div-${props.name
-                .replaceAll(/\s/g, "-")
-                .replaceAll(/[êéèë]/g, "e")}__${props.id}`
-            );
+            handleClick(productId);
           }
         }}
         title={`Clique aqui para abrir o menu de opções para ${props.name}`}

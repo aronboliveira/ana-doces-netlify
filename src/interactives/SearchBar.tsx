@@ -1,5 +1,12 @@
 import SearchIcon from "../icons/SearchIcon";
-import { FormEvent, useEffect, useRef, useState, useDeferredValue } from "react";
+import {
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+  useDeferredValue,
+  useCallback,
+} from "react";
 import { nullishDiv, nullishInp } from "../declarations/types";
 import { htmlElementNotFound } from "../handlersErrors";
 import {
@@ -16,6 +23,20 @@ export default function SearchBar(props: SearchBarProps): JSX.Element {
   const searchInpRef = useRef<nullishInp>(null);
   const [searchValue, setSearchValue] = useState("");
   const deferredValue = useDeferredValue(searchValue);
+  const runSearchFilter = useCallback((value: string) => {
+    const input = searchInpRef.current;
+    if (input instanceof HTMLInputElement) {
+      handleSearchFilter(
+        input,
+        input.closest("menu") ||
+          input.closest("ul") ||
+          input.closest("ol") ||
+          input.closest("dl"),
+        value,
+        "li"
+      );
+    }
+  }, []);
   useEffect(() => {
     try {
       if (!(searchRef.current instanceof HTMLElement))
@@ -90,16 +111,7 @@ export default function SearchBar(props: SearchBarProps): JSX.Element {
         )
           searchInpRef.current.value = "";
         setTimeout(() => {
-          searchInpRef.current &&
-            handleSearchFilter(
-              searchInpRef.current,
-              searchInpRef.current.closest("menu") ||
-                searchInpRef.current.closest("ul") ||
-                searchInpRef.current.closest("ol") ||
-                searchInpRef.current.closest("dl"),
-              searchInpRef.current.value,
-              "li"
-            );
+          searchInpRef.current && runSearchFilter(searchInpRef.current.value);
         }, 1000);
       }
     } catch (e) {
@@ -108,7 +120,7 @@ export default function SearchBar(props: SearchBarProps): JSX.Element {
       );
     }
   }, [searchInpRef]);
-  const handleChange = (ev: FormEvent<HTMLElement>) => {
+  const handleChange = useCallback((ev: FormEvent<HTMLElement>) => {
     try {
       if (
         !(
@@ -157,21 +169,10 @@ export default function SearchBar(props: SearchBarProps): JSX.Element {
             } for ${ev.currentTarget}:${(e as Error).message}`
           );
     }
-  };
+  }, [props.searchParams, props.setSearchParams, props.navigate]);
   useEffect(() => {
-    const input = searchInpRef.current;
-    if (input instanceof HTMLInputElement) {
-      handleSearchFilter(
-        input,
-        input.closest("menu") ||
-          input.closest("ul") ||
-          input.closest("ol") ||
-          input.closest("dl"),
-        deferredValue,
-        "li"
-      );
-    }
-  }, [deferredValue]);
+    runSearchFilter(deferredValue);
+  }, [deferredValue, runSearchFilter]);
   useEffect(() => {
     if (
       !/\?q=/g.test(location.href) &&
