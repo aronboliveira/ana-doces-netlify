@@ -2338,7 +2338,7 @@ export function applySubOptParam(optRef: voidishHTMLEl): void {
 
 export function roundToTenth(
   num: number,
-  multiplier: number = 1,
+  multiplier: number = 2,
   fixeds: number = 2,
   up: boolean = false
 ): string {
@@ -2369,7 +2369,7 @@ export function roundToTenth(
       : (Math.floor(num * multiplied) / multiplied).toFixed(fixeds);
   } catch (e) {
     console.error(`Error executing roundToTenth:\n${(e as Error).message}`);
-    return num.toFixed(2);
+    return typeof num === "number" ? num.toFixed(2) : `${Number(num)}`;
   }
 }
 
@@ -2385,7 +2385,7 @@ export function capitalizeFirstLetter(text: string): string {
     console.error(
       `Error executing capitalizeFirstLetter:\n${(e as Error).message}`
     );
-    return text.toString();
+    return String(text);
   }
 }
 
@@ -2401,7 +2401,7 @@ export function textTransformPascal(text: string): string {
     console.error(
       `Error executing capitalizeFirstLetter:\n${(e as Error).message}`
     );
-    return text.toString();
+    return String(text);
   }
 }
 
@@ -2529,6 +2529,30 @@ export function adjustIdentifiers(scope: nodeScope = document): void {
           if (/[êéèë]/g.test(el.id)) el.id = el.id.replaceAll(/[êéèë]/g, "e");
           if (/[ÊÉÈË]/g.test(el.id)) el.id = el.id.replaceAll(/[ÊÉÈË]/g, "E");
         }
+        // Classes are inherently a space-separated list (DOMTokenList
+        // splits on whitespace before handing back individual tokens),
+        // so unlike id/name, a single token here can never itself
+        // contain a space -- only accents and a leading digit/symbol
+        // need normalizing, and it applies to any element, not just
+        // form controls.
+        el.classList.forEach(classListed => {
+          let fixedClass = classListed;
+          if (/[êéèë]/g.test(fixedClass))
+            fixedClass = fixedClass.replaceAll(/[êéèë]/g, "e");
+          if (/[ÊÉÈË]/g.test(fixedClass))
+            fixedClass = fixedClass.replaceAll(/[ÊÉÈË]/g, "E");
+          if (
+            /^[0-9]/g.test(fixedClass) ||
+            fixedClass.startsWith("+") ||
+            fixedClass.startsWith("~") ||
+            fixedClass.startsWith("-")
+          )
+            fixedClass = `_${fixedClass}`;
+          if (fixedClass !== classListed) {
+            el.classList.remove(classListed);
+            el.classList.add(fixedClass);
+          }
+        });
         if (
           (el instanceof HTMLInputElement ||
             el instanceof HTMLButtonElement ||
@@ -2547,33 +2571,6 @@ export function adjustIdentifiers(scope: nodeScope = document): void {
             el.name.startsWith("-")
           )
             el.name = `_${el.name}`;
-          el.classList.forEach(classListed => {
-            if (/[êéèë]/g.test(classListed)) {
-              const fixedClassListed = classListed.replaceAll(/[êéèë]/g, "e");
-              el.classList.remove(classListed);
-              el.classList.add(fixedClassListed);
-            }
-            if (/[ÊÉÈË]/g.test(classListed)) {
-              const fixedClassListed = classListed.replaceAll(/[ÊÉÈË]/g, "E");
-              el.classList.remove(classListed);
-              el.classList.add(fixedClassListed);
-            }
-            if (/\s/g.test(classListed)) {
-              const fixedClass = normalizeSpacing(classListed);
-              el.classList.remove(fixedClass);
-              el.classList.add(fixedClass);
-            }
-            if (
-              /^[0-9]/g.test(classListed) ||
-              classListed.startsWith("+") ||
-              classListed.startsWith("~") ||
-              classListed.startsWith("-")
-            ) {
-              const fixedClass = `_${classListed}`;
-              el.classList.remove(classListed);
-              el.classList.add(fixedClass);
-            }
-          });
         }
       });
     else
@@ -2588,6 +2585,20 @@ export function adjustIdentifiers(scope: nodeScope = document): void {
           )
             el.id = `_${el.id}`;
         }
+        el.classList.forEach(classListed => {
+          let fixedClass = classListed;
+          if (
+            /^[0-9]/g.test(fixedClass) ||
+            fixedClass.startsWith("+") ||
+            fixedClass.startsWith("~") ||
+            fixedClass.startsWith("-")
+          )
+            fixedClass = `_${fixedClass}`;
+          if (fixedClass !== classListed) {
+            el.classList.remove(classListed);
+            el.classList.add(fixedClass);
+          }
+        });
         if (
           (el instanceof HTMLInputElement ||
             el instanceof HTMLButtonElement ||
@@ -2602,23 +2613,6 @@ export function adjustIdentifiers(scope: nodeScope = document): void {
             el.name.startsWith("-")
           )
             el.name = `_${el.name}`;
-          el.classList.forEach(classListed => {
-            if (/\s/g.test(classListed)) {
-              const fixedClass = normalizeSpacing(classListed);
-              el.classList.remove(fixedClass);
-              el.classList.add(fixedClass);
-            }
-            if (
-              /^[0-9]/g.test(classListed) ||
-              classListed.startsWith("+") ||
-              classListed.startsWith("~") ||
-              classListed.startsWith("-")
-            ) {
-              const fixedClass = `_${classListed}`;
-              el.classList.remove(classListed);
-              el.classList.add(fixedClass);
-            }
-          });
         }
       });
   } catch (e) {
@@ -2639,13 +2633,7 @@ export function adjustHeadings(refEl: voidishHTMLEl): void {
     const attributes: { [k: string]: string } = {};
     for (const attr of refEl.attributes)
       if (attr.name !== "class") attributes[attr.name] = attr.value;
-    const headingProps = Object.assign(
-      {},
-      {
-        ...attributes,
-        tagName: "",
-      }
-    );
+    const headingProps = Object.assign({}, attributes);
     let currElement = refEl.parentElement;
     const parentElements: HTMLElement[] = [];
     let safeAcc = 0;
@@ -2677,42 +2665,42 @@ export function adjustHeadings(refEl: voidishHTMLEl): void {
       switch (lowestPrioHeadingNum.tagName) {
         case "H5":
           const newHeadingh6 = document.createElement("h6");
-          newHeadingh6.classList.add(refEl.className);
+          refEl.className && newHeadingh6.classList.add(refEl.className);
           refEl.parentElement!.replaceChild(
-            refEl,
-            Object.assign(newHeadingh6, headingProps)
+            Object.assign(newHeadingh6, headingProps),
+            refEl
           );
           break;
         case "H4":
           const newHeadingh5 = document.createElement("h5");
-          newHeadingh5.classList.add(refEl.className);
+          refEl.className && newHeadingh5.classList.add(refEl.className);
           refEl.parentElement!.replaceChild(
-            refEl,
-            Object.assign(newHeadingh5, headingProps)
+            Object.assign(newHeadingh5, headingProps),
+            refEl
           );
           break;
         case "H3":
           const newHeadingh4 = document.createElement("h4");
-          newHeadingh4.classList.add(refEl.className);
+          refEl.className && newHeadingh4.classList.add(refEl.className);
           refEl.parentElement!.replaceChild(
-            refEl,
-            Object.assign(newHeadingh4, headingProps)
+            Object.assign(newHeadingh4, headingProps),
+            refEl
           );
           break;
         case "H2":
           const newHeadingh3 = document.createElement("h3");
-          newHeadingh3.classList.add(refEl.className);
+          refEl.className && newHeadingh3.classList.add(refEl.className);
           refEl.parentElement!.replaceChild(
-            refEl,
-            Object.assign(newHeadingh3, headingProps)
+            Object.assign(newHeadingh3, headingProps),
+            refEl
           );
           break;
         case "H1":
           const newHeadingh2 = document.createElement("h2");
-          newHeadingh2.classList.add(refEl.className);
+          refEl.className && newHeadingh2.classList.add(refEl.className);
           refEl.parentElement!.replaceChild(
-            refEl,
-            Object.assign(newHeadingh2, headingProps)
+            Object.assign(newHeadingh2, headingProps),
+            refEl
           );
           break;
         default:
