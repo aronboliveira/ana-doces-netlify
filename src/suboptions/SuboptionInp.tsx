@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { htmlElementNotFound } from "../handlersErrors";
+import styles from "./SuboptionsCont.module.scss";
 import {
   normalizeSpacing,
   recalculateByOption,
@@ -116,9 +117,9 @@ export default function SuboptionInp({
         <ErrorMessageComponent message="Error rendering Option" />
       )}
     >
-      <label className="subopLab form-check-label" ref={labRef}>
+      <label className={`subopLab form-check-label ${styles['suboptions__label']}`} ref={labRef}>
         <input
-          className="subopInp form-check-input"
+          className={`subopInp form-check-input ${styles['suboptions__input']}`}
           type={inpType}
           ref={inpRef}
           value={option.toLowerCase()}
@@ -187,7 +188,7 @@ export default function SuboptionInp({
             }
           }}
         />
-        <span className="subopText">{textTransformPascal(option)}</span>
+        <span className={`subopText ${styles['suboptions__text']}`}>{textTransformPascal(option)}</span>
       </label>
     </ErrorBoundary>
   );

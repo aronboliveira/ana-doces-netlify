@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { SubotpionsSubDivProps } from "../declarations/interfaces";
+import styles from "./SuboptionsCont.module.scss";
 import { nullishDiv } from "../declarations/types";
 import { htmlElementNotFound } from "../handlersErrors";
 import { ErrorBoundary } from "react-error-boundary";
@@ -62,8 +63,8 @@ export default function SuboptionsSubDiv({
             (inp.type === "radio" || inp.type === "checkbox")
         ) as HTMLInputElement[]
       );
-      const namingInterval = setInterval(interv => {
-        if (!document.querySelector("dialog")) clearInterval(interv);
+      const namingInterval = setInterval(() => {
+        if (!document.querySelector("dialog")) clearInterval(namingInterval);
         try {
           if (!(mainRef.current instanceof HTMLElement))
             throw htmlElementNotFound(
@@ -89,7 +90,7 @@ export default function SuboptionsSubDiv({
                   )
               )
           )
-            clearInterval(interv);
+            clearInterval(namingInterval);
           mainRef.current.querySelectorAll("*").forEach(el => {
             if (/unfilled/gi.test(el.id))
               el.id = el.id.replace(/unfilled/gi, mainRef.current!.id);
@@ -153,7 +154,7 @@ export default function SuboptionsSubDiv({
           `validation of Main Reference`,
           ["HTMLElement"]
         );
-      const checkInterv = setTimeout(interv => {
+      const checkInterv = setTimeout(() => {
         const firstRadio = mainRef.current?.querySelector(
           'input[type="radio"]'
         );
@@ -163,7 +164,7 @@ export default function SuboptionsSubDiv({
         ) {
           if (firstRadio.checked) return;
           firstRadio.checked = true;
-          clearInterval(interv);
+          clearTimeout(checkInterv);
         } else
           console.warn(
             `No radio found for ${
@@ -186,7 +187,7 @@ export default function SuboptionsSubDiv({
         <ErrorMessageComponent message="Error rendering Options Container" />
       )}
     >
-      <div className="opSubGroup form-check" ref={mainRef}>
+      <div className={`opSubGroup form-check ${styles['suboptions__group']}`} ref={mainRef}>
         {subOptionsList.map((opt, i) => (
           <SuboptionInp
             option={opt}

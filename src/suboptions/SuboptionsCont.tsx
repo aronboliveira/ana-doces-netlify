@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { SuboptionsContProps } from "../declarations/interfaces";
+import styles from "./SuboptionsCont.module.scss";
 import { nullishDiv } from "../declarations/types";
 import { htmlElementNotFound } from "../handlersErrors";
 import { ErrorBoundary } from "react-error-boundary";
@@ -46,7 +47,7 @@ export default function SuboptionsCont({
         <ErrorMessageComponent message="Error rendering Options Container" />
       )}
     >
-      <div className="opGroup" ref={mainRef}>
+      <div className={`opGroup ${styles.suboptions}`} ref={mainRef}>
         {subOptions.some((opt) => opt.length > 0) &&
           subOptions.map((opt, i) => (
             <SuboptionsSubDiv

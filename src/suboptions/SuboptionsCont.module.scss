@@ -1,0 +1,7 @@
+@use '../styles/abstracts/variables' as *;
+
+.suboptions {}                // block: option group wrapper
+.suboptions__group {}         // element: sub-group container
+.suboptions__label {}         // element: label wrapper
+.suboptions__input {}         // element: checkbox/radio input
+.suboptions__text {}          // element: label text span
