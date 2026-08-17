@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "npx tsc --noEmit && npx vite build",
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0"
+    "lint": "npx eslint . --report-unused-disable-directives --max-warnings 0"
   },
   "repository": {
     "type": "git"
