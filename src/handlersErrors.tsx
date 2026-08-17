@@ -69,7 +69,7 @@ export function argsError(acceptedTypes: string[], ...values: any[]): Error {
     .replace("]", "")}`;
   for (let v = 0; v < values.length; v++)
     message += `\nObtained Value and Instance: ${values[v] ?? "nullish"}, ${
-      values[v].constructor.name
+      values[v]?.constructor.name ?? "nullish"
     }`;
   console.error(message);
   return Error(message);
