@@ -29,7 +29,7 @@ export default function OrderRemove(props: OrderProps): JSX.Element {
         aria-hidden="false"
         aria-label="Remover item"
         onClick={ev => handleRemoveOrder(ev.currentTarget)}
-        style={{ minWidth: "44px", minHeight: "44px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+        style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -132,7 +132,7 @@ header {
   border-bottom: ridge rgba($gold, 0.4) 0.15rem;
   font-size: 0.8rem;
   font-weight: 500;
-  padding-block: 0.3rem;
+  padding-block: 10px;
 
   a {
     display: flex;
@@ -140,7 +140,7 @@ header {
     align-items: flex-start;
     text-decoration: none;
     color: transparent;
-    margin-left: 0.7rem;
+    margin-left: 0;
   }
 
   svg.bi {
@@ -156,7 +156,7 @@ main {
   min-height: fit-content;
   margin: auto auto;
   overflow: auto;
-  padding-top: 2vh;
+  padding-top: 2rem;
   padding-bottom: 2vh;
   font-size: 1.6rem;
 }
@@ -614,6 +614,12 @@ table.table {
   background-color: transparent;
   box-shadow: none;
   border: none;
+}
+
+.celRemove .tabRemove {
+  transform: translate(15%, 5%);
+  min-width: 1rem;
+  min-height: 1rem;
 }
 
 .brandedNameSpan {
