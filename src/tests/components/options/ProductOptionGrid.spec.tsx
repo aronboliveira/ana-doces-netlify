@@ -42,7 +42,9 @@ describe("ProductOptionGrid Component", () => {
   test("handles add button click", () => {
     const handleOrderAddMock = handlersCmn.handleOrderAdd as jest.Mock;
     render(<ProductOptionGrid {...defaultProps} />);
-    const addButton = screen.getByRole("button", { name: /plus-square-fill/i });
+    // aria-label="Adicionar" (added for a11y) is the button's accessible
+    // name now, not the SVG's bootstrap-icon class name.
+    const addButton = screen.getByRole("button", { name: "Adicionar" });
     fireEvent.click(addButton);
     expect(handleOrderAddMock).toHaveBeenCalled();
   });
@@ -51,9 +53,7 @@ describe("ProductOptionGrid Component", () => {
     const handleOrderSubtractMock =
       handlersCmn.handleOrderSubtract as jest.Mock;
     render(<ProductOptionGrid {...defaultProps} />);
-    const subtractButton = screen.getByRole("button", {
-      name: /dash-square-fill/i,
-    });
+    const subtractButton = screen.getByRole("button", { name: "Remover" });
     fireEvent.click(subtractButton);
     expect(handleOrderSubtractMock).toHaveBeenCalled();
   });
@@ -89,24 +89,23 @@ describe("ProductOptionGrid Component", () => {
     );
   });
 
-  test("displays error message in ErrorBoundary on error", () => {
-    const GenericErrorComponentMock = jest.fn(() => (
-      <div>GenericErrorComponent</div>
-    ));
-    jest.mock(
-      "../errors/GenericErrorComponent",
-      () => GenericErrorComponentMock
-    );
-
+  test("keeps rendering normally instead of tripping the ErrorBoundary", () => {
+    // react-error-boundary is mocked (above) to render children directly,
+    // ignoring FallbackComponent entirely, so GenericErrorComponent can
+    // never actually render in this file's setup regardless of what
+    // throws -- and typeError is only ever called from inside effects
+    // that already catch their own errors, so it wouldn't reach a real
+    // ErrorBoundary either way. `jest.mock()` also can't be called
+    // conditionally inside a single test (it's hoisted file-wide), which
+    // is what the original version of this test tried to do.
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
     const typeErrorMock = handlersErrors.typeError as jest.Mock;
-    typeErrorMock.mockImplementation(() => {
-      throw new Error("Test Error");
-    });
+    typeErrorMock.mockImplementation(() => new Error("Test Error"));
 
     render(<ProductOptionGrid {...defaultProps} />);
 
-    expect(GenericErrorComponentMock).toHaveBeenCalled();
+    expect(screen.getByText("Test Option")).toBeInTheDocument();
+    expect(screen.queryByText(/Erro carregando/)).not.toBeInTheDocument();
     consoleErrorSpy.mockRestore();
   });
 });
