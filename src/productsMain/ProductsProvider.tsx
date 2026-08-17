@@ -17,22 +17,7 @@ import {
 import { useEffect, useRef } from "react";
 import { nullishMenu } from "../declarations/types";
 import SearchBar from "../interactives/SearchBar";
-import { createRoot } from "react-dom/client";
-import BrowniesHC from "../hardcodedOptions/BrowniesHC";
-import TortasHC from "../hardcodedOptions/TortasHC";
 import { basePath, mainItems } from "../index";
-import BrowniesRechHC from "../hardcodedOptions/BrowniesRechHC";
-import BrowniesMiniHC from "../hardcodedOptions/BrowniesMiniHC";
-import CookiesHC from "../hardcodedOptions/CookiesHC";
-import CookiesMiniHC from "../hardcodedOptions/CookiesMiniHC";
-import GeleiaHC from "../hardcodedOptions/GeleiaHC";
-import PalhaHC from "../hardcodedOptions/PalhaHC";
-import CopoHC from "../hardcodedOptions/CopoHC";
-import PaveHC from "../hardcodedOptions/PaveHC";
-import BoloPoteHC from "../hardcodedOptions/BoloPoteHC";
-import BoloCaseiroHC from "../hardcodedOptions/BoloCaseiroHC";
-import BoloFestaHC from "../hardcodedOptions/BoloFestaHC";
-import TravessaHC from "../hardcodedOptions/TravessaHC";
 
 export default function ProductsProvider({
   root,
@@ -270,12 +255,6 @@ export default function ProductsProvider({
             history.pushState({}, "", basePath);
             return;
           }
-          const newDiv = document.createElement("div");
-          newDiv.classList.add("contDlg");
-          newDiv.style.display = "hidden";
-          newDiv.style.position = "relative";
-          newDiv.id = `divDlg${matchedItem.id}`;
-          matchedItem.insertAdjacentElement("afterend", newDiv);
           matchedItem.scrollIntoView();
           const normalizedMatchItemId = `${matchedItem.id
             .slice(0, matchedItem.id.indexOf("__"))
@@ -283,60 +262,8 @@ export default function ProductsProvider({
             .replace("div-", "")
             .replace("-—-conjunto", "")
             .toLowerCase()}`;
-          if (new RegExp(normalizedMatchItemId, "g").test(location.href)) {
-            switch (normalizedMatchItemId.replace("?&", "")) {
-              case "brownie-simples":
-                createRoot(newDiv).render(<BrowniesHC />);
-                break;
-              case "brownie-recheado":
-                createRoot(newDiv).render(<BrowniesRechHC />);
-                break;
-              case "mini-brownie-recheado":
-                createRoot(newDiv).render(<BrowniesMiniHC />);
-                break;
-              case "cookie-recheado":
-                createRoot(newDiv).render(<CookiesHC />);
-                break;
-              case "mini-cookie":
-                createRoot(newDiv).render(<CookiesMiniHC />);
-                break;
-              case "geleia-artesanal":
-                createRoot(newDiv).render(<GeleiaHC />);
-                break;
-              case "palha-gourmet":
-                createRoot(newDiv).render(<PalhaHC />);
-                break;
-              case "copo-da-felicidade":
-                createRoot(newDiv).render(<CopoHC />);
-                break;
-              case "pave-de-pote":
-                createRoot(newDiv).render(<PaveHC />);
-                break;
-              case "bolo-de-pote":
-                createRoot(newDiv).render(<BoloPoteHC />);
-                break;
-              case "bolo-caseiro":
-                createRoot(newDiv).render(<BoloCaseiroHC />);
-                break;
-              case "bolo-de-festa":
-                createRoot(newDiv).render(<BoloFestaHC />);
-                break;
-              case "taça-recheada":
-                createRoot(newDiv).render(<TortasHC />);
-                break;
-              case "torta-gelada":
-                createRoot(newDiv).render(<TortasHC />);
-                break;
-              case "travessa-recheada":
-                createRoot(newDiv).render(<TravessaHC />);
-                break;
-              default:
-                !location.href.endsWith("/") &&
-                  console.warn(`No matched item found in switch for pathname`);
-                history.pushState({}, "", basePath);
-                break;
-            }
-          }
+          if (new RegExp(normalizedMatchItemId, "g").test(location.href))
+            matchedItem.click();
         } catch (e) {
           console.error(
             `Error executing procedure for modal pathing:\n${
