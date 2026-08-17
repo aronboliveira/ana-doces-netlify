@@ -12,7 +12,12 @@ describe("Main Module", () => {
     document.body.appendChild(container);
   });
   afterEach(() => {
-    document.body.removeChild(container);
+    // Several tests below replace document.body.innerHTML entirely,
+    // which already detaches (and drops) the container beforeEach
+    // appended -- removeChild on a node that's no longer a child
+    // throws, so only remove it if it's still actually attached.
+    if (container.parentNode === document.body)
+      document.body.removeChild(container);
     container = null!;
   });
   test("should render AppProvider into main element", () => {
