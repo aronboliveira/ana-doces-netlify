@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<design-spec project="Ana Doces Digital Menu" version="2.0" last-updated="2026-08-15">
+
+  <branding>
+    <palette name="Chocolate &amp; Gold">
+      <color name="chocolate-dark"   hex="#1a0e0a" usage="primary background, body bg" />
+      <color name="chocolate-mid"    hex="#2a1810" usage="secondary background, card bg, modal bg" />
+      <color name="chocolate-light"  hex="#3a2518" usage="tertiary background, hover states" />
+      <color name="gold"             hex="#c8a050" usage="primary accent, buttons, borders, links, focus rings" />
+      <color name="gold-light"       hex="#d4a852" usage="lighter accent, copy-alert bg" />
+      <color name="cream"            hex="#e8d5b5" usage="primary text on dark backgrounds" />
+      <color name="warm-shadow"      hex="rgba(26,14,10,0.8)" usage="drop shadows" />
+      <color name="success-green"    hex="#4caf50" usage="add-to-order, positive feedback (keep as-is)" />
+      <color name="warning-orange"   hex="#ff9800" usage="remove-from-order (keep as-is)" />
+      <color name="error-red"        hex="#dc3545" usage="alerts, validation errors (keep as-is)" />
+      <color name="scrollbar-thumb"  hex="rgba(200,160,80,0.4)" usage="custom scrollbar thumb" />
+      <color name="scrollbar-track"  hex="rgba(26,14,10,0.6)" usage="custom scrollbar track" />
+    </palette>
+
+    <typography>
+      <font-family name="Playfair Display" role="headings" weights="400-700 italic" />
+      <font-family name="Montserrat" role="body" weights="400-700" />
+      <font-family name="Dancing Script" role="brand-name" weights="400-700" />
+      <scale>
+        <size name="xs"   value="0.75rem" />
+        <size name="sm"   value="0.875rem" />
+        <size name="base" value="1rem" />
+        <size name="lg"   value="1.125rem" />
+        <size name="xl"   value="1.25rem" />
+        <size name="2xl"  value="1.5rem" />
+        <size name="3xl"  value="1.875rem" />
+        <size name="4xl"  value="2.25rem" />
+      </scale>
+    </typography>
+
+    <spacing>
+      <token name="xs"  value="0.25rem" />
+      <token name="sm"  value="0.5rem" />
+      <token name="md"  value="1rem" />
+      <token name="lg"  value="1.5rem" />
+      <token name="xl"  value="2rem" />
+      <token name="2xl" value="3rem" />
+    </spacing>
+
+    <borders>
+      <radius name="sm" value="0.25rem" />
+      <radius name="md" value="0.5rem" />
+      <radius name="lg" value="1rem" />
+      <radius name="full" value="9999px" />
+      <shadow name="warm" value="0 0.2vh 0.2vh rgba(26,14,10,0.6)" />
+      <shadow name="elevated" value="0 4px 12px rgba(26,14,10,0.4)" />
+    </borders>
+  </branding>
+
+  <architecture>
+    <stack>
+      <technology name="React" version="19.x" />
+      <technology name="TypeScript" version="5.9.x" />
+      <technology name="Vite" version="8.x" />
+      <technology name="react-router-dom" version="7.x" />
+      <technology name="Jest" version="30.x" />
+      <technology name="ESLint" version="9.x" />
+      <technology name="Babel" version="8.x" />
+      <technology name="SCSS" version="pending-migration" />
+    </stack>
+
+    <deploy target="Netlify" output-dir="dist" />
+
+    <structure>
+      <folder name="src/styles/abstracts/" purpose="SCSS partials: _variables, _mixins, _functions, _placeholders" />
+      <folder name="src/styles/" purpose="Global SCSS entrypoint and shared partials" />
+      <folder name="src/productsMain/" purpose="Product list grid + provider (Compound Pattern)" />
+      <folder name="src/productOptions/" purpose="Product options modal (dialog)" />
+      <folder name="src/modals/" purpose="Reusable modal components (InfosModal, MaintenanceModal)" />
+      <folder name="src/interactives/" purpose="Header, SearchBar, MaintenanceBar" />
+      <folder name="src/routing/" purpose="App shell, routing, Home page" />
+      <folder name="src/declarations/" purpose="Types, interfaces, class definitions" />
+      <folder name="src/handlersCmn.tsx" purpose="Shared handlers (large, ~3k lines)" />
+      <folder name="src/tests/" purpose="Jest specs, mirrors src/ structure" />
+    </structure>
+
+    <css-migration>
+      <strategy>Global SCSS for theme/utilities; CSS Modules for frequently mounted/unmounted components</strategy>
+      <global-files>style.scss, gStyle.scss, fonts.scss, styleFix.scss</global-files>
+      <module-candidates>
+        <component file="Header.tsx" module="Header.module.scss" />
+        <component file="ProductOptionsDlg.tsx" module="ProductOptionsDlg.module.scss" />
+        <component file="InfosModal.tsx" module="InfosModal.module.scss" />
+        <component file="SearchBar.tsx" module="SearchBar.module.scss" />
+      </module-candidates>
+      <scss-abstracts>
+        <file name="_variables.scss" purpose="Color palette, typography, spacing tokens, breakpoints" />
+        <file name="_mixins.scss" purpose="Flex layouts, grid layouts, scrollbar, accordion, modal, responsive queries" />
+        <file name="_functions.scss" purpose="Color manipulation (lighten/darken), spacing scale generators" />
+        <file name="_placeholders.scss" purpose="Reusable placeholder selectors for toggle/isolate patterns" />
+      </scss-abstracts>
+    </css-migration>
+
+    <commands>
+      <command name="dev"     script="vite" description="Start Vite dev server" />
+      <command name="build"   script="tsc --noEmit &amp;&amp; vite build" description="Type-check + production build" />
+      <command name="test"    script="jest" description="Run Jest test suite" />
+      <command name="lint"    script="eslint src/" description="Run ESLint flat config" />
+    </commands>
+  </architecture>
+
+  <accessibility>
+    <audience primary="elderly-users" notes="Large font targets, generous tap areas, high contrast on dark bg" />
+    <requirements>
+      <requirement name="font-size-minimum" value="1rem (16px)" />
+      <requirement name="touch-target-minimum" value="44x44px" />
+      <requirement name="contrast-ratio" value="WCAG AA 4.5:1 for text, 3:1 for large text" />
+      <requirement name="focus-visible" value="Always show focus ring (gold accent, 2px outline)" />
+      <requirement name="aria-labels" value="All interactive elements must have accessible names" />
+      <requirement name="role-attributes" value="Use semantic HTML + role where needed" />
+      <requirement name="reduced-motion" value="Respect prefers-reduced-motion for animations" />
+      <requirement name="skip-nav" value="Skip-to-content link for keyboard users" />
+    </requirements>
+    <aria-patterns>
+      <pattern name="accordion" aria="aria-expanded, aria-controls on button; aria-labelledby on panel" />
+      <pattern name="modal" aria="role=dialog, aria-modal=true, aria-labelledby" />
+      <pattern name="navigation" aria="role=navigation, aria-label for nav landmarks" />
+    </aria-patterns>
+  </accessibility>
+
+  <seo>
+    <lighthouse-target score="90+" />
+    <requirements>
+      <requirement name="title-tag" content="Ana Doces | Cardápio Digital Interativo" />
+      <requirement name="meta-description" content="Confeitaria criativa na Ilha do Governador. Brownies, Cookies, Bolos e mais." />
+      <requirement name="og-tags" values="og:title, og:description, og:image, og:url, og:type" />
+      <requirement name="twitter-card" values="summary_large_image" />
+      <requirement name="canonical-url" value="https://anadocesapp.netlify.app/" />
+      <requirement name="json-ld" schema="Bakery" fields="name, description, address, priceRange, servesCuisine, telephone, sameAs" />
+      <requirement name="semantic-html" values="header[role=banner], main[role=main], nav[role=navigation], footer" />
+      <requirement name="image-alt" requirement="All img elements must have descriptive alt text" />
+      <requirement name="lang-attribute" value="pt-BR on html element" />
+      <requirement name="robots" value="index, follow" />
+      <requirement name="theme-color" value="#1a0e0a" />
+    </requirements>
+  </seo>
+
+</design-spec>
