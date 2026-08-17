@@ -69,7 +69,7 @@ describe("elementNotFound", () => {
 });
 describe("typeError", () => {
   test("should return an Error with correct message for invalid type", () => {
-    const error = typeError(123, "input validation", ["string, number"]);
+    const error = typeError(123, "input validation", ["string", "number"]);
     expect(error).toBeInstanceOf(Error);
     expect(error.message).toContain("TYPE ERROR:");
     expect(error.message).toContain(
@@ -117,7 +117,7 @@ describe("argsError", () => {
       "Obtained Value and Instance: true, Boolean"
     );
     expect(error.message).toContain(
-      "Obtained Value and Instance: null, Object"
+      "Obtained Value and Instance: nullish, nullish"
     );
   });
   test("should log the error message to console", () => {
