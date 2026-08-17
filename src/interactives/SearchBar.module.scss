@@ -10,6 +10,10 @@
   border: 1px solid rgba($gold, 0.4);
   border-radius: $radius-full;
   padding: $space-sm $space-md;
+  // Bootstrap's .form-control (also applied to this container) sets its own
+  // near-black text color; without overriding it here, the search icon's
+  // stroke="currentColor" inherits that near-black instead of a visible tone.
+  color: $gold;
 
   &:focus-within {
     border-color: $gold;

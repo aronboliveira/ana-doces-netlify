@@ -122,6 +122,7 @@ body {
 
 header {
   display: flex;
+  flex-flow: row wrap;
   align-items: center;
   height: fit-content;
   width: 100%;
@@ -150,6 +151,7 @@ header {
 main {
   display: flex;
   flex-flow: column wrap;
+  align-items: center;
   min-width: fit-content;
   min-height: fit-content;
   margin: auto auto;
@@ -269,9 +271,22 @@ section.sectMain {
 table {
   min-width: min-content;
   width: 99%;
+  margin-inline: auto;
+  // Bootstrap's .table reads background/text/border colors from these
+  // custom properties; left unset they default to a light theme, giving
+  // white cells and near-black text regardless of the page's dark palette.
+  --bs-table-bg: transparent;
+  --bs-table-color: #{$cream};
+  --bs-table-border-color: #{rgba($gold, 0.3)};
+  --bs-table-striped-bg: #{rgba($chocolate-light, 0.5)};
+  --bs-table-striped-color: #{$cream};
+  --bs-table-hover-bg: #{rgba($gold, 0.15)};
+  --bs-table-hover-color: #{$cream};
+  color: $cream;
 
   caption {
     caption-side: top;
+    color: $gold;
   }
 
   colgroup col {
@@ -1069,6 +1084,18 @@ table {
 #divBtns,
 #divTotal {
   width: 80%;
+}
+
+#divTotal {
+  // Reuses Bootstrap's .form-control class for its box styling, which
+  // defaults to a white background/near-black text — override for the
+  // dark theme.
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  background: $chocolate-mid;
+  color: $cream;
+  border-color: rgba($gold, 0.4);
 }
 
 .tipT {
