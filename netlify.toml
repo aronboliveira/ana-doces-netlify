@@ -6,7 +6,7 @@ command = "npm run build"
 NODE_VERSION = "22"
 
 [context.production.environment]
-NODE_ENV = "development"
+NODE_ENV = "production"
 
 [[redirects]]
 from = "/*"
