@@ -1,5 +1,37 @@
 @use '../styles/abstracts/variables' as *;
 
 .search-bar {}                // block
-.search-bar__container {}     // element: form-control wrapper
-.search-bar__input {}         // element: search input
+
+.search-bar__container {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  background: $chocolate-mid;
+  border: 1px solid rgba($gold, 0.4);
+  border-radius: $radius-full;
+  padding: $space-sm $space-md;
+
+  &:focus-within {
+    border-color: $gold;
+    box-shadow: 0 0 0 2px rgba($gold, 0.25);
+  }
+}
+
+.search-bar__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: $cream;
+  font-family: $font-body;
+  font-size: 1rem;
+
+  &::placeholder {
+    color: rgba($cream, 0.5);
+  }
+
+  &::-webkit-search-cancel-button {
+    filter: invert(0.8);
+  }
+}

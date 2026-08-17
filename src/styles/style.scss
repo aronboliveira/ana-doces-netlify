@@ -113,6 +113,7 @@ body {
   display: flex;
   flex-flow: column nowrap;
   background: linear-gradient(135deg, $chocolate-dark 0%, $chocolate-mid 50%, $chocolate-dark 100%);
+  color: $cream;
   margin: auto auto;
   height: 100% !important;
   width: 100vw;
@@ -623,16 +624,10 @@ table {
   justify-content: space-between;
   align-items: start !important;
   column-gap: 1vw;
-  padding-bottom: 16vh;
+  padding-bottom: 1.6vh;
 
   &:hover {
     cursor: pointer;
-  }
-
-  &:not([src*=".svg"]) {
-    max-height: 15vh;
-    width: calc(9rem + 3vh);
-    border-radius: 1vh;
   }
 
   .divProductImg img {
@@ -645,6 +640,12 @@ table {
     overflow: hidden;
     object-fit: cover;
     animation: fadeIn 1.5s ease-in-out;
+
+    &:not([src*=".svg"]) {
+      max-height: 15vh;
+      width: calc(9rem + 3vh);
+      border-radius: 1vh;
+    }
 
     &[id*="brownie-simples"] {
       object-position: 5px;
