@@ -1,0 +1,33 @@
+@use 'abstracts/variables' as *;
+
+$font-families: (
+  montserrat: (#{$font-body}),
+  poppins: ("Poppins", sans-serif),
+);
+
+$weights: (
+  thin: 100,
+  extralight: 200,
+  light: 300,
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+  black: 900,
+);
+
+@each $family-name, $family-value in $font-families {
+  @each $weight-name, $weight-value in $weights {
+    .#{$family-name}-#{$weight-name} {
+      font-family: $family-value;
+      font-weight: $weight-value;
+      font-style: normal;
+    }
+    .#{$family-name}-#{$weight-name}-italic {
+      font-family: $family-value;
+      font-weight: $weight-value;
+      font-style: italic;
+    }
+  }
+}

@@ -1,0 +1,64 @@
+// ============================================
+// Ana Doces — Placeholders (reusable selectors)
+// Use @extend in components that need these patterns
+// ============================================
+
+// Flex centering (used by many components)
+%flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Flex between (used by header, product list, menu)
+%flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+// Flex column nowrap (used by product info, option groups)
+%flex-col-nowrap {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+// Flex row nowrap (used by product list, menu items)
+%flex-row-nowrap {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+// Flex row wrap (used by responsive layouts)
+%flex-row-wrap {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+// Full width
+%full-width {
+  width: 100%;
+}
+
+// Content width fit
+%fit-content {
+  width: fit-content;
+}
+
+// Reset margins/padding
+%reset-spacing {
+  margin: 0;
+  padding: 0;
+}
+
+// Visually hidden (accessible)
+%visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

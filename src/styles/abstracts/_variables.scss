@@ -1,0 +1,86 @@
+// ============================================
+// Ana Doces — Design Tokens
+// ============================================
+
+// ---- Color Palette ----
+$chocolate-dark:   #1a0e0a;
+$chocolate-mid:    #2a1810;
+$chocolate-light:  #3a2518;
+$gold:             #c8a050;
+$gold-light:       #d4a852;
+$cream:            #e8d5b5;
+$warm-shadow:      rgba(26, 14, 10, 0.8);
+
+// Functional colors (keep as-is)
+$success-green:    #4caf50;
+$warning-orange:   #ff9800;
+$error-red:        #dc3545;
+
+// Scrollbar
+$scrollbar-thumb:  rgba(200, 160, 80, 0.4);
+$scrollbar-track:  rgba(26, 14, 10, 0.6);
+
+// Utility colors (from gStyle.css)
+$mediumgreen:      #0caf0cda;
+$mediumblue:       #079fdb;
+$mediumorange:     #e9720ade;
+$mediumgrey:       #adad93bd;
+
+// ---- Typography ----
+$font-heading:     "Playfair Display", "Montserrat", serif;
+$font-body:        "Montserrat", sans-serif;
+$font-brand:       "Dancing Script", cursive;
+
+// ---- Spacing Scale ----
+$space-xs:   0.25rem;
+$space-sm:   0.5rem;
+$space-md:   1rem;
+$space-lg:   1.5rem;
+$space-xl:   2rem;
+$space-2xl:  3rem;
+
+// ---- Border Radius ----
+$radius-sm:   0.25rem;
+$radius-md:   0.5rem;
+$radius-lg:   1rem;
+$radius-full: 9999px;
+
+// ---- Shadows ----
+$shadow-warm:      0 0.2vh 0.2vh rgba(26, 14, 10, 0.6);
+$shadow-elevated:  0 4px 12px rgba(26, 14, 10, 0.4);
+$shadow-modal:     0 0 0.6rem rgba(0, 0, 0, 0.3);
+
+// ---- Breakpoints ----
+$bp-mobile-sm:  460px;
+$bp-mobile:     600px;
+$bp-tablet:     750px;
+$bp-desktop-sm: 900px;
+$bp-desktop:    1020px;
+$bp-desktop-lg: 1250px;
+$bp-wide:       1420px;
+
+// ---- Z-Index Scale ----
+$z-header:     10;
+$z-modal:      900;
+$z-modal-stk:  990;
+$z-modal-portrait: 1000;
+
+// ---- CSS Custom Properties (kept for JS runtime usage) ----
+:root {
+  --chocolate-dark: #{$chocolate-dark};
+  --chocolate-mid: #{$chocolate-mid};
+  --chocolate-light: #{$chocolate-light};
+  --gold: #{$gold};
+  --gold-light: #{$gold-light};
+  --cream: #{$cream};
+  --warm-shadow: #{$warm-shadow};
+  --frmpd: 0.375rem 0.75rem 0.375rem 0.75rem;
+  --scyan: #0addf519;
+  --stcyan: #0addf5e5;
+  --swhite: #ffffffcc;
+  --bslikesd: 0.2vh 0.2vh 0.2vh rgba(161, 159, 159, 0.973);
+  --mediumgreen: #{$mediumgreen};
+  --mediumblue: #{$mediumblue};
+  --mediumorange: #{$mediumorange};
+  --mediumgrey: #{$mediumgrey};
+}

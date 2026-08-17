@@ -11,10 +11,10 @@ import HomeFallback from "./routing/HomeFallback";
 import AppProvider from "./routing/AppProvider";
 import Header from "./interactives/Header";
 import { watchLabels } from "./handlersCmn";
-import "./gStyle.css";
-import "./style.css";
-import "./fonts.css";
-import "./styleFix.css";
+import "./styles/gStyle.scss";
+import "./styles/style.scss";
+import "./styles/fonts.scss";
+import "./styles/styleFix.scss";
 
 export const mainItems: { listMainItems: Array<looseNum[]> } = {
   listMainItems: [],
@@ -43,7 +43,7 @@ let mainRoot: voidishRoot = undefined;
   }
 })()
   .then(() => {
-    setTimeout(timeout => {
+    setTimeout((timeout: ReturnType<typeof setTimeout>) => {
       if (!document.querySelector(".caller")) {
         (async () => {
           const mainEl = document.querySelector("main");
@@ -62,13 +62,13 @@ let mainRoot: voidishRoot = undefined;
             );
           }
         })().then(() => {
-          const buildAttempt = setInterval(interv => {
+          const buildAttempt = setInterval(() => {
             if (
               document.getElementById("logoHeader") ||
               (!document.querySelector(".spinner") &&
                 document.querySelector("td"))
             )
-              clearInterval(interv);
+              clearInterval(buildAttempt);
             const productRoot = document.querySelector("#productsRoot");
             try {
               if (productRoot instanceof HTMLElement) {
@@ -647,14 +647,14 @@ let mainRoot: voidishRoot = undefined;
                       {ProductsProviderCall}
                     </ErrorBoundary>
                   );
-                } else clearInterval(interv);
+                } else clearInterval(buildAttempt);
               } else
                 throw htmlElementNotFound(
                   productRoot,
                   `validating productRoot`,
                   ["HTMLElement"]
                 );
-            } catch (err) {
+            } catch (_err) {
               productRoot instanceof Element && console.dir(productRoot);
               createRoot(
                 document.querySelector("div") ??

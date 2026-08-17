@@ -1,23 +1,40 @@
-@charset "UTF-8";
-:root {
-  --frmpd: 0.375rem 0.75rem 0.375rem 0.75rem;
-  --scyan: #0addf519;
-  --stcyan: #0addf5e5;
-  --swhite: #ffffffcc;
-  --bslikesd: 0.2vh 0.2vh 0.2vh rgba(161, 159, 159, 0.973);
-  --mediumgreen: #0caf0cda;
-  --mediumblue: #079fdb;
-  --mediumorange: #e9720ade;
-  --mediumgrey: #adad93bd;
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
+// ============================================
+// Global Styles — Migrated from gStyle.css
+// ============================================
+
+// ---- Skip to Content ----
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 10000;
+  background: $chocolate-dark;
+  color: $cream;
+  padding: $space-sm $space-md;
+  font-family: $font-body;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 0 0 $radius-md 0;
+
+  &:focus {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    outline: 2px solid $gold;
+    outline-offset: 2px;
+  }
 }
 
-input[type=date].form-control.dfPhDate, input[type=date]:required:invalid {
-  color: transparent;
-}
-input[type=date].form-control.dfPhDate:focus, input[type=date]:focus:required:invalid {
-  color: #000000 !important;
-}
-
+// ---- Keyframes ----
 @keyframes highlightBtn {
   0% {
     filter: contrast(100%);
@@ -35,25 +52,7 @@ input[type=date].form-control.dfPhDate:focus, input[type=date]:focus:required:in
     filter: hue-rotate(0deg);
   }
 }
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes dropIn {
-  0% {
-    top: -45%;
-  }
-  50% {
-    top: 0%;
-  }
-  100% {
-    top: 5%;
-  }
-}
+
 @keyframes giveOpacity {
   0% {
     opacity: initial;
@@ -65,6 +64,19 @@ input[type=date].form-control.dfPhDate:focus, input[type=date]:focus:required:in
     opacity: initial;
   }
 }
+
+// ---- Form Date Placeholders ----
+input[type=date].form-control.dfPhDate,
+input[type=date]:required:invalid {
+  color: transparent;
+}
+
+input[type=date].form-control.dfPhDate:focus,
+input[type=date]:focus:required:invalid {
+  color: #000000 !important;
+}
+
+// ---- Reset & Base ----
 html {
   font-size: 100%;
 }
@@ -78,7 +90,7 @@ html {
 }
 
 body {
-  background-color: var(--scyan);
+  background-color: rgba(26, 14, 10, 0.15);
   background-size: contain;
   box-sizing: border-box;
 }
@@ -91,115 +103,125 @@ footer {
   opacity: 0.1;
 }
 
+// ---- KBD Styles ----
 kbd {
-  background-color: #eee;
+  background-color: #3a2518;
   border-radius: 3px;
-  border: 1px solid #b4b4b4;
+  border: 1px solid rgba(200, 160, 80, 0.3);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
-  color: #333;
+  color: #e8d5b5;
   display: inline-block;
   font-size: 0.85em;
   font-weight: 700;
   line-height: 1;
   padding: 2px 4px;
   white-space: nowrap;
-}
 
-kbd.kbd {
-  --bs-btn-font-weight: 400;
-  --bs-btn-color: var(--bs-body-color);
-  --bs-btn-bg: transparent;
-  --bs-btn-border-width: var(--bs-border-width);
-  --bs-btn-border-color: transparent;
-  --bs-btn-border-radius: var(--bs-border-radius);
-  --bs-btn-hover-border-color: transparent;
-  --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
-    0 1px 1px rgba(0, 0, 0, 0.075);
-  --bs-btn-disabled-opacity: 0.65;
-  --bs-btn-focus-box-shadow: 0 0 0 0.25rem
-    rgba(var(--bs-btn-focus-shadow-rgb), 0.5);
-  display: inline-block;
-  font-family: var(--bs-btn-font-family);
-  font-weight: var(--bs-btn-font-weight);
-  color: var(--bs-btn-color);
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  border-radius: var(--bs-btn-border-radius);
-  background-color: var(--bs-btn-bg);
-}
+  &.kbd {
+    --bs-btn-font-weight: 400;
+    --bs-btn-color: var(--bs-body-color);
+    --bs-btn-bg: transparent;
+    --bs-btn-border-width: var(--bs-border-width);
+    --bs-btn-border-color: transparent;
+    --bs-btn-border-radius: var(--bs-border-radius);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      0 1px 1px rgba(0, 0, 0, 0.075);
+    --bs-btn-disabled-opacity: 0.65;
+    --bs-btn-focus-box-shadow: 0 0 0 0.25rem
+      rgba(var(--bs-btn-focus-shadow-rgb), 0.5);
+    display: inline-block;
+    font-family: var(--bs-btn-font-family);
+    font-weight: var(--bs-btn-font-weight);
+    color: var(--bs-btn-color);
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    border-radius: var(--bs-btn-border-radius);
+    background-color: var(--bs-btn-bg);
+  }
 
-kbd.kbd-primary {
-  --bs-btn-color: #fff;
-  --bs-btn-bg: #0d6efd;
-  --bs-btn-border-color: #0d6efd;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #0b5ed7;
-  --bs-btn-hover-border-color: #0a58ca;
-  --bs-btn-focus-shadow-rgb: 49, 132, 253;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #0a58ca;
-  --bs-btn-active-border-color: #0a53be;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #0d6efd;
-  --bs-btn-disabled-border-color: #0d6efd;
-}
+  &.kbd-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #c8a050;
+    --bs-btn-border-color: #c8a050;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #0b5ed7;
+    --bs-btn-hover-border-color: #0a58ca;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #0a58ca;
+    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #c8a050;
+    --bs-btn-disabled-border-color: #c8a050;
+  }
 
-kbd.kbd-success {
-  --bs-btn-color: #fff;
-  --bs-btn-bg: #198754;
-  --bs-btn-border-color: #198754;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #157347;
-  --bs-btn-hover-border-color: #146c43;
-  --bs-btn-focus-shadow-rgb: 60, 153, 110;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #146c43;
-  --bs-btn-active-border-color: #13653f;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #198754;
-  --bs-btn-disabled-border-color: #198754;
-}
+  &.kbd-success {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #198754;
+    --bs-btn-border-color: #198754;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #157347;
+    --bs-btn-hover-border-color: #146c43;
+    --bs-btn-focus-shadow-rgb: 60, 153, 110;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #146c43;
+    --bs-btn-active-border-color: #13653f;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #198754;
+    --bs-btn-disabled-border-color: #198754;
+  }
 
-kbd.kbd-warning {
-  border-color: rgb(222, 226, 230);
-  color: rgb(33, 37, 41);
-  transition: color 0.5s ease-in 0s;
-  --bs-btn-color: #000;
-  --bs-btn-bg: #ffc107;
-  --bs-btn-border-color: #ffc107;
-  --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #ffca2c;
-  --bs-btn-hover-border-color: #ffc720;
-  --bs-btn-focus-shadow-rgb: 217, 164, 6;
-  --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #ffcd39;
-  --bs-btn-active-border-color: #ffc720;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #ffc107;
-  --bs-btn-disabled-border-color: #ffc107;
-}
+  &.kbd-warning {
+    border-color: rgb(222, 226, 230);
+    color: rgb(33, 37, 41);
+    transition: color 0.5s ease-in 0s;
+    --bs-btn-color: #000;
+    --bs-btn-bg: #ffc107;
+    --bs-btn-border-color: #ffc107;
+    --bs-btn-hover-color: #000;
+    --bs-btn-hover-bg: #ffca2c;
+    --bs-btn-hover-border-color: #ffc720;
+    --bs-btn-focus-shadow-rgb: 217, 164, 6;
+    --bs-btn-active-color: #000;
+    --bs-btn-active-bg: #ffcd39;
+    --bs-btn-active-border-color: #ffc720;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #000;
+    --bs-btn-disabled-bg: #ffc107;
+    --bs-btn-disabled-border-color: #ffc107;
+  }
 
-kbd.kbd-check-input {
-  background-color: #008000;
-  border-color: #008000;
-  --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e")
-  border-radius: 0.3em;
-  box-shadow: var(--bslikesd);
-  --bs-form-check-bg: var(--bs-body-bg);
-  background-image: var(--bs-form-check-bg-image);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  border: var(--bs-border-width) solid var(--bs-border-color);
-  -webkit-print-color-adjust: exact;
+  &.kbd-check-input {
+    background-color: #008000;
+    border-color: #008000;
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e")
+    border-radius: 0.3em;
+    box-shadow: var(--bslikesd);
+    --bs-form-check-bg: var(--bs-body-bg);
+    background-image: var(--bs-form-check-bg-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    -webkit-print-color-adjust: exact;
+  }
+
+  &.kbd-rounded {
+    border-radius: 50%;
+    height: 0.8rem;
+  }
+
+  &.vtAltxTop {
+    vertical-align: text-top;
+  }
 }
 
 .kbd-check-input-img {
@@ -213,11 +235,6 @@ kbd.kbd-check-input {
   background-color: transparent;
 }
 
-kbd.kbd-rounded {
-  border-radius: 50%;
-  height: 0.8rem;
-}
-
 p .form-check-input[role=switch] {
   --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
   background-position: right center;
@@ -225,11 +242,12 @@ p .form-check-input[role=switch] {
   background-image: var(--bs-form-switch-bg);
   border-radius: 2em;
   width: 2em;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #c8a050;
+  border-color: #c8a050;
   border: var(--bs-border-width) solid var(--bs-border-color);
 }
 
+// ---- Body & Progress ----
 body,
 progress::-moz-progress-bar,
 progress::-ms-fill,
@@ -237,31 +255,43 @@ progress::-webkit-progress-value {
   background: var(--scyan);
 }
 
+// ---- Details ----
 details {
   margin-left: 1vw;
-}
-details abbr {
-  font-weight: 500;
+
+  abbr {
+    font-weight: 500;
+  }
 }
 
+// ---- Tooltip Dialog ----
 progress::-moz-progress-bar,
 progress::-ms-fill-unavailable,
 .tipDlg {
-  background-color: rgba(255, 255, 255, 0.8980392157);
+  background-color: rgba(200, 160, 80, 0.6);
 }
 
+// ---- Textarea ----
 textarea:not([id^=textAdd]) {
   display: block;
 }
 
+// ---- Buttons ----
 button[disabled] {
   cursor: not-allowed;
   opacity: 0.3;
 }
+
 button:hover {
   animation: highlightBtn 2s infinite;
 }
 
+button[disabled] {
+  cursor: no-drop;
+  z-index: 20;
+}
+
+// ---- Display Utilities ----
 div[id^=divAdd],
 textarea[id^=textAdd],
 .d-no {
@@ -276,19 +306,21 @@ hr.rdc02rHr {
   margin: 0.2rem;
 }
 
+// ---- Legend ----
 legend {
   align-content: center;
   vertical-align: middle;
   flex-wrap: wrap;
 }
 
+// ---- Typography Helpers ----
 .italic,
 blockquote {
   font-style: italic;
 }
 
 input:checked {
-  color: rgba(7, 112, 7, 0.9058823529);
+  color: #4caf50;
 }
 
 blockquote,
@@ -299,12 +331,20 @@ label.boldLabel,
   font-weight: bold;
 }
 
+span,
+td,
+.divLab {
+  font-weight: 500;
+}
+
+// ---- Date & Button Width ----
 input[type=date],
 .datBtn {
   min-width: 16ch;
   max-width: 36ch;
 }
 
+// ---- Flex/Align Justify ----
 legend,
 [class*=flexDiv],
 .flexDiv.flexDivProg {
@@ -318,11 +358,12 @@ legend,
   display: flex;
 }
 
-.divMain:not(#divConfirm):not(#divFreqOdont):not(#fsAnamGDiv3),
+.divMain:not(#divConfirm):not(#freqOdont):not(#fsAnamGDiv3),
 .flexDiv:not(.fsAnamGDiv) {
   justify-content: space-between;
 }
 
+// ---- Table Tab ----
 .divTab,
 [class*=tab],
 .tbodyProgCons {
@@ -334,6 +375,7 @@ legend,
   padding: 1vh 1vw;
 }
 
+// ---- Custom Validity Warnings ----
 .customValidityWarn {
   display: block;
   height: 0.8rem;
@@ -346,29 +388,28 @@ legend,
   color: rgba(255, 0, 0, 0.6078431373);
 }
 
+// ---- FS Anam ----
 #fsAnamGId {
   margin-left: 0.5rem;
 }
 
+// ---- Main Root ----
 #mainRoot {
   margin-left: 0.5rem;
 }
 
-span,
-td,
-.divLab {
-  font-weight: 500;
-}
-
+// ---- Form Box Shadow ----
 [class*=form-]:not([class*=-check]):not([class*=-switch]):not([class*=-padded]) {
   box-shadow: var(--bslikesd);
 }
 
+// ---- Grid Display ----
 .divMain,
 #genDiv {
   display: grid;
 }
 
+// ---- FS Anam Div ----
 .fsAnamGDiv > *,
 #genDiv {
   white-space: nowrap;
@@ -376,15 +417,18 @@ td,
 
 .fsAnamGSpan {
   min-height: 3.13rem;
-}
-.fsAnamGSpan.form-switch {
-  padding-left: 0;
-}
-.fsAnamGSpan .labelIdentif {
-  min-width: 25vw;
-  max-width: 70%;
+
+  &.form-switch {
+    padding-left: 0;
+  }
+
+  .labelIdentif {
+    min-width: 25vw;
+    max-width: 70%;
+  }
 }
 
+// ---- Half Radius ----
 .halfL,
 .tabCelBottom {
   border-top-right-radius: 0;
@@ -395,6 +439,7 @@ td,
   border-bottom-right-radius: 0;
 }
 
+// ---- Fit Spaced ----
 .fitSpaced,
 [class*=Identif] {
   margin: 0.1vh;
@@ -402,10 +447,12 @@ td,
   height: fit-content;
 }
 
+// ---- Align Self Start ----
 .alSfSt {
   align-self: start;
 }
 
+// ---- Backdrop ----
 .backdrop {
   position: relative;
   width: 50vw;
@@ -414,14 +461,16 @@ td,
   z-index: 900;
 }
 
+// ---- Bootstrap Icons ----
 .bi {
   pointer-events: none;
   color: #000000;
   min-width: 1.75rem;
   min-height: 1.25rem;
-}
-.bi:not([class$=lock]):not([class*=exclamation]) {
-  height: 100%;
+
+  &:not([class$=lock]):not([class*=exclamation]) {
+    height: 100%;
+  }
 }
 
 .biBtn {
@@ -432,13 +481,15 @@ td,
   background-color: transparent;
   background: none;
   width: max-content;
-}
-.biBtn:is(.countAntMed),
-.biBtn > .bi {
-  width: 2vw;
-  height: 2.3vh;
+
+  &:is(.countAntMed),
+  > .bi {
+    width: 2vw;
+    height: 2.3vh;
+  }
 }
 
+// ---- Border Utilities ----
 .brd-rd2r {
   border-radius: 2rem;
 }
@@ -449,18 +500,18 @@ td,
 
 .brd-nulled {
   border-bottom: none;
-}
 
-.brd-nulled.brd-b-no {
-  border-bottom: none;
+  &.brd-b-no {
+    border-bottom: none;
+  }
 }
 
 .brd .btnsDiv {
-  display: flex;
-  flex-flow: row nowrap;
+  @include flex-row-nowrap;
   column-gap: 0.4rem;
 }
 
+// ---- Button Variants ----
 .btn.btn-rounded {
   border-radius: 2rem;
 }
@@ -488,6 +539,7 @@ td,
   border-width: 0.25rem;
 }
 
+// ---- Caption ----
 .caption-t {
   caption-side: top;
   text-align: left;
@@ -495,20 +547,25 @@ td,
   font-weight: bold;
 }
 
+// ---- Card ----
 .card {
   border-radius: 0.5rem;
-}
 
-.card.brd-rd2r {
-  border-radius: 2rem;
-}
+  &.brd-rd2r {
+    border-radius: 2rem;
+  }
 
-.card.card18r {
-  width: 18rem;
-}
+  &.card18r {
+    width: 18rem;
+  }
 
-.card.card23v {
-  width: 23vw;
+  &.card23v {
+    width: 23vw;
+  }
+
+  &.htMinMaxC {
+    min-height: max-content;
+  }
 }
 
 .card-header {
@@ -520,6 +577,7 @@ td,
   top: 19%;
 }
 
+// ---- Content Width ----
 .contFitW {
   width: fit-content;
 }
@@ -528,6 +586,7 @@ td,
   width: max-content;
 }
 
+// ---- Column Gaps ----
 .cGap0,
 .fsAnamGDiv > * {
   column-gap: 0;
@@ -553,43 +612,54 @@ td,
   column-gap: 5%;
 }
 
+// ---- Check Green ----
 input[type=checkbox].checkGreen:checked {
   background-color: #008000;
   border-color: #008000;
 }
 
+// ---- DDD Width ----
 [id*=DDD],
 [id*=ddd] {
   max-width: 10ch;
 }
 
+// ---- Left Padding ----
 [class$=left] {
   padding-right: 1%;
 }
 
+// ---- Dicas ----
 .dicas {
   text-align: start;
   font-size: 1rem;
 }
 
-.divAdd.gridTwoCol, .divAdd.gridThreeCol {
+// ---- DivAdd Grid Variants ----
+.divAdd.gridTwoCol,
+.divAdd.gridThreeCol {
   align-content: start;
   grid-template-columns: auto auto;
   row-gap: 1vh;
+
+  input[type=checkbox] {
+    width: unset;
+    height: unset;
+  }
+
+  &.switchedDiv {
+    padding-left: 0;
+  }
 }
-.divAdd.gridTwoCol input[type=checkbox], .divAdd.gridThreeCol input[type=checkbox] {
-  width: unset;
-  height: unset;
-}
-.divAdd.gridTwoCol.switchedDiv, .divAdd.gridThreeCol.switchedDiv {
-  padding-left: 0;
-}
-.divAdd.gridTwoCol, .divAdd.divAntFam {
+
+.divAdd.gridTwoCol,
+.divAdd.divAntFam {
   width: 66%;
   column-gap: 3%;
   border: var(--bs-border-width) solid var(--bs-border-color);
   margin-bottom: 2vh;
 }
+
 .divAdd.gridThreeCol {
   display: grid;
   width: 50%;
@@ -598,14 +668,17 @@ input[type=checkbox].checkGreen:checked {
   padding: 0;
 }
 
+// ---- DivTab ----
 .divTab {
   padding-left: 0.5rem;
 }
 
+// ---- Display Utilities ----
 .d-ibl {
   display: inline-block;
 }
 
+// ---- Fade-In Classes ----
 .fade-in-early-element {
   animation: fadeIn 0.9s ease-in;
 }
@@ -638,94 +711,61 @@ input[type=checkbox].checkGreen:checked {
   animation: fadeIn 2.5s ease-in;
 }
 
-.flexAlItBs {
-  display: flex;
-  align-items: baseline;
+// ---- Flex Align Items ----
+$flex-alignments: (
+  Bs: baseline,
+  Ct: center,
+  E: end,
+  SE: self-end,
+  St: start,
+  T: top,
+);
+
+@each $suffix, $value in $flex-alignments {
+  .flexAlIt#{$suffix} {
+    display: flex;
+    align-items: $value;
+  }
 }
 
-.flexAlItCt {
-  display: flex;
-  align-items: center;
+// ---- Flex Basis ----
+$flex-basis-values: (
+  10: 10%,
+  25: 25%,
+  40: 40%,
+  50: 50%,
+  60: 60%,
+  70: 70%,
+  72: 72%,
+  75: 75%,
+  90: 90%,
+  100: 100%,
+);
+
+@each $num, $val in $flex-basis-values {
+  .flexBasis#{$num} {
+    flex-basis: $val;
+  }
 }
 
-.flexAlItE {
-  display: flex;
-  align-items: end;
-}
-
-.flexAlItSE {
-  display: flex;
-  align-items: self-end;
-}
-
-.flexAlItSt {
-  display: flex;
-  align-items: start;
-}
-
-.flexAlItT {
-  display: flex;
-  align-items: top;
-}
-
-.flexBasis10 {
-  flex-basis: 10%;
-}
-
-.flexBasis25 {
-  flex-basis: 25%;
-}
-
-.flexBasis40 {
-  flex-basis: 40%;
-}
-
-.flexBasis50 {
-  flex-basis: 50%;
-}
-
-.flexBasis60 {
-  flex-basis: 60%;
-}
-
-.flexBasis70 {
-  flex-basis: 70%;
-}
-
-.flexBasis72 {
-  flex-basis: 72%;
-}
-
-.flexBasis75 {
-  flex-basis: 75%;
-}
-
-.flexBasis90 {
-  flex-basis: 90%;
-}
-
-.flexBasis100 {
-  flex-basis: 100%;
-}
-
+// ---- Flex Baseline + Content ----
 .flexBl {
   display: flex;
   align-items: baseline;
   align-content: baseline;
 }
 
+// ---- Flex Center ----
 .flexCenter {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  justify-items: center;
+  @include flex-center;
 }
 
+// ---- Flex Column ----
 .flexColumn {
   flex-direction: column;
 }
 
+// ---- Flex Div Around ----
 .flexDivAround {
   justify-content: space-around;
 }
@@ -734,11 +774,13 @@ input[type=checkbox].checkGreen:checked {
   align-items: center;
 }
 
+// ---- Flex Div Tab ----
 .flexDivTab {
   border: solid #808080 0.125rem;
   border-radius: 0.375rem;
 }
 
+// ---- Flex Justify ----
 .flexJBt {
   display: flex;
   justify-content: space-between;
@@ -759,6 +801,7 @@ input[type=checkbox].checkGreen:checked {
   justify-content: start;
 }
 
+// ---- Flex Line Div ----
 .flexLineDiv {
   display: flex;
   align-items: start;
@@ -769,6 +812,7 @@ input[type=checkbox].checkGreen:checked {
   flex-flow: row nowrap;
 }
 
+// ---- Flex No Wrap ----
 .flexNoW {
   display: flex;
   flex-wrap: nowrap;
@@ -776,20 +820,18 @@ input[type=checkbox].checkGreen:checked {
 
 .flexNoWR,
 [class$=flexDiv] {
-  display: flex;
-  flex-flow: row nowrap;
+  @include flex-row-nowrap;
 }
 
 .flexNoWRSwitch {
-  display: flex;
-  flex-flow: row nowrap;
+  @include flex-row-nowrap;
 }
 
 .flexNoWC {
-  display: flex;
-  flex-flow: column nowrap;
+  @include flex-column-nowrap;
 }
 
+// ---- Flex Flow Utilities ----
 .flexRepCNoW {
   flex-flow: column wrap;
 }
@@ -823,56 +865,35 @@ input[type=checkbox].checkGreen:checked {
   flex-flow: column wrap;
 }
 
+// ---- Flex Scape ----
 .flScape90 {
   flex-basis: 90%;
 }
 
+// ---- Form Sized ----
 .formSized {
   height: 52.5px;
   padding: 0.375rem 0;
   border: 0.07rem;
 }
 
+// ---- Form Padded (with scrollbar on hover) ----
 .form-padded {
   padding: var(--frmpd);
   overflow: auto;
-  scrollbar-width: none;
+  @include scrollbar-on-hover;
   white-space: nowrap;
-}
-.form-padded:hover {
-  scrollbar-width: thin;
-  scroll-behavior: smooth;
-  scrollbar-gutter: stable;
-}
-.form-padded:hover::-webkit-scrollbar-thumb {
-  background-color: #1f7094;
-}
-.form-padded:hover::-webkit-scrollbar-track {
-  background-color: #9fb3b4;
-}
-.form-padded:hover::-webkit-scrollbar-button {
-  background-color: #1f7094;
+
+  > * {
+    overflow: unset;
+  }
 }
 
 .form-padded--supl {
   padding: var(--frmpd);
   overflow: auto;
-  scrollbar-width: none;
+  @include scrollbar-on-hover;
   white-space: nowrap;
-}
-.form-padded--supl:hover {
-  scrollbar-width: thin;
-  scroll-behavior: smooth;
-  scrollbar-gutter: stable;
-}
-.form-padded--supl:hover::-webkit-scrollbar-thumb {
-  background-color: #1f7094;
-}
-.form-padded--supl:hover::-webkit-scrollbar-track {
-  background-color: #9fb3b4;
-}
-.form-padded--supl:hover::-webkit-scrollbar-button {
-  background-color: #1f7094;
 }
 
 .form-padded-nosb {
@@ -886,34 +907,12 @@ input[type=checkbox].checkGreen:checked {
   white-space: nowrap;
 }
 
-.form-padded--supl {
-  overflow: auto;
-  scrollbar-width: none;
-  white-space: nowrap;
-}
-.form-padded--supl:hover {
-  scrollbar-width: thin;
-  scroll-behavior: smooth;
-  scrollbar-gutter: stable;
-}
-.form-padded--supl:hover::-webkit-scrollbar-thumb {
-  background-color: #1f7094;
-}
-.form-padded--supl:hover::-webkit-scrollbar-track {
-  background-color: #9fb3b4;
-}
-.form-padded--supl:hover::-webkit-scrollbar-button {
-  background-color: #1f7094;
-}
-
-.form-padded > * {
-  overflow: unset;
-}
-
+// ---- Font Light Weight ----
 .fontLightWt {
-  color: rgba(255, 255, 255, 0.7019607843) smoke;
+  color: rgba(232, 213, 181, 0.7) smoke;
 }
 
+// ---- Gap Utilities ----
 .gapped2v {
   column-gap: 2vw;
   row-gap: 2vh;
@@ -924,6 +923,7 @@ input[type=checkbox].checkGreen:checked {
   row-gap: 1vh;
 }
 
+// ---- Grid Utilities ----
 .gridAt {
   display: grid;
 }
@@ -976,6 +976,7 @@ input[type=checkbox].checkGreen:checked {
   grid-template-columns: repeat(5, 20%);
 }
 
+// ---- HalfR ----
 .halfR {
   margin: 0;
   padding: 0 0.4rem;
@@ -996,6 +997,7 @@ input[type=checkbox].checkGreen:checked {
   height: 2.42rem;
 }
 
+// ---- Height Utilities ----
 .hBsFormLike {
   height: 2.4375rem;
 }
@@ -1032,30 +1034,32 @@ input[type=checkbox].checkGreen:checked {
   min-height: max-content;
 }
 
-.card.htMinMaxC {
-  min-height: max-content;
-}
-
+// ---- Input General ----
 .inpGen {
   min-width: 48ch;
 }
 
+// ---- Invert Signal ----
 .invtSignal.invtAdapt:checked.dkGreen {
   background-color: #e678ab;
   border-color: #e678ab;
 }
+
 .invtSignal.invtAdapt:checked.dkBlue {
   background-color: #fd6e01;
   border-color: #fd6e01;
 }
+
 .invtSignal.invtAdapt:not(:checked) {
   background-color: white;
 }
 
+// ---- Lab Flex Div ----
 .labFlexDiv {
   column-gap: 1vw;
 }
 
+// ---- Medium Green Checkbox ----
 input[type=checkbox].mdGreen {
   width: 1.6rem;
   height: 1.1rem;
@@ -1064,6 +1068,7 @@ input[type=checkbox].mdGreen {
   box-shadow: var(--bslikesd);
 }
 
+// ---- Math Font Sizes ----
 .math-sm {
   font-size: 1.2rem;
 }
@@ -1076,6 +1081,7 @@ input[type=checkbox].mdGreen {
   font-size: 2rem;
 }
 
+// ---- Margin Utilities ----
 .mg-0b {
   margin-bottom: 0;
 }
@@ -1146,14 +1152,15 @@ input[type=checkbox].mdGreen {
   margin-top: 0.7vh;
 }
 
+// ---- Min Height ----
 .min20H {
   min-height: 20px;
   height: 20px;
 }
 
+// ---- Modal Content ----
 .modal-content {
-  display: flex;
-  flex-flow: column nowrap;
+  @include flex-column-nowrap;
   position: relative;
   animation: dropIn 0.3s ease-out forwards, fadeIn 0.6s ease-in-out forwards;
   width: 90vw;
@@ -1165,14 +1172,28 @@ input[type=checkbox].mdGreen {
   box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.3019607843);
   z-index: 900;
   padding: 2%;
-}
-.modal-content::backdrop {
-  background-color: rgba(0, 0, 0, 0.5019607843);
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5019607843);
+  }
+
+  > fieldset {
+    position: relative;
+    min-width: 95%;
+  }
+
+  > * > *:is(div):is(fieldset):is(section):is(form) {
+    min-width: 92%;
+  }
+
+  section {
+    padding: 2%;
+    min-width: 80%;
+  }
 }
 
 .modal-content-stk2 {
-  display: flex;
-  flex-flow: column nowrap;
+  @include flex-column-nowrap;
   position: relative;
   animation: dropIn 0.3s ease-out forwards, fadeIn 0.6s ease-in-out forwards;
   width: 80vw;
@@ -1185,14 +1206,14 @@ input[type=checkbox].mdGreen {
   z-index: 990;
   padding: 2%;
   white-space: normal;
-}
-.modal-content-stk2::backdrop {
-  background-color: rgba(0, 0, 0, 0.5019607843);
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5019607843);
+  }
 }
 
 .modal-content.modal-content-stk2 {
-  display: flex;
-  flex-flow: column nowrap;
+  @include flex-column-nowrap;
   position: relative;
   animation: dropIn 0.3s ease-out forwards, fadeIn 0.6s ease-in-out forwards;
   width: 80vw;
@@ -1205,14 +1226,14 @@ input[type=checkbox].mdGreen {
   z-index: 990;
   padding: 2%;
   white-space: normal;
-}
-.modal-content.modal-content-stk2::backdrop {
-  background-color: rgba(0, 0, 0, 0.5019607843);
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5019607843);
+  }
 }
 
 .modal-content-fit {
-  display: flex;
-  flex-flow: column nowrap;
+  @include flex-column-nowrap;
   position: relative;
   animation: dropIn 0.3s ease-out forwards, fadeIn 0.6s ease-in-out forwards;
   width: 80vw;
@@ -1226,9 +1247,10 @@ input[type=checkbox].mdGreen {
   padding: 2%;
   white-space: normal;
   width: fit-content;
-}
-.modal-content-fit::backdrop {
-  background-color: rgba(0, 0, 0, 0.5019607843);
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5019607843);
+  }
 }
 
 [class*=modal-content].wid50v {
@@ -1239,20 +1261,7 @@ input[type=checkbox].mdGreen {
   display: revert;
 }
 
-.modal-content > fieldset {
-  position: relative;
-  min-width: 95%;
-}
-
-.modal-content > * > *:is(div):is(fieldset):is(section):is(form) {
-  min-width: 92%;
-}
-
-.modal-content section {
-  padding: 2%;
-  min-width: 80%;
-}
-
+// ---- No Margin / Expand ----
 .noMargin {
   margin: 0;
 }
@@ -1261,6 +1270,7 @@ input[type=checkbox].mdGreen {
   max-height: 2.45rem;
 }
 
+// ---- Opacity Utilities ----
 .opaquelightEl {
   opacity: 0.8;
 }
@@ -1270,37 +1280,21 @@ input[type=checkbox].mdGreen {
 }
 
 .opaque {
-  color: rgba(0, 0, 0, 0.3019607843);
+  color: rgba(232, 213, 181, 0.4);
 }
 
 .opaque-bluish {
-  color: rgba(9, 129, 113, 0.3019607843);
+  color: rgba(200, 160, 80, 0.3);
 }
 
+// ---- Overflow / Scrollbar On Hover ----
 .ovFlAut,
 .ovFlAut-fix table {
   overflow: auto;
-  scrollbar-width: none;
-}
-.ovFlAut:hover,
-.ovFlAut-fix table:hover {
-  scrollbar-width: thin;
-  scroll-behavior: smooth;
-  scrollbar-gutter: stable;
-}
-.ovFlAut:hover::-webkit-scrollbar-thumb,
-.ovFlAut-fix table:hover::-webkit-scrollbar-thumb {
-  background-color: #1f7094;
-}
-.ovFlAut:hover::-webkit-scrollbar-track,
-.ovFlAut-fix table:hover::-webkit-scrollbar-track {
-  background-color: #9fb3b4;
-}
-.ovFlAut:hover::-webkit-scrollbar-button,
-.ovFlAut-fix table:hover::-webkit-scrollbar-button {
-  background-color: #1f7094;
+  @include scrollbar-on-hover;
 }
 
+// ---- Padding Utilities ----
 .pd-no {
   padding: 0;
 }
@@ -1382,6 +1376,7 @@ input[type=checkbox].mdGreen {
   padding-top: 5vh;
 }
 
+// ---- Position ----
 .posAb {
   position: absolute;
 }
@@ -1390,12 +1385,14 @@ input[type=checkbox].mdGreen {
   position: relative;
 }
 
+// ---- Profile Icon ----
 .profileIcon {
   max-width: 1.5rem;
   max-height: 1.5rem;
   cursor: pointer;
 }
 
+// ---- PO Tooltip ----
 .po {
   display: block;
   position: absolute;
@@ -1425,16 +1422,16 @@ input[type=checkbox].mdGreen {
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
-}
 
-.po.lowPo {
-  top: 150%;
-  left: -7%;
-  /* TODO MUDAR LEFT E WIDTH EM FUNÇÃO COM QUERY NO ELEMENTO PAI */
-}
+  &.lowPo {
+    top: 150%;
+    left: -7%;
+    /* TODO MUDAR LEFT E WIDTH EM FUNÇÃO COM QUERY NO ELEMENTO PAI */
+  }
 
-.po.userPo {
-  width: 11rem;
+  &.userPo {
+    width: 11rem;
+  }
 }
 
 .hPo {
@@ -1442,7 +1439,7 @@ input[type=checkbox].mdGreen {
   margin-bottom: 0;
   font-size: 1rem;
   color: inherit;
-  background-color: #f7f7f7;
+  background-color: #2a1810;
   border-bottom: 1px solid #ebebeb;
   border-top-left-radius: calc(0.3rem - 1px);
   border-top-right-radius: calc(0.3rem - 1px);
@@ -1450,7 +1447,7 @@ input[type=checkbox].mdGreen {
 
 .bdPo {
   padding: 0.5rem 0.75rem 0.5rem 0.75rem;
-  color: #212529;
+  color: #e8d5b5;
 }
 
 .arrow {
@@ -1463,25 +1460,32 @@ input[type=checkbox].mdGreen {
   display: block;
 }
 
+// ---- Form Utilities with Modifiers ----
 [class*=form-].mg-0b {
   margin-bottom: 0;
 }
+
 [class*=form-].mg-1b {
   margin-bottom: 1vh;
 }
+
 [class*=form-].mg-1-3b {
   margin-bottom: 1.3vh;
 }
+
 [class*=form-].pdL0 {
   padding-left: 0;
 }
+
 [class*=form-].pdL0-5v {
   padding-left: 0.5vw;
 }
+
 [class*=form-].noMargin {
   margin: 0;
 }
 
+// ---- Row Gaps ----
 .rGap0-5v {
   row-gap: 0.5vh;
 }
@@ -1502,6 +1506,7 @@ input[type=checkbox].mdGreen {
   row-gap: 5vh;
 }
 
+// ---- Scrollbar Width Utilities ----
 .scbw-fa {
   scrollbar-width: auto !important;
 }
@@ -1514,6 +1519,7 @@ input[type=checkbox].mdGreen {
   scrollbar-width: thin !important;
 }
 
+// ---- Scrollbar Measure ----
 .scrollbar-measure {
   width: 100px;
   height: 100px;
@@ -1522,6 +1528,7 @@ input[type=checkbox].mdGreen {
   top: -9999px;
 }
 
+// ---- Size Minimums ----
 .sizeMinBtn {
   min-width: 9.4rem;
   min-height: 1.5rem;
@@ -1533,11 +1540,13 @@ input[type=checkbox].mdGreen {
   min-height: 1.5rem;
 }
 
+// ---- St Lab ----
 .stLab {
   font-weight: 500;
   margin-bottom: 1vh;
 }
 
+// ---- Switch Div ----
 .switchDiv {
   padding: 2vh 0;
   margin-left: -1vw;
@@ -1547,6 +1556,7 @@ span.form-switch {
   padding-left: 3.2rem;
 }
 
+// ---- Table Cell Borders ----
 .tabCelBottom {
   border-top-left-radius: 0;
 }
@@ -1559,26 +1569,33 @@ span.form-switch {
   border-bottom-left-radius: 0;
 }
 
+// ---- Table Transparent ----
 .table-transparent {
   background-color: transparent;
-}
-.table-transparent td, .table-transparent th, .table-transparent tr, .table-transparent tbody, .table-transparent thead, .table-transparent tfoot, .table-transparent caption {
-  background-color: transparent;
-}
-.table-transparent > * {
-  background-color: transparent;
-}
-.table-transparent > * > * {
-  background-color: transparent;
-}
-.table-transparent > * > * > * {
-  background-color: transparent;
+
+  td, th, tr, tbody, thead, tfoot, caption {
+    background-color: transparent;
+  }
+
+  > * {
+    background-color: transparent;
+
+    > * {
+      background-color: transparent;
+
+      > * {
+        background-color: transparent;
+      }
+    }
+  }
 }
 
+// ---- Tel National ----
 .tel-national {
   max-width: 10ch;
 }
 
+// ---- Tip Dialog ----
 .tipDlg {
   position: absolute;
   max-width: 50vw;
@@ -1598,6 +1615,7 @@ span.form-switch {
   cursor: help;
 }
 
+// ---- Transparent Elements ----
 .transparent-el {
   border-color: transparent;
   box-shadow: transparent;
@@ -1609,19 +1627,18 @@ span.form-switch {
   border-color: transparent;
 }
 
+// ---- Text Align ----
 .txAlCt,
 .txaCt {
   text-align: center;
 }
 
+// ---- Vertical Align ----
 .vtAltxTop {
   vertical-align: text-top;
 }
 
-.kbd.vtAltxTop {
-  vertical-align: text-top;
-}
-
+// ---- Width Utilities ----
 .wid101 {
   width: 101%;
 }
@@ -1697,6 +1714,7 @@ span.form-switch {
   width: 25%;
 }
 
+// ---- White Space ----
 .wsNoW {
   white-space: nowrap;
 }
@@ -1705,10 +1723,11 @@ span.form-switch {
   white-space: pre-wrap;
 }
 
+// ---- ID Selectors ----
 #bgDiv {
   margin: 0.5%;
   border: none;
-  background-color: rgba(255, 255, 255, 0.8980392157);
+  background-color: rgba(200, 160, 80, 0.6);
   min-width: 80vw;
   min-height: 98vh;
 }
@@ -1756,10 +1775,10 @@ span.form-switch {
   overflow: hidden;
   height: 200px;
   width: 300px;
-}
 
-#scroll:hover {
-  overflow: auto;
+  &:hover {
+    overflow: auto;
+  }
 }
 
 #spanHFlex {
@@ -1770,451 +1789,580 @@ span.form-switch {
   padding-top: 0.4rem;
 }
 
+// ---- Role Switch ----
 [role=switch] {
   cursor: pointer;
-}
-[role=switch]:hover {
-  animation: highlightBtn 2s infinite;
+
+  &:hover {
+    animation: highlightBtn 2s infinite;
+  }
 }
 
+// ---- Checkbox ----
 [type=checkbox] {
   cursor: pointer;
 }
 
-button[disabled] {
-  cursor: no-drop;
-  z-index: 20;
-}
-
+// ---- Hover Block ----
 .hovBlock {
   cursor: no-drop;
   z-index: 18;
 }
 
-@media screen and (max-width: 1350px) {
+// ============================================
+// Responsive Breakpoints
+// ============================================
+
+// ---- Max 1350px ----
+@include bp(1350px) {
   .labAst {
     width: 75%;
   }
+
   .labDivConfirm2 {
     width: max-content;
   }
+
   #labConfirmLoc {
     width: 25%;
     min-width: 15.63rem;
   }
 }
-@media screen and (max-width: 900px) {
+
+// ---- Max 900px ----
+@include bp(900px) {
   legend,
   .flexQ900NoW,
   .flexNoW900Q {
     display: flex;
     flex-wrap: nowrap;
   }
+
   .flexQ900NoWC,
   .flexNoWC900Q,
   .labConfirm:not(label[for=confirmId]),
   #genDiv,
   [id*=divConfirm]:not(#divConfirm) {
-    display: flex;
-    flex-flow: column nowrap;
+    @include flex-column-nowrap;
   }
+
   .fsAnamGDiv > *,
   #genDiv {
     white-space: normal;
   }
+
   .fsAnamGSpan {
     align-items: center;
     min-height: 3.13rem;
+
+    .labelIdentif,
+    .atvSpan .labelIdentif,
+    .labAlimRot {
+      min-width: 80vw;
+    }
   }
-  .fsAnamGSpan .labelIdentif,
-  .atvSpan .labelIdentif,
-  .labAlimRot {
-    min-width: 80vw;
-  }
+
   .widMax900q80vw,
   .form-control.inpAlimRot,
   .form-select.labelIdentif {
     max-width: 80vw;
   }
+
   label[for=inpDiur].form-control {
     box-shadow: none;
     max-width: 100%;
     justify-content: start;
   }
+
   label[for=inpDiur] .inpUr {
     max-width: 45vw;
   }
+
   label[for=inpDiur] .msrProgCons {
     max-width: 35vw;
   }
+
   .datBtn:not(#headerDatBtn):not(#confirmDatBtn):not(.atualTratBtn):not(.tratBtn),
   #spanHFlex {
     width: 30vw;
   }
+
   .htFull900Q,
   .bi:not([class*=exclamation]) {
     height: 100%;
   }
+
   .alItSt900Q,
   #genDiv {
     align-items: start;
   }
+
   .btnsDiv {
     column-gap: 1.2rem;
   }
+
   .divAdd.gridTwoCol {
     width: max-content;
     column-gap: 1rem;
+
+    &:not(.divAntFam) {
+      padding: 1rem;
+    }
   }
-  .divAdd.gridTwoCol:not(.divAntFam) {
-    padding: 1rem;
-  }
+
   .sectionSub .divAdd.divAntFam {
     width: max-content;
     column-gap: 1rem;
     padding: 1rem;
   }
+
   .divMain:not(#divConfirm):not(#fsAnamGDiv3) {
     justify-content: space-between;
     column-gap: 5%;
     width: 87.5%;
+
+    button#copyBtnInst {
+      width: 100%;
+    }
+
+    button:not(#copyBtnInst) {
+      width: 100%;
+    }
   }
-  .divMain:not(#divConfirm):not(#fsAnamGDiv3) button#copyBtnInst {
-    width: 100%;
-  }
-  .divMain:not(#divConfirm):not(#fsAnamGDiv3) button:not(#copyBtnInst) {
-    width: 100%;
-  }
+
   #copyBtnsInst {
     width: 70vw;
   }
+
   #btnChame_no_Whatsapp,
   #copyBtnsInst,
   #copyBtnWp {
     height: 3rem;
   }
+
   .flexAlE900Q {
     align-items: end;
   }
+
   .flexAlItCt900Q {
     align-items: center;
   }
+
   .flexAlItSt900Q {
     align-items: start;
   }
+
   .flexJtSb900Q {
     justify-content: start;
   }
+
   .htAt900Q {
     height: auto;
   }
+
   .pd1r900Q {
     padding: 1rem;
   }
+
   .pdT2pc900Q {
     padding-top: 2%;
   }
+
   .pdL1v900Q {
     padding-left: 1vw;
   }
+
   .pdR1v900Q {
     padding-right: 1vw;
   }
+
   .pdL2v900Q {
     padding-left: 2vw;
   }
+
   .pdR2v900Q {
     padding-right: 2vw;
   }
+
   .mgB1v900Q {
     margin-bottom: 1vh;
   }
+
   .mgT1vh900Q {
     margin-top: 1vh;
   }
+
   .rGap1v900Q {
     row-gap: 1vh;
   }
+
   .rGap2v900Q,
   .rGapQ9002v {
     row-gap: 2vh;
   }
+
   .rGapQ900null {
     row-gap: 0;
   }
+
   .htHalf900Q {
     height: 50%;
   }
+
   .widFull900Q {
     width: 100%;
   }
+
   .wid90-900Q {
     width: 90%;
   }
+
   .widQ900MinFull {
     min-width: 100% !important;
   }
+
   .widHalf900Q {
     width: 50%;
   }
+
   .widMin75Q900 {
     min-width: 75%;
   }
+
   .widMin50Q900v {
     min-width: 50vw !important;
   }
+
   .widMin75Q900v {
     min-width: 75vw !important;
   }
+
   .ws900N {
     white-space: normal;
   }
+
   #divFreqOdont {
     width: 90%;
   }
+
   #spanHFlex {
     flex-direction: column-reverse;
   }
+
   #sectConfirmBut {
     display: flex;
     flex-flow: column nowrap;
     row-gap: 2vh;
-  }
-  #sectConfirmBut button {
-    width: 60%;
+
+    button {
+      width: 60%;
+    }
   }
 }
-@media screen and (min-width: 751px) {
+
+// ---- Min 751px ----
+@include bp-min(751px) {
   .card.cardh60v {
     height: 60vh;
   }
+
   .htMinMaxC751Qmin {
     min-height: max-content;
   }
+
   .card.htMinMaxC751Qmin {
     min-height: max-content;
   }
 }
-@media screen and (max-width: 750px) {
+
+// ---- Max 750px ----
+@include bp(750px) {
   .btn.wid90p750Q {
     width: 90%;
   }
+
   .btn.wid80p750Q {
     width: 80%;
   }
+
   .card.wid90p750Q {
     width: 90%;
   }
+
   .flexQ750NoW {
     display: flex;
     flex-wrap: nowrap;
   }
+
   .flexQ750NoWC {
-    display: flex;
-    flex-flow: column nowrap;
+    @include flex-column-nowrap;
   }
+
   .pdL-3-2rQ750 {
     padding-left: 3.2rem;
   }
+
   .form-switch.pdL-3-2rQ750 {
     padding-left: 3.2rem;
   }
+
   .flexAlItCt750Q {
     display: flex;
     align-items: center;
   }
+
   .grid4r750Q {
     grid: repeat(4, 0.25fr)/1fr;
   }
+
   .grid2r750Q {
     grid: 80% 10%/1fr;
   }
+
   .gridAlItBs750Q {
     display: grid;
     align-items: baseline;
   }
+
   .gridAuto750Q {
     grid: auto/auto;
     grid-template-rows: auto;
   }
+
   .htAuto750Q {
     height: auto;
   }
+
   .mg-t1-2v {
     margin-top: 1.2vh;
   }
+
   .pd1r750Q {
     padding: 1rem;
   }
+
   .pd-b2v750Q {
     padding-bottom: 2vh;
   }
+
   .pd-b3v750Q {
     padding-bottom: 3vh;
   }
+
   .pd-b4v750Q {
     padding-bottom: 4vh;
   }
+
   .pd-t2v750Q {
     padding-top: 2vh;
   }
+
   .pd-t3v750Q {
     padding-top: 3vh;
   }
+
   .pd-t4v750Q {
     padding-top: 4vh;
   }
+
   .rGap2v750Q {
     row-gap: 2vh;
   }
+
   .rGap3v750Q {
     row-gap: 3vh;
   }
+
   .rGap4v750Q {
     row-gap: 3vh;
   }
+
   .wid90p750Q {
     width: 90%;
   }
+
   .wid80p750Q {
     width: 80%;
   }
+
   .widAt750Q {
     width: auto;
   }
 }
-@media screen and (min-width: 601px) {
+
+// ---- Min 601px ----
+@include bp-min(601px) {
   .mg-0lm601Q {
     margin-left: 0;
   }
+
   .pd-1rbm601Q {
     padding-bottom: 1rem;
   }
 }
-@media screen and (max-width: 600px) {
+
+// ---- Max 600px ----
+@include bp(600px) {
   hr.rdc02rHr600Q {
     margin: 0.5rem;
   }
+
   .cGap3v600Q {
     column-gap: 3vw;
   }
+
   .d-bl600Q {
     display: block;
   }
+
   .flexNoWC600Q {
-    display: flex;
-    flex-flow: column nowrap;
+    @include flex-column-nowrap;
   }
+
   .flexAlItCt600Q {
     display: flex;
     align-items: start;
   }
+
   .flexAlItE600Q {
     display: flex;
     align-items: end;
   }
+
   .flexAlItSt600Q {
     align-items: start;
   }
+
   .flexJSt600Q {
     justify-content: start;
   }
+
   .rGap1v600Q {
     row-gap: 1vh;
   }
+
   .rGap2v600Q {
     row-gap: 2vh;
   }
+
   .widFull600Q {
     width: 100%;
   }
+
   .widHalf600Q {
     width: 50%;
   }
+
   .mg-0b600Q {
     margin-bottom: 0;
   }
+
   [class*=form-].mg-0b600Q {
     margin-bottom: 0;
   }
 }
-@media screen and (max-width: 460px) {
+
+// ---- Max 460px ----
+@include bp(460px) {
   hr.rdc02rHr460Q {
     margin: 0.2rem;
   }
+
   hr.rdc05rHr460Q {
     margin: 0.5rem;
   }
+
   .flexAlItSt460Q {
     display: flex;
     align-items: start;
   }
+
   .flexLineDiv {
     flex-direction: column;
   }
+
   .flexQ460R {
     flex-direction: row;
   }
+
   .flexNoWRSwitch {
     flex-direction: column;
     margin-bottom: 0.5vh;
   }
+
   .flexQ460NoW {
     display: flex;
     flex-wrap: nowrap;
   }
+
   .flexQ460NoWC {
-    display: flex;
-    flex-flow: column nowrap;
+    @include flex-column-nowrap;
   }
+
   .mg-0bQ460 {
     margin-bottom: 0;
   }
+
   [class*=form-].mg-0bQ460 {
     margin-bottom: 0;
   }
+
   .pd-2vQ460 {
     padding-top: 2vh;
   }
+
   .pdL-0Q460 {
     padding-left: 0;
   }
+
   .pdL2v460Q {
     padding-left: 2vw;
   }
+
   .pdR2v460Q {
     padding-right: 2vw;
   }
+
   .form-switch.pdL-0Q460 {
     padding-left: 0;
   }
+
   .pdL-3-2rQ460 {
     padding-left: 3.2rem;
   }
+
   .form-switch.pdL-3-2rQ460 {
     padding-left: 3.2rem;
   }
+
   .widQ460MinFull {
     min-width: 100% !important;
     max-width: 100% !important;
   }
+
   .widQ460FullW {
     width: 86.5vw !important;
   }
+
   .widMin82Q460v {
     width: 82vw;
   }
+
   .widMin75Q460v {
     min-width: 75vw;
   }
+
   .rGapQ4601v {
     row-gap: 1vh;
   }
+
   .rGapQ4602v {
     row-gap: 2vh;
   }
 }
-@media (orientation: portrait) and (max-width: 600px) {
+
+// ---- Portrait Max 600px ----
+@include bp-portrait(600px) {
   .modal-content {
     position: sticky;
     align-items: self-start;
@@ -2225,44 +2373,55 @@ button[disabled] {
     z-index: 1000;
     max-width: 90vw;
     max-height: 94vh;
+
+    ::backdrop {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: 0, 0, 0, 0.5;
+      z-index: 999;
+    }
   }
-  .modal-content ::backdrop {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: 0, 0, 0, 0.5;
-    z-index: 999;
-  }
+
   .widQ600_75v {
     width: 75vw;
     max-width: 25rem;
   }
+
   .mg-30b600Q {
     margin-bottom: 30%;
   }
 }
-@media (orientation: portrait) and (max-width: 460px) {
+
+// ---- Portrait Max 460px ----
+@include bp-portrait(460px) {
   .flexNoWC460Q {
     display: flex;
     flex-direction: column;
   }
+
   .htMaxC460Q {
     height: max-content;
   }
+
   .card.htMaxC460Q {
     height: max-content;
   }
+
   .mg-1bv460Q {
     margin-bottom: 1vh;
   }
+
   .widQ460_120v {
     width: 120vw;
     max-width: 25rem;
   }
+
   .widAt460Q {
     width: auto;
   }
+
   .widHalf460Q {
     width: 50%;
   }

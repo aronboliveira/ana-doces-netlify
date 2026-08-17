@@ -1,0 +1,187 @@
+// ============================================
+// Ana Doces — Mixins
+// ============================================
+@use 'variables' as *;
+
+// ---- Pointer Query (elderly touch targets) ----
+@mixin coarse-pointer {
+  @media (pointer: coarse) {
+    @content;
+  }
+}
+
+// ---- Responsive Breakpoint Wrappers ----
+@mixin bp($bp) {
+  @media screen and (max-width: $bp) {
+    @content;
+  }
+}
+
+@mixin bp-min($bp) {
+  @media screen and (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin bp-range($min, $max) {
+  @media screen and (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin bp-portrait($bp) {
+  @media (orientation: portrait) and (max-width: $bp) {
+    @content;
+  }
+}
+
+// ---- Scrollbar On Hover ----
+@mixin scrollbar-on-hover($thumb: $gold, $track: $chocolate-mid) {
+  scrollbar-width: none;
+
+  &:hover {
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+
+    &::-webkit-scrollbar-thumb  { background-color: $thumb; }
+    &::-webkit-scrollbar-track  { background-color: $track; }
+    &::-webkit-scrollbar-button { background-color: $thumb; }
+  }
+}
+
+// ---- Scrollbar Global ----
+@mixin scrollbar-global($thumb: $scrollbar-thumb, $track: $scrollbar-track) {
+  @supports (scrollbar-color: red blue) {
+    & {
+      scrollbar-color: $thumb $track;
+    }
+  }
+  @supports (scrollbar-width: thin) {
+    & {
+      scrollbar-width: none;
+    }
+  }
+}
+
+// ---- Modal Base ----
+@mixin modal-base($width: 85vw, $left: 5%, $z: $z-modal, $ws: nowrap) {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  animation: dropIn 0.3s ease-out forwards, fadeIn 0.6s ease-in-out forwards;
+  width: $width;
+  left: $left;
+  height: max-content;
+  background-color: $chocolate-mid;
+  color: $cream;
+  padding-block: calc(0.5rem + 2%);
+  padding-inline: 2%;
+  border-radius: $radius-md;
+  box-shadow: $shadow-modal;
+  z-index: $z;
+
+  @if $ws != nowrap {
+    white-space: $ws;
+  }
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.50);
+  }
+
+  @include bp-portrait($bp-mobile) {
+    position: sticky;
+    align-items: self-start;
+    padding: 3%;
+    top: 50%;
+    bottom: 0.8%;
+    right: 5%;
+    z-index: $z-modal-portrait;
+    max-width: 90vw;
+    max-height: 94vh;
+  }
+}
+
+// ---- Flex Layout Presets ----
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flex-column-nowrap {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+@mixin flex-row-nowrap {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+@mixin flex-row-wrap {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+// ---- Fade-In Animation ----
+@mixin fade-in($duration: 1s) {
+  animation: fadeIn #{$duration} ease-in-out;
+}
+
+// ---- Drop-In Animation (modal entrance) ----
+@mixin drop-in {
+  animation: dropIn 0.3s ease-out forwards, fadeIn 0.6s ease-in-out forwards;
+}
+
+// ---- Button Color Variant ----
+@mixin btn-color($bg) {
+  background-color: $bg;
+  border-color: $bg;
+}
+
+// ---- Accordion Theme ----
+@mixin accordion-theme {
+  --bs-accordion-bg: transparent;
+  --bs-accordion-border-color: rgba(200, 160, 80, 0.3);
+  border-radius: $radius-md;
+  font-weight: 600;
+
+  .accordion-header {
+    --bs-accordion-bg: transparent;
+    background: linear-gradient(to right, $gold, rgba(200, 160, 80, 0.3));
+    font-weight: 600;
+  }
+
+  .accordion-button {
+    --bs-accordion-bg: transparent;
+    background: linear-gradient(to right, $gold, rgba(200, 160, 80, 0.3));
+    font-weight: 600;
+
+    &:not(.collapsed),
+    &.collapsed {
+      background-color: $gold;
+    }
+  }
+
+  .accordion-collapse {
+    --bs-accordion-bg: transparent;
+    background: linear-gradient(to right, $chocolate-mid, $chocolate-light);
+    font-weight: 600;
+    font-size: 1rem;
+    color: $cream;
+  }
+
+  .accordion-body {
+    --bs-accordion-bg: transparent;
+    background: linear-gradient(to right, $chocolate-light, rgba(200, 160, 80, 0.15));
+    font-weight: 600;
+  }
+}

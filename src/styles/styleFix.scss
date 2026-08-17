@@ -1,4 +1,6 @@
-/* running production test fix */
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
 header svg.bi.bi-instagram {
   opacity: 0.5;
 }
@@ -104,7 +106,7 @@ thead,
   min-height: unset;
 }
 
-@media screen and (min-width: 1421px) {
+@include bp-min($bp-wide) {
   #divBtns {
     min-width: 0;
   }
@@ -116,7 +118,7 @@ thead,
   }
 }
 
-@media screen and (max-width: 1020px) {
+@include bp($bp-desktop) {
   div#divBtns {
     margin-bottom: 0;
   }
@@ -125,25 +127,25 @@ thead,
   }
 }
 
-@media screen and (min-width: 1010px) and (max-width: 1420px) {
+@include bp-range(1010px, $bp-wide) {
   .celRemove .tabRemove {
     transform: translate(1.6vw, -7%);
   }
 }
 
-@media screen and (max-width: 1010px) {
+@include bp(1010px) {
   .celRemove .tabRemove {
     transform: translate(1.3rem, -7%);
   }
 }
 
-@media screen and (max-width: 900px) {
+@include bp($bp-desktop-sm) {
   #btnsTip {
     width: 74vw;
   }
 }
 
-@media screen and (max-width: 460px) {
+@include bp($bp-mobile-sm) {
   .celRemove .tabRemove {
     transform: translate(1.4rem, -7%);
   }
@@ -152,7 +154,7 @@ thead,
   }
 }
 
-@media screen and (max-width: 345px) {
+@include bp(345px) {
   #divBtns #copyBtnWp {
     height: 4rem;
   }

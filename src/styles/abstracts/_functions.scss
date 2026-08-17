@@ -1,0 +1,50 @@
+// ============================================
+// Ana Doces — Functions
+// ============================================
+
+// Spacing scale: maps a numeric multiplier to rem/viewport units
+@function space($multiplier, $unit: rem) {
+  @if $unit == rem {
+    @return #{$multiplier * 0.25}rem;
+  } @else if $unit == vh {
+    @return #{$multiplier * 0.5}vh;
+  } @else if $unit == vw {
+    @return #{$multiplier * 0.5}vw;
+  }
+  @return #{$multiplier * 0.25}rem;
+}
+
+// Generate font-size from a scale multiplier (base = 1rem = 16px)
+@function font-scale($level) {
+  $scale: (
+    -1: 0.75rem,
+    0: 0.875rem,
+    1: 1rem,
+    2: 1.125rem,
+    3: 1.25rem,
+    4: 1.5rem,
+    5: 1.875rem,
+    6: 2.25rem,
+  );
+  @if map-has-key($scale, $level) {
+    @return map-get($scale, $level);
+  }
+  @return 1rem;
+}
+
+// Generate a responsive suffix string (used in class name generation)
+@function bp-suffix($bp-name) {
+  $suffixes: (
+    mobile-sm: 460Q,
+    mobile: 600Q,
+    tablet: 750Q,
+    desktop-sm: 900Q,
+    desktop: 1020Q,
+    desktop-lg: 1250Q,
+    wide: 1420Q,
+  );
+  @if map-has-key($suffixes, $bp-name) {
+    @return map-get($suffixes, $bp-name);
+  }
+  @return '';
+}
