@@ -1,0 +1,7 @@
+@use '../styles/abstracts/variables' as *;
+
+.header {}                    // block (not used yet, reserved)
+.header__instagram {}          // .instDiv — Instagram icon container
+.header__tips {}              // .tips — tips text container
+.header__tip-title {}         // .tipT — tip title span
+.header__author-btn {}        // .biBtn "Sobre & Autores" button

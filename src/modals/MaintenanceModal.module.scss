@@ -1,0 +1,119 @@
+@use '../styles/abstracts/variables' as *;
+
+.maintenance-modal {
+  &__dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: rgba(0, 0, 0, 0.85);
+    color: $cream;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-body;
+
+    &::backdrop {
+      background: rgba(0, 0, 0, 0.85);
+    }
+  }
+
+  &__content {
+    position: relative;
+    background: linear-gradient(135deg, $chocolate-dark, $chocolate-mid);
+    border: 2px solid $gold;
+    border-radius: $radius-lg;
+    padding: $space-2xl;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  &__x-btn {
+    position: absolute;
+    top: $space-sm;
+    right: $space-sm;
+    background: transparent;
+    border: none;
+    color: $cream;
+    font-size: 1.5rem;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+
+    &:hover,
+    &:focus-visible {
+      color: $gold;
+    }
+  }
+
+  &__heading {
+    font-family: $font-heading;
+    font-size: 1.5rem;
+    color: $gold;
+    margin: 0 0 $space-md;
+  }
+
+  &__body {
+    font-family: $font-body;
+    font-size: 1rem;
+    color: $cream;
+    margin: 0 0 $space-sm;
+    line-height: 1.6;
+  }
+
+  &__links {
+    display: flex;
+    gap: $space-md;
+    justify-content: center;
+    margin: $space-xl 0 0;
+  }
+
+  &__link {
+    display: inline-block;
+    padding: $space-sm $space-xl;
+    border-radius: $radius-md;
+    text-decoration: none;
+    font-family: $font-body;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 120px;
+    text-align: center;
+    min-height: 44px;
+    line-height: 44px;
+
+    &:hover,
+    &:focus-visible {
+      transform: scale(1.05);
+    }
+
+    &--whatsapp {
+      background: #25d366;
+      color: #fff;
+      outline: 2px solid $gold;
+    }
+
+    &--instagram {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: #fff;
+      outline: 2px solid $gold;
+    }
+  }
+}

@@ -1,15 +1,21 @@
 import { ErrorBoundary } from "react-error-boundary";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { nullishDiv } from "../declarations/types";
 import ErrorIcon from "../icons/ErrorIcon";
 import InstIcon from "../icons/InstIcon";
 import { htmlElementNotFound } from "../handlersErrors";
 import { adjustIdentifiers, syncAriaStates } from "../handlersCmn";
-import InfosModal from "../modals/InfosModal";
+import useMaintenanceMode from "../hooks/useMaintenanceMode";
+const InfosModal = lazy(() => import("../modals/InfosModal"));
+const MaintenanceModal = lazy(() => import("../modals/MaintenanceModal"));
+import MaintenanceBar from "./MaintenanceBar";
+import styles from "./Header.module.scss";
 
 export default function Header(): JSX.Element {
   const mainRef = useRef<nullishDiv>(null);
   const [shouldShowAuthors, setShowAuthors] = useState(false);
+  const { isModalOpen, isBarVisible, dismissModal, reopenModal, hideBar } =
+    useMaintenanceMode();
   useEffect(() => {
     try {
       if (!(mainRef.current instanceof HTMLElement))
@@ -30,10 +36,21 @@ export default function Header(): JSX.Element {
   }, [mainRef]);
   return (
     <ErrorBoundary FallbackComponent={() => <ErrorIcon fill={true} />}>
-      <span className="instDiv" style={{ display: "flex" }}>
+      <a href="#mainEl" className="skip-to-content">
+        Pular para o conteúdo principal
+      </a>
+      {isBarVisible && (
+        <MaintenanceBar onShowModal={reopenModal} onDismiss={hideBar} />
+      )}
+      {isModalOpen && (
+        <Suspense fallback={null}>
+          <MaintenanceModal onDismiss={dismissModal} />
+        </Suspense>
+      )}
+      <span className={styles.header__instagram} style={{ display: "flex" }}>
         <InstIcon />
-        <div className="tips" style={{ color: "#ffff" }} ref={mainRef}>
-          <span className="tip tipT">
+        <div className={styles.header__tips} style={{ color: "#ffff" }} ref={mainRef}>
+          <span className={`tip ${styles['header__tip-title']}`}>
             <span>Clique</span>
             <a
               className="anchorUndecor"
@@ -52,12 +69,7 @@ export default function Header(): JSX.Element {
       </span>
       <span>
         <button
-          className="biBtn"
-          style={{
-            color: "#dfddddbe",
-            paddingRight: "1rem",
-            fontWeight: "700",
-          }}
+          className={`biBtn ${styles['header__author-btn']}`}
           onClick={() => {
             setShowAuthors(!shouldShowAuthors);
           }}
@@ -65,7 +77,9 @@ export default function Header(): JSX.Element {
           <span>Sobre & Autores</span>
         </button>
         {shouldShowAuthors && (
-          <InfosModal dispatch={setShowAuthors} state={shouldShowAuthors} />
+          <Suspense fallback={null}>
+            <InfosModal dispatch={setShowAuthors} state={shouldShowAuthors} />
+          </Suspense>
         )}
       </span>
     </ErrorBoundary>

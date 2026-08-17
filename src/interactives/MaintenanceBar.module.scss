@@ -1,0 +1,66 @@
+@use '../styles/abstracts/variables' as *;
+
+.maintenance-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  padding: $space-sm $space-md;
+  background: linear-gradient(90deg, $gold, $warning-orange);
+  color: $chocolate-dark;
+  font-family: $font-body;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+
+  &__text {
+    flex: 1;
+    text-align: center;
+  }
+
+  &__btn {
+    background: $chocolate-dark;
+    color: $cream;
+    border: none;
+    border-radius: $radius-sm;
+    padding: $space-xs $space-sm;
+    font-family: $font-body;
+    font-size: 0.85rem;
+    cursor: pointer;
+    min-height: 44px;
+    min-width: 44px;
+    transition: background 0.2s;
+
+    &:hover,
+    &:focus-visible {
+      background: $chocolate-mid;
+    }
+  }
+
+  &__close {
+    background: transparent;
+    border: none;
+    color: $chocolate-dark;
+    font-size: 1.25rem;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s;
+
+    &:hover,
+    &:focus-visible {
+      color: $chocolate-dark;
+      opacity: 0.7;
+    }
+  }
+}
