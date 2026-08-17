@@ -26,6 +26,7 @@ import {
 } from "src/handlersCmn";
 import { createRoot } from "react-dom/client";
 import { act } from "react";
+import { tbodyProps } from "src/tableComponents/TableOrders";
 
 // jsdom doesn't implement layout, so it never computes a real .innerText
 // (both the getter and setter are effectively no-ops there); handlersCmn
@@ -132,15 +133,29 @@ describe("handleOrderSubtract", () => {
   let subtBtn: HTMLButtonElement;
   let totalEl: HTMLOutputElement;
   beforeEach(() => {
+    // Unlike handleOrderAdd, handleOrderSubtract only updates the total
+    // when it can find a matching order <tr> under
+    // tbodyProps.currentRef, located via the "__"-delimited suffix of
+    // the button's own id -- both need to be present for the price
+    // update to run at all.
     document.body.innerHTML = `
       <li id="product1" data-title="Product 1">
-        <button id="subtBtn1" name="btn_product1">Subtract</button>
+        <button id="subtBtn__product1" name="btn_product1">Subtract</button>
         <span class="opSpanPrice">R$ 10,00</span>
       </li>
       <output id="total">R$ 20,00</output>
+      <table>
+        <tbody id="tbodyOrders">
+          <tr id="orderRow__product1"></tr>
+        </tbody>
+      </table>
     `;
-    subtBtn = document.getElementById("subtBtn1") as HTMLButtonElement;
+    subtBtn = document.getElementById("subtBtn__product1") as HTMLButtonElement;
     totalEl = document.getElementById("total") as HTMLOutputElement;
+    tbodyProps.currentRef = document.getElementById("tbodyOrders") as HTMLTableSectionElement;
+  });
+  afterEach(() => {
+    tbodyProps.currentRef = undefined;
   });
   test("should subtract product price from total", () => {
     handleOrderSubtract(subtBtn, totalEl);
@@ -160,17 +175,22 @@ describe("handleOrderSubtract", () => {
 });
 describe("concatProducts", () => {
   beforeEach(() => {
+    // <tbody> set via innerHTML needs a real <table> ancestor -- HTML's
+    // table-parsing rules otherwise drop it entirely (foster parenting),
+    // so getElementById("tbodyOrders") would come back null.
     document.body.innerHTML = `
-      <tbody id="tbodyOrders">
-        <tr>
-          <td class="outp_orderTitle">Product 1</td>
-          <td class="outp_orderQuant">2</td>
-        </tr>
-        <tr>
-          <td class="outp_orderTitle">Product 2</td>
-          <td class="outp_orderQuant">1</td>
-        </tr>
-      </tbody>
+      <table>
+        <tbody id="tbodyOrders">
+          <tr>
+            <td class="outp_orderTitle">Product 1</td>
+            <td class="outp_orderQuant">2</td>
+          </tr>
+          <tr>
+            <td class="outp_orderTitle">Product 2</td>
+            <td class="outp_orderQuant">1</td>
+          </tr>
+        </tbody>
+      </table>
     `;
   });
   test("should concatenate products into a message", () => {
