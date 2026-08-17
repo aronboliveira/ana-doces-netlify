@@ -1,7 +1,17 @@
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import DirectCaller from "src/callers/DirectCaller";
 import * as handlersCmn from "../../../handlersCmn";
-jest.mock("../../../handlersCmn");
+// capitalizeFirstLetter/normalizeSpacing are called directly while
+// DirectCaller constructs its own JSX (button/anchor ids), not inside
+// an effect -- a bare automock's `undefined` return crashes those
+// during render before any test gets to run. Keep the real
+// implementations for those two, mock the rest.
+jest.mock("../../../handlersCmn", () => ({
+  ...jest.requireActual("../../../handlersCmn"),
+  concatProducts: jest.fn(),
+  switchAlertOp: jest.fn(),
+  syncAriaStates: jest.fn(),
+}));
 jest.mock("../../../handlersErrors");
 describe("DirectCaller Component", () => {
   beforeEach(() => {
@@ -25,7 +35,7 @@ describe("DirectCaller Component", () => {
     );
     expect(getByText("Chame no Whatsapp!")).toBeInTheDocument();
   });
-  test("handles button click and copies message", () => {
+  test("handles button click and copies message", async () => {
     const concatProductsMock = handlersCmn.concatProducts;
     const switchAlertOpMock = handlersCmn.switchAlertOp;
     (concatProductsMock as any).mockReturnValue("Mocked WhatsApp Message");
@@ -49,10 +59,12 @@ describe("DirectCaller Component", () => {
     fireEvent.click(button);
     expect(concatProductsMock).toHaveBeenCalled();
     expect(writeTextMock).toHaveBeenCalledWith("Mocked WhatsApp Message");
-    expect(switchAlertOpMock).toHaveBeenCalled();
+    // switchAlertOp fires from the writeText promise's .then(), a
+    // microtask that hasn't resolved yet right after fireEvent.click.
+    await waitFor(() => expect(switchAlertOpMock).toHaveBeenCalled());
     expect(window.open).toHaveBeenCalled();
   });
-  test("handles anchor click and copies message", () => {
+  test("handles anchor click and copies message", async () => {
     const concatProductsMock = handlersCmn.concatProducts;
     const switchAlertOpMock = handlersCmn.switchAlertOp;
     (concatProductsMock as any).mockReturnValue("Mocked WhatsApp Message");
@@ -75,7 +87,7 @@ describe("DirectCaller Component", () => {
     fireEvent.click(getByText("Chame no Whatsapp!"));
     expect(concatProductsMock).toHaveBeenCalled();
     expect(writeTextMock).toHaveBeenCalledWith("Mocked WhatsApp Message");
-    expect(switchAlertOpMock).toHaveBeenCalled();
+    await waitFor(() => expect(switchAlertOpMock).toHaveBeenCalled());
     expect(window.open).toHaveBeenCalled();
   });
   test("handles missing total element gracefully", () => {
