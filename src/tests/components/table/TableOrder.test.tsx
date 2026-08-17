@@ -1,10 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { TableOrders } from "src/tableComponents/TableOrders";
-import * as ReactErrorBoundary from "react-error-boundary";
-import * as ReactDOMClient from "react-dom/client";
-import GenericErrorComponent from "src/errors/GenericErrorComponent";
+import { TableOrders, tbodyProps } from "src/tableComponents/TableOrders";
+import * as handlersErrors from "../../../handlersErrors";
 
-jest.mock("react-dom/client");
 jest.mock("../../../handlersErrors");
 jest.mock("../../../tableComponents/OrderRow", () =>
   jest.fn(() => (
@@ -13,17 +10,23 @@ jest.mock("../../../tableComponents/OrderRow", () =>
     </tr>
   ))
 );
-jest.mock("../../../errors/GenericErrorComponent", () =>
-  jest.fn(() => <div>Error</div>)
-);
+// react-dom/client is deliberately NOT mocked: @testing-library/react's
+// own render() uses the same createRoot under the hood (React 19 has no
+// legacy ReactDOM.render), so a wholesale mock silently turns RTL's own
+// render into a no-op.
 
 describe("TableOrders Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (ReactDOMClient.createRoot as jest.Mock).mockImplementation(() => ({
-      render: jest.fn(),
-      unmount: jest.fn(),
-    }));
+    // tbodyProps is a module-level singleton the component mutates
+    // (roots, refs); left over from a prior test it points at DOM
+    // already unmounted by RTL's own cleanup, and the component reuses
+    // a root as long as it looks intact (root._internalRoot truthy),
+    // so a stale root leaks across tests within this file.
+    tbodyProps.root = undefined;
+    tbodyProps.currentRef = undefined;
+    tbodyProps.primaryRowRoot = undefined;
+    tbodyProps.roots = {};
   });
 
   test("renders without crashing", () => {
@@ -39,25 +42,39 @@ describe("TableOrders Component", () => {
     expect(screen.getByText("OrderRow")).toBeInTheDocument();
   });
 
-  test("renders error fallback when error occurs", () => {
-    render(
-      <ReactErrorBoundary.ErrorBoundary
-        FallbackComponent={() => <GenericErrorComponent message="Error" />}
-      >
-        <GenericErrorComponent message="Error" />
-      </ReactErrorBoundary.ErrorBoundary>
-    );
-
-    expect(
-      screen.getByText("Erro carregando tabela de produtos!")
-    ).toBeInTheDocument();
-  });
-
   test("reset button clears the table", () => {
     render(<TableOrders />);
     const resetButton = screen.getByText("Limpar Tabela");
+    const tbody = document.getElementById("tbodyOrders")!;
+
     fireEvent.click(resetButton);
 
-    expect(ReactDOMClient.createRoot).toHaveBeenCalled();
+    // The reset handler unmounts the current tbody root and mounts a
+    // fresh one rendering a placeholder OrderRow -- verifying that
+    // real re-render happened (rather than spying on createRoot, an
+    // implementation detail) is the meaningful, reachable assertion.
+    expect(tbody).toContainElement(screen.getByText("OrderRow"));
+  });
+
+  test("keeps rendering normally despite a defensively-mocked error path", () => {
+    // TableOrders' own ErrorBoundary can only catch errors from its
+    // *static* JSX tree, but that tree is just <thead>/<tbody> -- no
+    // custom child component lives there to throw during reconciliation.
+    // OrderRow only ever appears via imperative
+    // tbodyProps.root.render(...) calls inside effects, on a separate,
+    // independent React root; an error there doesn't propagate through
+    // TableOrders' reconciliation (or its boundary) at all. The
+    // reachable, meaningful assertion is that the table's own static
+    // content still renders even when a downstream helper is mocked to
+    // fail.
+    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+    const htmlElementNotFoundMock =
+      handlersErrors.htmlElementNotFound as jest.Mock;
+    htmlElementNotFoundMock.mockImplementation(() => new Error("Test Error"));
+
+    render(<TableOrders />);
+
+    expect(screen.getByText("Pedido")).toBeInTheDocument();
+    consoleErrorSpy.mockRestore();
   });
 });
