@@ -1,82 +1,86 @@
-# 🍬 Ana Doces Digital Menu
+# Ana Doces — Cardápio Digital Interativo
 
-**Version:** React.js (Create React App)  
-**License:** GNU/GPL  
-**Author:** [Aron Barbosa de Oliveira](https://github.com/aronboliveira)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite)](https://vite.dev)
 
----
-
-## 🌐 Live Demo  
-🔗 [https://anadocesapp.netlify.app/](https://anadocesapp.netlify.app/)
+**Live:** [anadocesapp.netlify.app](https://anadocesapp.netlify.app/)
 
 ---
 
-## 📄 About
+## Sobre
 
-<details>
-  <summary><strong>🇧🇷 pt-BR — Sobre o Projeto</strong></summary>
+Cardápio digital interativo da **Ana Doces: Confeitaria Criativa**, localizada na Ilha do Governador, Rio de Janeiro.
 
-**Esta é uma aplicação em React.js** (construída com Create React App) desenvolvida para representar o **Cardápio Digital Interativo** da **Ana Doces: Confeitaria Criativa**, localizada no Rio de Janeiro, RJ, Brasil.
-
-</details>
+O aplicativo permite navegar pelo cardápio completo, visualizar detalhes e preços de cada produto, e fazer pedidos diretamente pelo WhatsApp.
 
 ---
 
-<details>
-  <summary><strong>🇺🇸 en-US — About the Project</strong></summary>
+## Tech Stack
 
-**This is a React.js application** (built with Create React App) designed to showcase the **Interactive Digital Menu** of **Ana Doces: Confeitaria Criativa**, a candy shop located in Rio de Janeiro, RJ, Brazil.
-
-</details>
-
----
-
-<details>
-  <summary><strong>🇪🇸 Español — Acerca del Proyecto</strong></summary>
-
-**Esta es una aplicación en React.js** (creada con Create React App) diseñada para presentar el **Menú Digital Interactivo** de **Ana Doces: Confeitaria Criativa**, una pastelería ubicada en Río de Janeiro, RJ, Brasil.
-
-</details>
+| Camada | Tecnologia |
+|---|---|
+| Frontend | React 19 + TypeScript 5.9 |
+| Build | Vite 8 |
+| Routing | react-router-dom 7 |
+| Testes | Jest 30 + Testing Library |
+| Lint | ESLint 9 (flat config) |
+| Deploy | Netlify |
+| Estilo | SCSS (em migração) |
 
 ---
 
-<details>
-  <summary><strong>🇫🇷 Français — À propos du projet</strong></summary>
+## Estrutura do Projeto
 
-**Il s'agit d'une application React.js** (développée avec Create React App) conçue pour présenter le **Menu Numérique Interactif** de **Ana Doces: Confeitaria Criativa**, une confiserie située à Rio de Janeiro, RJ, Brésil.
-
-</details>
-
----
-
-<details>
-  <summary><strong>🇷🇺 Русский — О проекте</strong></summary>
-
-**Это приложение на React.js** (созданное с помощью Create React App), предназначенное для отображения **Интерактивного Цифрового Меню** кондитерской **Ana Doces: Confeitaria Criativa**, расположенной в Рио-де-Жанейро, Бразилия.
-
-</details>
-
----
-
-<details>
-  <summary><strong>🇨🇳 中文 — 关于项目</strong></summary>
-
-**这是一个用 React.js**（通过 Create React App 构建）开发的应用程序，用于展示位于巴西里约热内卢的糖果店 **Ana Doces: Confeitaria Criativa** 的**互动数字菜单**。
-
-</details>
+```
+src/
+├── routing/          # Shell da aplicação e rotas
+├── productsMain/     # Grade de produtos (Compound Pattern)
+├── productOptions/   # Modal de opções do produto
+├── modals/           # Modais reutilizáveis
+├── interactives/     # Header, SearchBar, barra de manutenção
+├── callers/          # Lógica de links WhatsApp
+├── declarations/     # Tipos, interfaces, classes
+├── styles/           # SCSS (tema, utilitários, abstracts)
+└── tests/            # Testes Jest
+```
 
 ---
 
-<details>
-  <summary><strong>🇯🇵 日本語 — プロジェクトについて</strong></summary>
+## Acessibilidade
 
-**この React.js アプリケーション**（Create React App で構築）は、ブラジルのリオデジャネイロにあるお菓子屋 **Ana Doces: Confeitaria Criativa** の**インタラクティブ・デジタルメニュー**を表示するために作成されました。
-
-</details>
+- Fontes grandes e legíveis (mínimo 16px)
+- Áreas de toque generosas (mínimo 44×44px)
+- Alto contraste: texto creme `#e8d5b5` sobre fundo chocolate `#1a0e0a` (~12:1)
+- Animações respeitam `prefers-reduced-motion`
+- Foco visível sempre visível (anel dourado)
+- Padrões ARIA: accordion, modal, landmarks de navegação
 
 ---
 
-## 📄 License
+## SEO
 
-**COPYRIGHTED BY:** [Aron Barbosa de Oliveira](https://github.com/aronboliveira)  
-Licensed under the **GNU/GPL** license.
+- Meta tags completas (título, descrição, Open Graph, Twitter Card)
+- JSON-LD: schema `Bakery` para dados estruturados
+- HTML semântico: `header`, `main`, `nav`
+- Lighthouse target: **90+**
+
+---
+
+## Desenvolvimento
+
+```bash
+npm install          # Instalar dependências
+npm run dev          # Servidor de desenvolvimento (localhost:5173)
+npm run build        # Type-check + build de produção
+npm test             # Executar testes Jest
+npm run lint         # Verificar lint
+```
+
+---
+
+## Licença
+
+Copyright © [Aron Barbosa de Oliveira](https://github.com/aronboliveira)
+Licenciado sob a licença **GNU/GPL v3**.
