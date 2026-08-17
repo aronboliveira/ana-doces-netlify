@@ -28,6 +28,7 @@ __tests__/
 
 # production
 /build
+/dist
 /package-lock.json
 **/package-lock.json
 
@@ -41,3 +42,11 @@ __tests__/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# agent working notes / dev-only artifacts — never part of the shipped app
+/.tmp/
+**/.tmp/
+utils/.llms/
+/utils/.llms/
+.playwright-mcp/
+/.playwright-mcp/
