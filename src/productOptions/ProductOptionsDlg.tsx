@@ -1,5 +1,5 @@
 import { ProductOptionsDlgProps } from "../declarations/interfaces";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { Root, createRoot } from "react-dom/client";
 import {
   nullishDlg,
@@ -40,7 +40,6 @@ export default function ProductOptionsDlg({
   root = null,
   setOptions = undefined,
 }: ProductOptionsDlgProps): JSX.Element {
-  const [finished] = useState<boolean>(false);
   const params = useParams<{ options: string; subOptions: string }>();
   if (params.options && params.subOptions) {
     options = JSON.parse(
@@ -246,7 +245,7 @@ export default function ProductOptionsDlg({
           op?.previousElementSibling?.id.replaceAll(/[^0-9]*/g, "") ??
           "ERROR"
         }
-        6. previousElementSibling : ${op?.previousElementSibling!.id}`);
+        6. previousElementSibling : ${op?.previousElementSibling?.id ?? "ERROR"}`);
       }
     };
     if (menuRef.current instanceof HTMLElement) {
@@ -255,7 +254,7 @@ export default function ProductOptionsDlg({
     } else
       elementNotFound(
         menuRef.current,
-        `Reference for Options Menu related to ${optionsRef.current!.id}`,
+        `Reference for Options Menu related to ${optionsRef.current?.id ?? "ERROR"}`,
         ["HTMLElement"]
       );
   }, [menuRef, options, root, setOptions, shouldShowOptions, subOptions]);
@@ -474,9 +473,9 @@ export default function ProductOptionsDlg({
     return () => clearURLAfterModal(optionsId);
   }, []);
   useEffect(() => {
-    if (!finished || !optionsRef.current) return;
+    if (!optionsRef.current) return;
     adjustIdentifiers(optionsRef.current);
-  }, [finished]);
+  }, [shouldShowOptions]);
   useEffect(() => {
     const idRef = optionsRef.current?.id;
     const modalInterv = setInterval(() => {
@@ -575,8 +574,16 @@ export default function ProductOptionsDlg({
                 shouldShowOptions
                   ? optionsRef.current.showModal()
                   : optionsRef.current.close();
-                optionsRef.current.closest(".contDlg")?.remove() ||
-                  optionsRef.current.remove();
+                try {
+                  optionsRef.current.closest(".contDlg")?.remove() ||
+                    optionsRef.current.remove();
+                } catch (e) {
+                  console.error(
+                    `Error removing dialog container on outside click:\n${
+                      (e as Error).message
+                    }`
+                  );
+                }
               }
             }
           }}
