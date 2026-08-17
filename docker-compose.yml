@@ -1,0 +1,14 @@
+services:
+  dev:
+    build: .
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    working_dir: /app
+    ports:
+      - "5173:5173" # vite dev
+      - "4173:4173" # vite preview
+    command: bash
+
+volumes:
+  node_modules:
