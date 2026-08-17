@@ -1,9 +1,12 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import ProductsProvider from "src/productsMain/ProductsProvider";
 import { ProductsProviderProps } from "src/declarations/interfaces";
 import { Product } from "src/declarations/classes";
 import * as handlersCmn from "../../../handlersCmn";
-import * as handlersErrors from "../../../handlersErrors";
+// Plain require, not `import * as React` -- Babel's namespace-import
+// interop returns a copy of the module namespace, so spying on it
+// wouldn't affect the `useRef` the component's own named import reads.
+const ReactModule = require("react");
 
 // Mock factories return a plain function (not jest.fn()) as the default export —
 // nothing here needs call-tracking, and it stays correct even if `mockReset`/`clearMocks`
@@ -18,7 +21,10 @@ jest.mock("../../../productsMain/ProductGrid", () => ({
 }));
 jest.mock("../../../handlersCmn");
 jest.mock("../../../handlersErrors");
-jest.mock("../../../index", () => ({ basePath: "/" }));
+jest.mock("../../../index", () => ({
+  basePath: "/",
+  mainItems: { listMainItems: [] },
+}));
 
 describe("ProductsProvider Component", () => {
   const products: Product[] = [
@@ -49,6 +55,15 @@ describe("ProductsProvider Component", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    // Flush anything still pending (the 500ms/1000ms effect timers) before
+    // switching back to real timers, so a leftover callback can't fire
+    // against a torn-down component during a later, unrelated test.
+    act(() => jest.runOnlyPendingTimers());
+    jest.useRealTimers();
   });
 
   test("renders without crashing", () => {
@@ -62,18 +77,27 @@ describe("ProductsProvider Component", () => {
     const syncAriaStatesMock = handlersCmn.syncAriaStates as jest.Mock;
     render(<ProductsProvider {...defaultProps} />);
     expect(adjustIdentifiersMock).toHaveBeenCalled();
+    // syncAriaStates fires from a setTimeout(..., 500) in a separate effect.
+    act(() => jest.advanceTimersByTime(500));
     expect(syncAriaStatesMock).toHaveBeenCalled();
   });
 
   test("handles error in useEffect gracefully", () => {
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-    const htmlElementNotFoundMock =
-      handlersErrors.htmlElementNotFound as jest.Mock;
-    htmlElementNotFoundMock.mockImplementation(() => {
-      throw new Error("Test Error");
-    });
+    // menuRef.current is always a real HTMLElement on a normal jsdom
+    // render (React assigns it at commit, before this effect runs), so
+    // the only way to exercise the catch branch is to make useRef itself
+    // return undefined for this render, which throws on the .current read.
+    const useRefSpy = jest
+      .spyOn(ReactModule, "useRef")
+      .mockReturnValueOnce(undefined);
+
     render(<ProductsProvider {...defaultProps} />);
+
+    // The check (and its catch) run inside a setTimeout(..., 500).
+    act(() => jest.advanceTimersByTime(500));
     expect(consoleErrorSpy).toHaveBeenCalled();
     consoleErrorSpy.mockRestore();
+    useRefSpy.mockRestore();
   });
 });
