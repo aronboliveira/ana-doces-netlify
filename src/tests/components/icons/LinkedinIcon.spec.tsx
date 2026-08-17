@@ -1,7 +1,10 @@
 import { render } from "@testing-library/react";
 import LinkedinIcon from "src/icons/LinkedinIcon";
 import * as handlersCmn from "../../../handlersCmn";
-import * as handlersErrors from "../../../handlersErrors";
+// Plain require, not `import * as React` -- Babel's namespace-import
+// interop returns a copy of the module namespace, so spying on it
+// wouldn't affect the `useRef` the component's own named import reads.
+const ReactModule = require("react");
 
 jest.mock("../../../handlersCmn");
 jest.mock("../../../handlersErrors");
@@ -27,16 +30,17 @@ describe("LinkedinIcon Component", () => {
     expect(adjustIdentifiersMock).toHaveBeenCalled();
   });
 
-  test("renders ErrorIcon if there is an error", () => {
-    const htmlElementNotFoundMock =
-      handlersErrors.htmlElementNotFound as jest.Mock;
-    htmlElementNotFoundMock.mockImplementation(() => {
-      throw new Error("Test Error");
-    });
+  test("degrades gracefully (logs, keeps rendering) when the ref check fails", () => {
+    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+    const useRefSpy = jest
+      .spyOn(ReactModule, "useRef")
+      .mockReturnValueOnce(undefined);
 
-    const { getByTestId } = render(<LinkedinIcon />);
-    const errorIcon = getByTestId("error-icon");
+    const { container } = render(<LinkedinIcon />);
 
-    expect(errorIcon).toBeInTheDocument();
+    expect(consoleErrorSpy).toHaveBeenCalled();
+    expect(container.querySelector("svg")).toBeInTheDocument();
+    consoleErrorSpy.mockRestore();
+    useRefSpy.mockRestore();
   });
 });

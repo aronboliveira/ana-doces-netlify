@@ -32,7 +32,7 @@ export default function ErrorIcon({ fill = false }: { fill: boolean }) {
   }, [svgRef, fill]);
   return (
     <ErrorBoundary FallbackComponent={() => <></>}>
-      <span ref={svgRef}>
+      <span ref={svgRef} data-testid="error-icon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

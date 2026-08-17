@@ -1,7 +1,10 @@
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import WpIcon from "src/icons/WpIcon";
 import * as handlersCmn from "../../../handlersCmn";
-import * as handlersErrors from "../../../handlersErrors";
+// Plain require, not `import * as React` -- Babel's namespace-import
+// interop returns a copy of the module namespace, so spying on it
+// wouldn't affect the `useRef` the component's own named import reads.
+const ReactModule = require("react");
 
 jest.mock("../../../handlersCmn");
 jest.mock("../../../handlersErrors");
@@ -25,12 +28,13 @@ describe("WpIcon Component", () => {
     expect(svgElement?.getAttribute("viewBox")).toBe("0 0 32 24");
   });
 
-  test("calls syncAriaStates in useEffect", () => {
+  test("calls syncAriaStates in useEffect", async () => {
     const syncAriaStatesMock = handlersCmn.syncAriaStates as jest.Mock;
 
     render(<WpIcon large={false} />);
 
-    expect(syncAriaStatesMock).toHaveBeenCalled();
+    // syncAriaStates fires from a setTimeout(..., 100) inside the effect.
+    await waitFor(() => expect(syncAriaStatesMock).toHaveBeenCalled());
   });
 
   test("adds classes to the closest button", () => {
@@ -47,15 +51,14 @@ describe("WpIcon Component", () => {
 
   test("handles error in useEffect gracefully", () => {
     const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
-    const htmlElementNotFoundMock =
-      handlersErrors.htmlElementNotFound as jest.Mock;
-    htmlElementNotFoundMock.mockImplementation(() => {
-      throw new Error("Test Error");
-    });
+    const useRefSpy = jest
+      .spyOn(ReactModule, "useRef")
+      .mockReturnValueOnce(undefined);
 
     render(<WpIcon large={false} />);
 
     expect(consoleErrorSpy).toHaveBeenCalled();
     consoleErrorSpy.mockRestore();
+    useRefSpy.mockRestore();
   });
 });

@@ -21,7 +21,7 @@ describe("ErrorIcon Component", () => {
     const { container } = render(<ErrorIcon fill={true} />);
     const svgElement = container.querySelector("svg");
     expect(svgElement).toBeInTheDocument();
-    expect(svgElement?.innerHTML).toContain("bi-exclamation-circle-fill");
+    expect(svgElement?.outerHTML).toContain("bi-exclamation-circle-fill");
   });
 
   test("calls syncAriaStates in useLayoutEffect", () => {
